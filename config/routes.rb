@@ -1,4 +1,4 @@
-Blog::Application.routes.draw do
+Mongologue::Application.routes.draw do
   resources :posts do
     member do
       get :expand_comments
