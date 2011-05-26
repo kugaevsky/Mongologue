@@ -1,0 +1,52 @@
+<% store_location %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blog</title>
+  <%= stylesheet_link_tag 'custom', :media => 'screen' %>
+  <%= javascript_include_tag 'jquery-1.6.min', 'rails', 'application' %>
+  
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<div id="wrapper">
+  <div id="clientinfo">
+    <% if signed_in? %>
+      <p>Hello, <%= "master" if current_user.admin? %>
+         <%= link_to identity_or_name(current_user), current_user.identity %> |
+         <%= link_to "Sign out", signout_path, :method => :delete %></p>
+    <% else %>
+      <p><%= loginza_button_tag("Sign in",
+                            'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+
+                            request.fullpath) %></p>
+    <% end %>
+
+  </div>
+  <div id="header">
+    <h1><%= link_to "Mongologue", root_path %></h1>
+    <p id="notice"><%= notice %></p>
+  </div>
+  <div id="container">
+    <div id="content">
+      <%= yield %>
+    </div>
+    <div id="side-b">
+      <div id="site_info">
+        <p id="postscounter"><%= "Posts total: #{Post.count}" %></p>
+        <% if authorized_admin? %>
+           <p><%= link_to 'New post', new_post_path, :id => "newpostlink", :remote => true %></p>
+        <% end %>
+      </div>
+      <% cache('tagscloud') do %>
+      <div id="tagscloud"><%= tags_cloud.html_safe %></div>
+      <% end %> 
+    </div>
+  </div>
+  <div id="footer">
+    FOOTER
+  </div>
+<%= debug(params) if Rails.env.development? %>
+</div>
+</body>
+</html>
+

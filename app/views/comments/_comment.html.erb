@@ -1,0 +1,10 @@
+<div class="commentbox" id=<%= "c#{comment.id}"%>>
+  <h3><%= comment.url == nil ? h(comment.name) : link_to(h(comment.name), comment.url) %></h3>
+  <p class="commentinfo"><%= time_ago_in_words(comment.created_at) %> ago</p>
+  <div class="comment">
+    <p><%= display(comment.content).html_safe %></p>
+    <div class="reply" id=<%= "r#{comment.id}" %>>
+      <%= render :partial => 'comments/reply', :locals => { :comment => comment }  %>
+    </div>
+  </div>
+</div>

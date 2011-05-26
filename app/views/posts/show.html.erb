@@ -1,0 +1,6 @@
+<%= cache(:action => "show", :id => params[:id] ) do %>
+  <%= render @post %>
+  <div id=<%= "pc#{@post.id}" %> >
+    <%= render 'posts/comments' %>
+  </div> 
+<% end %>

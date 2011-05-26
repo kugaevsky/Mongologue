@@ -1,0 +1,6 @@
+<%= form_for [@post, @comment], :remote => true do |f| %>
+  <%= render "shared/error_messages", :object => @comment %> 
+  <%= f.text_area :reply, :rows => 10 %>
+  <%= f.submit "Update reply" %>
+  <%= link_to "Cancel", [@post, @comment], :remote => true %>
+<% end %>             

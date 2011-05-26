@@ -1,0 +1,73 @@
+= Loginza
+
+Loginza - is interactive JavaScript widget provides visitors to your sites, 
+a wide range of options for authentication through the accounts of common WEB-portals and 
+service (Yandex, Google, and TA. See full list {providers}[http://loginza.ru/features-and-benefits]). 
+Easy to learn {Loginza.API}[http://loginza.ru/api-overview].
+
+== Install
+
+Via rails plugin:
+
+Rails 3:
+
+  rails plugin install git://github.com/galetahub/loginza.git
+
+Rails 2:
+  
+  ./script/plugin install git://github.com/galetahub/loginza.git
+
+Via rails gem:
+  
+  sudo gem install loginza
+
+== Usage
+
+=== View
+
+==== Link
+
+Simple example:
+  
+  <%= loginza_button_tag("Login via OpenID", clients_url) %>
+ 
+With set of providers:
+  
+  <%= loginza_button_tag("Login via OpenID", clients_url, :providers => [ :google, :facebook, :twitter ]) %>
+    
+With default provider:
+  
+  <%= loginza_button_tag("Login via OpenID", clients_url, :provider => :google) %>
+
+With a block:
+
+  <%= loginza_button_tag(clients_url, :provider => :google) do %>
+   <div class='loginza'>
+     <img src="http://loginza.ru/img/providers/google.png" alt="Google" title="Google Accounts">
+     <img src="http://loginza.ru/img/providers/twitter.png" alt="Twitter" title="Twitter">
+     <img src="http://loginza.ru/img/providers/yandex.png" alt="Yandex" title="Yandex">
+     <img src="http://loginza.ru/img/providers/myopenid.png" alt="MyOpenID" title="MyOpenID">
+     <img src="http://loginza.ru/img/providers/openid.png" alt="OpenID" title="OpenID">
+   </div>
+  <% end %>
+
+==== Frame
+
+  <%= loginza_frame_tag(clients_url, { :providers => [:google, :yandex, :mailru] }, { :style => "width:400px;height:350px;" }) %>
+
+
+=== Controller
+
+  class ClientsController < ApplicationController
+  
+    def create
+      if data = Loginza.user_data(params[:token])
+        client = Client.find_or_create(data)
+        redirect_to root_path
+      else
+        redirect_to login_path
+      end
+    end    
+    
+  end
+Copyright (c) 2010 Brainberry, released under the MIT license

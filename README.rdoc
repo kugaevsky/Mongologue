@@ -1,0 +1,25 @@
+== Welcome to Mongologue
+
+Ok, this is my first attempt to create something using Ruby on Rails after "Ruby on Rails Tutorial: Learn by example" book.
+I didn't came up with something better than blog engine.
+
+Anyway.
+
+This blog uses MongoDB (http://mongodb.org) through Mongoid ORM (http://mongoid.org).
+Authorization handled with Loginza (http://loginza.ru) using plugin (https://github.com/galetahub/loginza).
+I replaced Prototype library with jQuery because I have no clue how to use both.
+There is some jQuery magic, inplace editing, expand/collapse for comments and so on.
+
+Oh! And also there is some "serious" typography function to make posts and comments look better (for russian language mostly).
+
+== Installation and Setup:
+
+For development and looking around: 
+
+Populate new mongo database with rake db:seed, rake db:create_indexes.
+This should generate 100 posts with some comments.
+
+For development or production:
+
+Sign in with Loginza using something (Gmail or Facebook will be fine).
+Find this user using rails console or mongodb shell and set admin=true.

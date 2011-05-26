@@ -1,0 +1,35 @@
+<% if @post.comments.size > 0 %>
+  <% for comment in @post.comments.order_by(:created_at => :asc) %>
+    <% unless comment.new_record? %>
+      <%= render comment %>
+    <% end %>
+  <% end %>
+<% end %>
+<div id=<%= "lc#{@post.id}" %>></div>
+<% if signed_in? %>  
+  <p>Signed in as <%= link_to identity_or_name(current_user), current_user.identity %> |
+                  <%= link_to "Sign out", signout_path, :method => :delete %></p>
+<% else %>
+  <p>Not signed in (anonymous) | <%= loginza_button_tag("Sign in",
+                          'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+
+                          request.fullpath) %></p>
+<% end %>
+         
+<%= form_for [@post, @new_comment], :html => { :id => "#fc#{@post.id}" }, :remote => true do |f| %>
+  <%= render "shared/error_messages", :object => @new_comment %> 
+  <p><%= f.text_area :content, :rows => 10 %></p>
+  <p><%= f.submit %> <span id="<%= "cnt#{@post.id}" %>"></span></p>
+<% end %>
+<script type="text/javascript"> 
+    $(document).ready(function(){
+    $("<%= "#pc#{@post.id}" %> textarea").maxChar(400, {indicator: "<%= "cnt#{@post.id}" %>"});
+    
+    setInterval(function () {
+      if($("<%= "#pc#{@post.id}" %> textarea").val().length <= 400) {
+        $("<%= "#pc#{@post.id}" %> input").removeAttr("disabled");
+      } else {
+        $("<%= "#pc#{@post.id}" %> input").attr("disabled", "disabled");
+      }
+    }, 200);
+  });
+</script> 

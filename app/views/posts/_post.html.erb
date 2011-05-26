@@ -1,0 +1,26 @@
+<div id=<%= "p#{post.id}" %> >
+  <div class="post">
+    <h2><%= link_to post.title, post %></h2>
+    <p class="postinfo"><%= time_info(post.created_at, post.updated_at) %>
+      Tags: <%= tags_list(post.tags).html_safe %></p>
+    <p><%= typa_graf(post.content).html_safe %></p>
+    <p><% if signed_in? %>
+         <% if current_user.admin? %>
+           <%= link_to 'Edit', edit_post_path(post), :remote => true %>,  |
+           <%= link_to 'Delete', post, :confirm => 'Are you sure?', :method => :delete, 
+                                       :remote => true %> |       
+         <% end %>      
+       <% end %>
+       <% cc="Comments: #{post.comments_counter.to_i}" %>
+       <% if controller.action_name == "index" %>
+         <%= link_to cc, expand_comments_post_path(post), 
+             :remote => true,
+             :id => "showc#{post.id}"%></p>
+       <% else %>
+         <%= link_to cc, collapse_comments_post_path(post), 
+             :remote => true,
+             :id => "showc#{post.id}"%></p>
+       <% end %>
+  </div>
+  <hr>
+</div>    

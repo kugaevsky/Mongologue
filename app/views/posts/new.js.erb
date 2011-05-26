@@ -1,0 +1,3 @@
+$("#new_post").remove()
+$("#newpostlink").hide()
+$("<%= escape_javascript(render :partial => 'form') %>").insertAfter("#firstpost")

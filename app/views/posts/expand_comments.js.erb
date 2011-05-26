@@ -1,0 +1,2 @@
+$('<%= "#pc#{@post.id}" %>').hide().html("<%= escape_javascript(render('posts/comments')) %>").slideDown(200)
+$('<%= "#showc#{@post.id}" %>').replaceWith("<%= escape_javascript(link_to "Comments: #{@post.comments_counter.to_i}", collapse_comments_post_path(@post), :remote => true, :id => "showc#{@post.id}") %>")

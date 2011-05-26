@@ -1,0 +1,182 @@
+body {
+  color: black;
+  font-family: Cambria, Georgia, "Times New Roman", serif;
+  font-size: 100%;
+  line-height: 1.3em;
+  padding: 0;
+}
+
+a:link, a:active, a:visited {
+  color: black;
+  background-color: inherit;
+  text-decoration: underline;
+}
+
+#wrapper {
+  text-align: left;
+  margin: 0px auto;
+  padding: 0px;
+  border:0;
+  width: 960px;
+}
+
+#clientinfo {
+  margin: 0;
+  text-align: left;
+}
+
+#header {
+  margin: -1.3em 0 0 0;
+  text-align: center;
+  border-bottom: 1px dotted #000000;
+  padding: 0;
+}
+
+#site_info {
+  height: 150px;
+  border-bottom: 1px dotted #000000;
+
+}
+
+#side-b {
+  float: right;
+  width: 225px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#content { 
+  float: left;
+  width: 700px;
+  padding: 10px;
+  text-align: left;
+  line-height: 1.6em;
+}
+
+#footer {
+  clear: both;
+  text-align: center;
+}
+
+h1, h2 {
+  font-weight: normal;
+  font-variant: small-caps;
+  line-height: 1.6em;
+}
+
+h3 {
+font-size: 1em;
+}
+
+.post h2 {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.commentbox {
+  margin: 0;
+}
+
+.comment {
+  border: 1px dotted #666;
+  padding: 0 15px 0 15px;
+  overflow: hidden;
+  display: block;  
+}
+
+.comment p {
+  padding: 10px;
+  margin: 0 15px 0 0;
+  overflow: hidden;
+  display: block;
+}
+
+.commentbox h3 {
+  padding: 0;
+  margin-bottom: 0;
+  line-height: 1.2em;
+  margin-top: 20px;
+
+}
+
+.reply {
+  border-left: 5px solid #000000;
+  background: #FFFFFF;
+  padding: 0px 15px 0px 10px;
+  margin-left: 40px;
+}
+
+.reply p, .reply h3 {
+  margin: 0;
+  padding: 0;
+}
+
+
+p.postinfo {
+  font-size: 0.8em;
+  margin: 0 0 1em 0;
+}
+
+p.commentinfo {
+  font-size: 0.8em;
+  margin: 0;
+}
+
+p.moderatecomment {
+  margin: 0;
+}
+
+#clientinfo p {
+  font-size: 0.8em;
+  margin: 0;
+}
+
+#header h1, #header p {
+  margin: 0;
+}
+
+h2 a:link, h2 a:active, h2 a:visited, h2 a:hover, h2 a:focus,
+h1 a:link, h1 a:active, h1 a:visited, h1 a:hover, h1 a:focus  {
+  text-decoration: none;
+}
+
+a:hover { background-color:#eeeeee; }
+
+#tagscloud {
+  font-size: 0.8em;
+  text-align: justify;
+
+}
+
+.favtag {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+blockquote {
+  background-color: #EEEEEE;
+  padding: 10px;
+  margin: 0 0 0 30px;
+  border: 1px dotted #666;
+}
+
+code, pre {
+  background-color: #222222;
+  width: 650px;
+  color: #FFFFFF;
+  border: solid 1px;
+  padding: 8px;
+  margin: 1em 0;
+  overflow: scroll;
+  font-family: Consolas, 'Courier New', monospace;  
+  line-height: 1.3em;
+}
+
+input[type=text], textarea {
+  font-family: Cambria, Georgia, "Times New Roman", serif;
+  font-size: 100%;
+  background-color: #eeeeee;
+  border: 1px solid #000000;
+  width: 100%;
+  line-height: 1.3em;  
+}

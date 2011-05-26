@@ -1,0 +1,5 @@
+$("#new_post").remove()
+$("#newpostlink").show();
+$("#postscounter").html("<%= "Posts total: #{Post.count}" %>")
+$("<%= escape_javascript(render :partial => 'post', :locals => { :post => @post }) %>").insertAfter("#firstpost")
+$("#tagscloud").html("<%= escape_javascript(tags_cloud.html_safe) %>")

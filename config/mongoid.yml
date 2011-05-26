@@ -1,0 +1,22 @@
+defaults: &defaults
+  host: localhost
+  # slaves:
+  #   - host: slave1.local
+  #     port: 27018
+  #   - host: slave2.local
+  #     port: 27019
+
+development:
+  host: localhost
+  database: blog_development
+
+test:
+  host: localhost
+  database: blog_test
+
+# set these environment variables on your prod server
+production:
+  host: localhost
+  database: blog_production
+
+raise_not_found_error: false
