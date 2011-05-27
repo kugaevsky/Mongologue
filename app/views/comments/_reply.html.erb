@@ -5,7 +5,8 @@
 <% end %>
 <% if authorized_admin? %>
 <p class="moderatecomment">IP: <%= comment.ip %> | 
-<%= link_to 'Edit reply', edit_post_comment_path(@post,comment), :remote => true %> |
+<%= link_to comment.reply.nil? ? 'Add reply' : 'Edit reply', 
+            edit_post_comment_path(@post,comment), :remote => true %> |
 <%= link_to 'Delete comment', [@post, comment], :confirm => 'Are you sure?',
                                         :method => :delete, :remote => true %></p>
 <% end %>                                          

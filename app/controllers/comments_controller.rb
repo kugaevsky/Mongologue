@@ -78,8 +78,14 @@ class CommentsController < ApplicationController
     respond_to do |format|
 
       @comment.reply = params[:comment][:reply]
-      @comment.reply_name = identity_or_name(current_user)
-      @comment.reply_url = current_user.identity 
+      if @comment.reply == ''
+        @comment.reply = nil
+        @comment.reply_name = nil
+        @comment.reply_url = nil
+      else
+        @comment.reply_name = identity_or_name(current_user)
+        @comment.reply_url = current_user.identity 
+      end
       if @comment.save
         expire_post(params[:post_id])
         format.html { redirect_to( @post, :notice => "Reply updated.") }
