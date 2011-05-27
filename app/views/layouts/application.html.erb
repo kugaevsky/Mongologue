@@ -15,6 +15,15 @@ $(document).ready(function() {
     }, function() {
     $(this).animate({ fontSize: "100%" }, 'fast');
   });
+
+  $('#paginator')
+    .hover(function() {
+    $(this).animate({ fontSize: "120%" }, 'fast');
+    }, function() {
+    $(this).animate({ fontSize: "100%" }, 'fast');
+  });
+
+
   $("#tagsbutton")
     .click(function() {
     $("#tagscloud").slideToggle();

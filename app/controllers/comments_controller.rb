@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
 
   def find_post
     @post = Post.where(:pid => params[:post_id]).first || not_found
-  end    
+  end
 
   def find_comment
     @comment = @post.comments.where(:pid => params[:id]).first || not_found
@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     @new_comment = @post.comments.build(params[:comment])
     if signed_in?
       @new_comment.name = identity_or_name(current_user)
-      @new_comment.url = current_user.identity 
+      @new_comment.url = current_user.identity
     else
       @new_comment.name = "Anonymous"
     end
@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
       if @new_comment.save
         @post.inc(:comments_counter, 1)
         expire_post(params[:post_id])
-  
+
         format.html { redirect_to @post }
         format.js   { render 'create_comment.js.erb'   }
       else
@@ -84,7 +84,7 @@ class CommentsController < ApplicationController
         @comment.reply_url = nil
       else
         @comment.reply_name = identity_or_name(current_user)
-        @comment.reply_url = current_user.identity 
+        @comment.reply_url = current_user.identity
       end
       if @comment.save
         expire_post(params[:post_id])
@@ -94,10 +94,9 @@ class CommentsController < ApplicationController
       else
         format.html { render :template => 'posts/show' }
         format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
-      end    
+      end
     end
   end
-
 
   def expire_post(id)
     expire_fragment(:controller => "posts", :action => "index", :id => id)
