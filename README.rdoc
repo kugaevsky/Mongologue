@@ -14,7 +14,7 @@ Oh! And also there is some "serious" typography function to make posts and comme
 
 == Installation and Setup:
 
-For development and looking around: 
+For development and looking around:
 
 Populate new mongo database with rake db:seed, rake db:create_indexes.
 This should generate 100 posts with some comments.
@@ -22,4 +22,4 @@ This should generate 100 posts with some comments.
 For development or production:
 
 Sign in with Loginza using something (Gmail or Facebook will be fine).
-Find this user using rails console or mongodb shell and set admin=true.
+First user to sign in becomes admin.

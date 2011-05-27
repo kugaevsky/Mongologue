@@ -19,13 +19,14 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @posts }
+      format.js
     end
   end
 
   # GET /posts/1
   # GET /posts/1.xml
   def show
-    
+
     @new_comment = Comment.new
 
     respond_to do |format|
@@ -76,7 +77,7 @@ class PostsController < ApplicationController
   # POST /posts.xml
   def create
     @post = Post.new(params[:post])
-        
+
     respond_to do |format|
       if @post.save
         expire_cloud
@@ -133,6 +134,6 @@ class PostsController < ApplicationController
   def expire_post(id)
     expire_fragment(:controller => "posts", :action => "index", :id => id)
     expire_fragment(:controller => "posts", :action => "show", :id => id)
-  end 
+  end
 
 end

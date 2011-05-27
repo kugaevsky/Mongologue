@@ -1,0 +1,8 @@
+$('#posts').hide().html('<div id="firstpost"></div>\
+  <% @posts.each do |post| %>\
+    <%= cache(:action => "index", :id => post.id) do %>\
+       <%= escape_javascript render post %>\
+       <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>\
+    <% end %>\
+  <% end %>').slideDown();
+$('#paginator').html('<%= escape_javascript(paginate(@posts, :remote => true).to_s) %>');

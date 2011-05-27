@@ -66,9 +66,14 @@ a:link, a:active, a:visited {
 }
 
 #footer {
-  clear: both;
+  width:960px;
+  height: 20px;
+  padding: 5px;
+  clear: left;
+  border-top: 2px dotted #000000;
   text-align: center;
 }
+
 
 h1, h2 {
   font-weight: normal;
@@ -112,7 +117,7 @@ font-size: 1em;
 }
 
 .commentbox {
-  margin: 20px 0px 20px 40px;
+  margin: 0px 0px 20px 40px;
   background: #FFFFFF;
   border: 1px dotted #666;
   padding: 5px;

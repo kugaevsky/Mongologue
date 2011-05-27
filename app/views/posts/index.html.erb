@@ -1,8 +1,12 @@
-<div id="firstpost"></div>
-<% @posts.each do |post| %>
-  <%= cache(:action => "index", :id => post.id) do %>
-     <%= render post %>
-     <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
-  <% end %> 
-<% end %>
-<%= paginate @posts %>
+<div id="posts">
+  <div id="firstpost"></div>
+  <% @posts.each do |post| %>
+    <%= cache(:action => "index", :id => post.id) do %>
+       <%= render post %>
+       <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
+    <% end %>
+  <% end %>
+</div>
+<div id="paginator">
+  <%= paginate @posts, :remote => true %>
+</div>
