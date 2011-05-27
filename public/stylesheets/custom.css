@@ -186,7 +186,7 @@ h1 a:link, h1 a:active, h1 a:visited, h1 a:hover, h1 a:focus  {
 
 a:hover { background-color:orange; }
 
-#tagsbutton {
+.rightbutton {
   background-color: orange;
   width: 225px;
   height: 25px;
@@ -194,26 +194,44 @@ a:hover { background-color:orange; }
   text-align: center;
 }
 
-#tagsbutton p, #tagsbutton a {
+.rightbutton p {
   margin: 0;
   padding: 3px;
   width: 100%;
   font-style: bold;
 }
 
-#tagscloud {
+.rightbutton:hover {
+  background: #FFFFFF;
+  cursor: pointer;
+}
+
+#tagscloud, #abouttext {
   font-size: 0.9em;
-  text-align: justify;
   border: 1px dotted #666;
   background: #FFFFFF;
-  padding: 5px;
+  padding: 7px;
+}
 
+#tagscloud p {
+  text-align: justify;
+  margin: 0;
+}
+
+#tagscloud a {
+  text-decoration: none;
+}
+
+#abouttext p {
+  margin: 0;
 }
 
 .favtag {
-  font-size: 1em;
-  font-weight: bold;
+  font-size: 1.3em;
+  font-style: bold;
 }
+
+
 
 blockquote {
   background-color: #EEEEEE;
@@ -222,7 +240,7 @@ blockquote {
   border: 1px dotted #666;
 }
 
-code, pre {
+pre {
   background-color: #222222;
   width: 600px;
   color: #FFFFFF;
@@ -231,7 +249,8 @@ code, pre {
   margin: 1em 0;
   overflow: scroll;
   font-family: Consolas, 'Courier New', monospace;
-  line-height: 1.3em;
+  font-size: 1em;
+  line-height: 1.2em;
 }
 
 input[type=text], textarea {

@@ -29,10 +29,10 @@ class Comment
     self.content=sanitize(self.content,:tags =>%w())
 
     cleanups = {
-          /\r/ => '',
+          /\r\n/ => "\n",
           /\n\n+/ => "\n\n",
           /[ \t]+/ => ' ',
-      }    
+      }
 
     cleanups.each do |regexp, replacement|
       self.content.gsub!(regexp, replacement)
@@ -48,7 +48,7 @@ class Comment
   protected
 
     def assign_pid
-      self.pid ||= Sequence.generate_pid("post#{self._parent}",:comment)
+      self.pid ||= Sequence.generate_pid("post#{self._parent.pid}",:comment)
     end
 
 end

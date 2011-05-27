@@ -9,12 +9,22 @@
   <%= csrf_meta_tag %>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#tagsbutton22')
-        .hover(function() {
-            $(this).animate({ fontSize: "120%" }, 'fast');
-        }, function() {
-            $(this).animate({ fontSize: "100%" }, 'fast');
-        });
+  $('.rightbutton')
+    .hover(function() {
+    $(this).animate({ fontSize: "120%" }, 'fast');
+    }, function() {
+    $(this).animate({ fontSize: "100%" }, 'fast');
+  });
+  $("#tagsbutton")
+    .click(function() {
+    $("#tagscloud").slideToggle();
+  });
+  $("#aboutbutton")
+    .click(function() {
+    $("#abouttext").slideToggle();
+  });
+
+
 });
 </script>
 </head>
@@ -51,12 +61,25 @@ $(document).ready(function() {
           </p>
         <% end %>
       </div>
-      <div id="tagsbutton">
-         <p>
-          <%= link_to_function "Tags", '$("#tagscloud").slideToggle();' %></p></div>
+      <div id="tagsbutton" class="rightbutton"><p>TAGS</p></div>
       <% cache('tagscloud') do %>
-      <div id="tagscloud" style="display: none;" ><%= tags_cloud.html_safe %></div>
+        <div id="tagscloud" style="display: none;" ><p><%= tags_cloud.html_safe %></p></div>
       <% end %>
+      <hr>
+      <div id="aboutbutton" class="rightbutton"><p>ABOUT</p></div>
+      <div id="abouttext" style="display: none;" >
+        <p>about author</br>
+           facebook</br>
+           livejournal</br>
+           twitter</br>
+           github</br>
+           </br>
+           skype: author</br>
+           icq: 22233344</br>
+           <a href="mailto:example@example.com">author@example.com</a></p>
+      </div>
+
+      </div>
     </div>
   </div>
   <div id="footer">
