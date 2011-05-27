@@ -23,8 +23,11 @@ Post.all.each do |post|
   10.times do |n|
     name = Faker::Name.name
     content = Faker::Lorem.sentence(10)
-    post.comments.create!(:name => name, 
-                          :content => content,
+    cc=post.comments.build(  :content => content,
                           :created_at => n.minutes.ago)
+    cc.name = name
+    cc.url = "http://www.example.com/#{name.gsub(' ','-')}"
+    cc.ip = Array.new(4){rand(256)}.join('.')
+    cc.save
   end
 end

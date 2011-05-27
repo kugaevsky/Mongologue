@@ -1,8 +1,8 @@
 var changebutton = 0;
-if ($('<%= "#pc#{@post.id}" %>').css("display") == "none") {
+if ($('<%= "#pc#{@post.pid}" %>').css("display") == "none") {
 	changebutton = 1;
  }
-$('<%= "#p#{@post.id}" %>').replaceWith("<%= post = escape_javascript(render(@post)) %>")
+$('<%= "#p#{@post.pid}" %>').replaceWith("<%= post = escape_javascript(render(@post)) %>")
 if (changebutton == 1) {
-	$('<%= "#showc#{@post.id}" %>').replaceWith("<%= escape_javascript(link_to "Comments: #{@post.comments_counter.to_i}", expand_comments_post_path(@post), :remote => true, :id => "showc#{@post.id}") %>")
+	$('<%= "#showc#{@post.pid}" %>').replaceWith("<%= escape_javascript(link_to "Comments: #{@post.comments_counter.to_i}", expand_comments_post_path(@post), :remote => true, :id => "showc#{@post.pid}") %>")
 }

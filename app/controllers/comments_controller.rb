@@ -2,9 +2,19 @@
 class CommentsController < ApplicationController
   before_filter :authenticate, :except => [:create, :show]
   before_filter :admin_user, :except => [:create, :show]
+  before_filter :find_post
+  before_filter :find_comment, :except => [:create]
+
+  def find_post
+    @post = Post.where(:pid => params[:post_id]).first || not_found
+  end    
+
+  def find_comment
+    @comment = @post.comments.find(params[:id]) || not_found
+  end
 
   def create
-    @post = Post.find(params[:post_id])
+    # @post = Post.find(params[:post_id])
     @new_comment = @post.comments.build(params[:comment])
     if signed_in?
       @new_comment.name = identity_or_name(current_user)
@@ -31,16 +41,16 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.find(params[:id])
+    # @post = Post.find(params[:post_id])
+    # @comment = @post.comments.find(params[:id])
     respond_to do |format|
       format.js { render 'show_reply.js.erb' }
     end
   end
 
   def edit
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.find(params[:id])
+    # @post = Post.find(params[:post_id])
+    # @comment = @post.comments.find(params[:id])
     respond_to do |format|
       format.js { render 'edit_reply.js.erb' }
       format.html { render 'edit_reply.html.erb' }
@@ -48,8 +58,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.find(params[:id])
+    # @post = Post.find(params[:post_id])
+    # @comment = @post.comments.find(params[:id])
     @comment.destroy
     @post.inc(:comments_counter, -1)
     expire_post(:id => @post.id)
@@ -61,12 +71,15 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:post_id])
+    # @post = Post.find(params[:post_id])
+    # @comment = @post.comments.find(params[:id])
     @new_comment = Comment.new
-    @comment = @post.comments.find(params[:id])
+
     respond_to do |format|
 
       @comment.reply = params[:comment][:reply]
+      @comment.reply_name = identity_or_name(current_user)
+      @comment.reply_url = current_user.identity 
       if @comment.save
         expire_post(params[:post_id])
         format.html { redirect_to( @post, :notice => "Reply updated.") }

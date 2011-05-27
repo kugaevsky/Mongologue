@@ -1,5 +1,6 @@
 <% unless comment.reply.nil? %>
-  <h3>Author</h3>
+  <h3><%= comment.reply_url == nil ? 
+          h(comment.reply_name) : link_to(h(comment.reply_name), comment.reply_url) %></h3>
   <p><%= typa_graf(comment.reply).html_safe %></p>
 <% end %>
 <% if authorized_admin? %>

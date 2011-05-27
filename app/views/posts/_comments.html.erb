@@ -5,7 +5,7 @@
     <% end %>
   <% end %>
 <% end %>
-<div id=<%= "lc#{@post.id}" %>></div>
+<div id=<%= "lc#{@post.pid}" %>></div>
 <% if signed_in? %>  
   <p>Signed in as <%= link_to identity_or_name(current_user), current_user.identity %> |
                   <%= link_to "Sign out", signout_path, :method => :delete %></p>
@@ -15,20 +15,20 @@
                           request.fullpath) %></p>
 <% end %>
          
-<%= form_for [@post, @new_comment], :html => { :id => "#fc#{@post.id}" }, :remote => true do |f| %>
+<%= form_for [@post, @new_comment], :html => { :id => "#fc#{@post.pid}" }, :remote => true do |f| %>
   <%= render "shared/error_messages", :object => @new_comment %> 
   <p><%= f.text_area :content, :rows => 10 %></p>
-  <p><%= f.submit %> <span id="<%= "cnt#{@post.id}" %>"></span></p>
+  <p><%= f.submit %> <span id="<%= "cnt#{@post.pid}" %>"></span></p>
 <% end %>
 <script type="text/javascript"> 
     $(document).ready(function(){
-    $("<%= "#pc#{@post.id}" %> textarea").maxChar(400, {indicator: "<%= "cnt#{@post.id}" %>"});
+    $("<%= "#pc#{@post.pid}" %> textarea").maxChar(400, {indicator: "<%= "cnt#{@post.pid}" %>"});
     
     setInterval(function () {
-      if($("<%= "#pc#{@post.id}" %> textarea").val().length <= 400) {
-        $("<%= "#pc#{@post.id}" %> input").removeAttr("disabled");
+      if($("<%= "#pc#{@post.pid}" %> textarea").val().length <= 400) {
+        $("<%= "#pc#{@post.pid}" %> input").removeAttr("disabled");
       } else {
-        $("<%= "#pc#{@post.id}" %> input").attr("disabled", "disabled");
+        $("<%= "#pc#{@post.pid}" %> input").attr("disabled", "disabled");
       }
     }, 200);
   });

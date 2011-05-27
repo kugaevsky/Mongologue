@@ -1,6 +1,11 @@
 class PostsController < ApplicationController
   before_filter :authenticate, :only => [:new, :create, :update, :edit, :destroy]
   before_filter :admin_user, :only => [:new, :create, :update, :edit, :destroy]
+  before_filter :find_post, :except => [:new, :create, :index]
+
+  def find_post
+    @post = Post.where(:pid => params[:id]).first || not_found
+  end
 
   # GET /posts
   # GET /posts.xml
@@ -21,19 +26,17 @@ class PostsController < ApplicationController
   # GET /posts/1.xml
   def show
     
-    @post = Post.find(params[:id])
-       
     @new_comment = Comment.new
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html  # show.html.erb
       format.xml  { render :xml => @post }
       format.js
     end
   end
 
   def collapse_comments
-    @post = Post.find(params[:id])
+    #@post = Post.find(params[:id])
     @new_comment = Comment.new
     respond_to do |format|
       format.js
@@ -41,7 +44,7 @@ class PostsController < ApplicationController
   end
 
   def expand_comments
-    @post = Post.find(params[:id])
+    #@post = Post.find(params[:id])
     @new_comment = Comment.new
     respond_to do |format|
       format.js
@@ -63,7 +66,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @post = Post.find(params[:id])
+    #@post = Post.find(params[:id])
     respond_to do |format|
       format.js
     end
@@ -92,7 +95,7 @@ class PostsController < ApplicationController
   # PUT /posts/1
   # PUT /posts/1.xml
   def update
-    @post = Post.find(params[:id])
+    #@post = Post.find(params[:id])
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
@@ -112,7 +115,7 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.xml
   def destroy
-    @post = Post.find(params[:id])
+    # @post = Post.find(params[:id])
     @post.destroy
     expire_cloud
     expire_post(:id => @post.id)

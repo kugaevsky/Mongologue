@@ -8,6 +8,8 @@ class Comment
   field :ip
   field :content
   field :reply
+  field :reply_name
+  field :reply_url
   validates_length_of :content, :within => 10..400
   validates_length_of :reply, :maximum => 400
   validates_length_of :name, :maximum => 50

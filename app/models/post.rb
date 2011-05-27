@@ -2,6 +2,7 @@ class Post
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Attributes
+  field :pid
   field :title
   field :content
   field :tags, type: Array
@@ -12,6 +13,7 @@ class Post
   validates_length_of :content, :maximum => 100000
 
   embeds_many :comments, index: true
+  index :pid
   index :tags
   index :created_at
   index :updated_at
@@ -20,7 +22,7 @@ class Post
   before_save :make_tags_ok
   after_save :rebuild_tags
   after_destroy :rebuild_tags
-  # before_create :assign_id
+  before_create :assign_pid
 
   def self.all_tags(limit = nil)
     tagcloud = Mongoid.master.collection('tagcloud')
@@ -65,42 +67,38 @@ class Post
     end
   end
 
-  # def self.find(id)
-  #   if (id == :all) or (id.length == 24)
-  #      super(id)
-  #   else
-  #      super(id.to_i)
-  #   end
-  # end
+  def to_param
+    pid
+  end
 
   protected
 
-  # def assign_id
-  #   self.id = Sequence.first.inc(:post,1)
-  # end
+    def assign_pid
+      self.pid ||= Sequence.generate_pid(nil,:post)
+    end
 
-  def rebuild_tags
-    map     = "function() {
-    if (!this.tags) {
-        return;
-    }
+    def rebuild_tags
+      map     = "function() {
+      if (!this.tags) {
+          return;
+      }
 
-    for (index in this.tags) {
-        emit(this.tags[index], 1);
-    }
-    }"
+      for (index in this.tags) {
+          emit(this.tags[index], 1);
+      }
+      }"
 
-    reduce  = "function(previous, current) {
-    var count = 0;
+      reduce  = "function(previous, current) {
+      var count = 0;
 
-    for (index in current) {
-        count += current[index];
-    }
-    return count;
-    }"
-        
-    tmpcloud=Post.collection.map_reduce(map,reduce, :raw => true, :out => 'tagcloud' )
-    Mongoid.master.collection('tagcloud').create_index([["value", Mongo::DESCENDING]])
-  end
+      for (index in current) {
+          count += current[index];
+      }
+      return count;
+      }"
+          
+      tmpcloud=Post.collection.map_reduce(map,reduce, :raw => true, :out => 'tagcloud' )
+      Mongoid.master.collection('tagcloud').create_index([["value", Mongo::DESCENDING]])
+    end
 
 end

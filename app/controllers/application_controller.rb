@@ -3,4 +3,9 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
   protect_from_forgery
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
 end

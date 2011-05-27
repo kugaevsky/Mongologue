@@ -7,7 +7,7 @@
 <% @posts.each do |post| %>
   <%= cache(:action => "index", :id => post.id) do %>
      <%= render post %>
-     <div id=<%= "pc#{post.id}" %> style="display: none;" ></div>
+     <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
   <% end %> 
 <% end %>
 <%= paginate @posts %>

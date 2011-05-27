@@ -1,4 +1,4 @@
-<div id=<%= "p#{post.id}" %> >
+<div id=<%= "p#{post.pid}" %> >
   <div class="post">
     <h2><%= link_to post.title, post %></h2>
     <p class="postinfo"><%= time_info(post.created_at, post.updated_at) %>
@@ -15,11 +15,11 @@
        <% if controller.action_name == "index" %>
          <%= link_to cc, expand_comments_post_path(post), 
              :remote => true,
-             :id => "showc#{post.id}"%></p>
+             :id => "showc#{post.pid}" %></p>
        <% else %>
          <%= link_to cc, collapse_comments_post_path(post), 
              :remote => true,
-             :id => "showc#{post.id}"%></p>
+             :id => "showc#{post.pid}"%></p>
        <% end %>
   </div>
   <hr>
