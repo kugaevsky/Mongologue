@@ -22,10 +22,10 @@
 <% end %>
 <script type="text/javascript"> 
     $(document).ready(function(){
-    $("<%= "#pc#{@post.pid}" %> textarea").maxChar(400, {indicator: "<%= "cnt#{@post.pid}" %>"});
+    $("<%= "#pc#{@post.pid}" %> textarea").maxChar(500, {indicator: "<%= "cnt#{@post.pid}" %>"});
     
     setInterval(function () {
-      if($("<%= "#pc#{@post.pid}" %> textarea").val().length <= 400) {
+      if($("<%= "#pc#{@post.pid}" %> textarea").val().length <= 500) {
         $("<%= "#pc#{@post.pid}" %> input").removeAttr("disabled");
       } else {
         $("<%= "#pc#{@post.pid}" %> input").attr("disabled", "disabled");

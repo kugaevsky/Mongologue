@@ -1,3 +1,4 @@
 $("#new_post").remove()
 $("#newpostlink").hide()
-$("<%= escape_javascript(render :partial => 'form') %>").insertAfter("#firstpost")
+$("<div id='new_post'></div>").insertAfter('#firstpost')
+$("#new_post").hide().html("<%= escape_javascript(render :partial => 'form') %>").slideDown()

@@ -4,6 +4,9 @@ body {
   font-size: 100%;
   line-height: 1.3em;
   padding: 0;
+  margin: 0;
+  background: #F4F3EB;
+
 }
 
 a:link, a:active, a:visited {
@@ -50,7 +53,7 @@ a:link, a:active, a:visited {
   width: 700px;
   padding: 10px;
   text-align: left;
-  line-height: 1.6em;
+  line-height: 1.3em;
 }
 
 #footer {
@@ -70,16 +73,36 @@ font-size: 1em;
 
 .post h2 {
   margin-bottom: 0;
+  margin-top: 0;
   padding: 0;
 }
 
+.postbox {
+  margin-bottom: 20px;
+  background: #FFFFFF;
+  border: 1px dotted #666;
+}
+
+.post {
+  margin-left: 70px;
+  margin-right: 10px;
+}
+
+.post p {
+  padding: 0 0 0 10px;
+
+}
+
 .commentbox {
-  margin: 0;
+  margin: 20px 0px 20px 40px;
+  background: #FFFFFF;
+  border: 1px dotted #666;  
+  padding: 5px;
+
 }
 
 .comment {
-  border: 1px dotted #666;
-  padding: 0 15px 0 15px;
+  padding: 0;
   overflow: hidden;
   display: block;  
 }
@@ -93,22 +116,24 @@ font-size: 1em;
 
 .commentbox h3 {
   padding: 0;
-  margin-bottom: 0;
+  margin: 0;
   line-height: 1.2em;
-  margin-top: 20px;
 
 }
 
 .reply {
-  border-left: 5px solid #000000;
-  background: #FFFFFF;
   padding: 0px 15px 0px 10px;
   margin-left: 40px;
+  padding: 5px;
 }
 
-.reply p, .reply h3 {
-  margin: 0;
+.reply h3 {
   padding: 0;
+}
+
+.reply p {
+  margin: 0 15px 0 0;
+  padding: 10px;
 }
 
 

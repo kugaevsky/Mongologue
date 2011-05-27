@@ -1,1 +1,1 @@
-$('<%= "#p#{@post.pid}" %>').hide().html("<%= escape_javascript(render('form')) %>").slideDown()
+$('<%= "#p#{@post.pid}" %>').html("<%= escape_javascript(render('form')) %>")
