@@ -11,20 +11,21 @@
 <body>
 <div id="wrapper">
   <div id="header">
-    <h1><%= link_to "Mongologue", root_path %></h1>
-    <p id="notice"><%= notice %></p>
-  </div>
-  <div id="clientinfo">
-    <% if signed_in? %>
-      <p>Hello, <%= "master" if current_user.admin? %>
-         <%= link_to identity_or_name(current_user), current_user.identity %> |
-         <%= link_to "Sign out", signout_path, :method => :delete %></p>
-    <% else %>
-      <p><%= loginza_button_tag("Sign in",
-                            'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+
-                            request.fullpath) %></p>
-    <% end %>
-
+    <div id="logo">
+      <h1><%= link_to "Mongologue", root_path %></h1>
+      <p id="notice"><%= notice %></p>
+    </div>
+    <div id="clientinfo">
+      <% if signed_in? %>
+        <p>Hello, <%= "master" if current_user.admin? %>
+           <%= link_to identity_or_name(current_user), current_user.identity %> |
+           <%= link_to "Sign out", signout_path, :method => :delete %></p>
+      <% else %>
+        <p><%= loginza_button_tag("Sign in",
+                              'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+
+                              request.fullpath) %></p>
+      <% end %>
+    </div>
   </div>
   <div id="container">
     <div id="content">

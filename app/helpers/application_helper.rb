@@ -18,9 +18,9 @@ module ApplicationHelper
 
   def time_info(created,updated)
     output = "Created #{time_ago_in_words(created)} ago."
-	if created!=updated
-	  output = "#{output} Updated #{time_ago_in_words(updated)} ago."
-    end
+	# if created!=updated
+	#   output = "#{output} Updated #{time_ago_in_words(updated)} ago."
+  #    end
     output
   end
 

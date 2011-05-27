@@ -1,3 +1,4 @@
+<div id="postform">
 <%= form_for(@post, :remote => true) do |f| %>
   <% if @post.new_record? %>
     <h2>New post</h2>
@@ -23,5 +24,5 @@
       <%= link_to_function "Cancel", '$("#new_post").slideUp(); $("#newpostlink").show(); ' %> 
     <% end %>
   </div>
-  <hr>
 <% end %>
+</div>
