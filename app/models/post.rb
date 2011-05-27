@@ -20,6 +20,7 @@ class Post
   before_save :make_tags_ok
   after_save :rebuild_tags
   after_destroy :rebuild_tags
+  # before_create :assign_id
 
   def self.all_tags(limit = nil)
     tagcloud = Mongoid.master.collection('tagcloud')
@@ -64,7 +65,19 @@ class Post
     end
   end
 
+  # def self.find(id)
+  #   if (id == :all) or (id.length == 24)
+  #      super(id)
+  #   else
+  #      super(id.to_i)
+  #   end
+  # end
+
   protected
+
+  # def assign_id
+  #   self.id = Sequence.first.inc(:post,1)
+  # end
 
   def rebuild_tags
     map     = "function() {

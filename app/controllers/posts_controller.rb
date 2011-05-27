@@ -20,7 +20,9 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.xml
   def show
+    
     @post = Post.find(params[:id])
+       
     @new_comment = Comment.new
 
     respond_to do |format|
