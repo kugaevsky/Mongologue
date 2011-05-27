@@ -5,8 +5,18 @@
   <title>Blog</title>
   <%= stylesheet_link_tag 'custom', :media => 'screen' %>
   <%= javascript_include_tag 'jquery-1.6.min', 'rails', 'application' %>
-  
+
   <%= csrf_meta_tag %>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#tagsbutton22')
+        .hover(function() {
+            $(this).animate({ fontSize: "120%" }, 'fast');
+        }, function() {
+            $(this).animate({ fontSize: "100%" }, 'fast');
+        });
+});
+</script>
 </head>
 <body>
 <div id="wrapper">
@@ -34,15 +44,19 @@
     <div id="side-b">
       <div id="site_info">
         <% if controller.action_name == "index" %>
-          <p>Posts: <span id="postscounter"><%= "#{@posts.count}" %></p>
-        <% end %>
-        <% if authorized_admin? %>
-           <p><%= link_to 'New post', new_post_path, :id => "newpostlink", :remote => true %></p>
+          <p>Posts: <span id="postscounter"><%= "#{@posts.count}" %>
+          <% if authorized_admin? %>
+             | <%= link_to 'New post', new_post_path, :id => "newpostlink", :remote => true %>
+          <% end %>
+          </p>
         <% end %>
       </div>
+      <div id="tagsbutton">
+         <p>
+          <%= link_to_function "Tags", '$("#tagscloud").slideToggle();' %></p></div>
       <% cache('tagscloud') do %>
-      <div id="tagscloud"><%= tags_cloud.html_safe %></div>
-      <% end %> 
+      <div id="tagscloud" style="display: none;" ><%= tags_cloud.html_safe %></div>
+      <% end %>
     </div>
   </div>
   <div id="footer">
