@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
   end    
 
   def find_comment
-    @comment = @post.comments.find(params[:id]) || not_found
+    @comment = @post.comments.where(:pid => params[:id]).first || not_found
   end
 
   def create

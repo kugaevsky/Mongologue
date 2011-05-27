@@ -14,6 +14,7 @@ class Post
 
   embeds_many :comments, index: true
   index :pid
+  index "comments.pid"
   index :tags
   index :created_at
   index :updated_at

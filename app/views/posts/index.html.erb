@@ -1,8 +1,3 @@
-<% if params[:tag] %>
-  <p id="searchinfo">Posts tagged '<%= params[:tag] %>': <span id="searchcount"><%= @posts.count %></span></p>
-<% else %>
-  <p>Posts: <%= @posts.count %></p>
-<% end %>
 <div id="firstpost"></div>
 <% @posts.each do |post| %>
   <%= cache(:action => "index", :id => post.id) do %>

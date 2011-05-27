@@ -10,6 +10,10 @@
 </head>
 <body>
 <div id="wrapper">
+  <div id="header">
+    <h1><%= link_to "Mongologue", root_path %></h1>
+    <p id="notice"><%= notice %></p>
+  </div>
   <div id="clientinfo">
     <% if signed_in? %>
       <p>Hello, <%= "master" if current_user.admin? %>
@@ -22,17 +26,15 @@
     <% end %>
 
   </div>
-  <div id="header">
-    <h1><%= link_to "Mongologue", root_path %></h1>
-    <p id="notice"><%= notice %></p>
-  </div>
   <div id="container">
     <div id="content">
       <%= yield %>
     </div>
     <div id="side-b">
       <div id="site_info">
-        <p id="postscounter"><%= "Posts total: #{Post.count}" %></p>
+        <% if controller.action_name == "index" %>
+          <p>Posts: <span id="postscounter"><%= "#{@posts.count}" %></p>
+        <% end %>
         <% if authorized_admin? %>
            <p><%= link_to 'New post', new_post_path, :id => "newpostlink", :remote => true %></p>
         <% end %>

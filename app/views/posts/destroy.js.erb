@@ -1,4 +1,5 @@
 $('<%= "#pc#{@post.pid}" %>').remove()
 $('<%= "#p#{@post.pid}" %>').remove()
-$("#postscounter").html("<%= "Posts total: #{Post.count}" %>")
+var postscounter = $("#postscounter").text()-1
+$("#postscounter").text(postscounter)
 $("#tagscloud").html("<%= escape_javascript(tags_cloud.html_safe) %>")
