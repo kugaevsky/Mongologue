@@ -31,6 +31,15 @@ a:link, a:active, a:visited {
   background: orange;
 }
 
+#logopic {
+  display: block;
+  float:left;
+  padding 0;
+  margin 0;
+  height: 20px;
+  width: 35px;
+}
+
 #clientinfo {
   float: right;
   margin: 0;
@@ -71,7 +80,8 @@ a:link, a:active, a:visited {
   padding: 5px;
   clear: left;
   border-top: 2px dotted #000000;
-  text-align: center;
+  text-align: right;
+  font-size: 0.9em;
 }
 
 

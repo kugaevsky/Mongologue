@@ -8,5 +8,5 @@
   <% end %>
 </div>
 <div id="paginator">
-  <%= link_to_next_page(@posts, "MORE POSTS", :remote => true) %>
+  <%= link_to_next_page(@posts, "&darr; MORE POSTS &darr;".html_safe, :remote => true) %>
 </div>

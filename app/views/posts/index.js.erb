@@ -4,4 +4,4 @@ $('<% @posts.each do |post| %>\
        <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>\
     <% end %>\
   <% end %>').appendTo("#posts").hide().slideDown();
-$('#paginator').html('<%= escape_javascript(link_to_next_page(@posts, "MORE POSTS", :remote => true)) %>');
+$('#paginator').html('<%= escape_javascript(link_to_next_page(@posts, "&darr; MORE POSTS &darr;".html_safe, :remote => true)) %>');

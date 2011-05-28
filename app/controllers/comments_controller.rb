@@ -94,6 +94,7 @@ class CommentsController < ApplicationController
       else
         format.html { render :template => 'posts/show' }
         format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
+        format.js   { render 'shared/error_messages.js.erb', :locals => { :object => @comment } }
       end
     end
   end

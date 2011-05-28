@@ -2,32 +2,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Blog</title>
+  <title>☢ Mongologue</title>
   <%= stylesheet_link_tag 'custom', :media => 'screen' %>
   <%= javascript_include_tag 'jquery-1.6.min', 'rails', 'application' %>
 
   <%= csrf_meta_tag %>
 <script type="text/javascript">
 $(document).ready(function() {
-  $('.rightbutton')
+  $('.rightbutton, #paginator, #logopic')
     .hover(function() {
     $(this).animate({ fontSize: "120%" }, 'fast');
     }, function() {
     $(this).animate({ fontSize: "100%" }, 'fast');
   });
-
-  $('#paginator')
-    .hover(function() {
-    $(this).animate({ fontSize: "120%" }, 'fast');
-    }, function() {
-    $(this).animate({ fontSize: "100%" }, 'fast');
-  });
-
 
   $("#tagsbutton")
     .click(function() {
     $("#tagscloud").slideToggle();
   });
+
   $("#aboutbutton")
     .click(function() {
     $("#abouttext").slideToggle();
@@ -41,7 +34,7 @@ $(document).ready(function() {
 <div id="wrapper">
   <div id="header">
     <div id="logo">
-      <h1><%= link_to "Mongologue", root_path %></h1>
+      <h1><%= link_to "<span id='logopic'>☢</span> Mongologue".html_safe, root_path %></h1>
       <p id="notice"><%= notice %></p>
     </div>
     <div id="clientinfo">
@@ -63,7 +56,7 @@ $(document).ready(function() {
     <div id="side-b">
       <div id="site_info">
         <% if controller.action_name == "index" %>
-          <p>Posts: <span id="postscounter"><%= "#{@posts.count}" %>
+          <p>Posts: <span id="postscounter"><%= "#{@posts.count}" %></span>
           <% if authorized_admin? %>
              | <%= link_to 'New post', new_post_path, :id => "newpostlink", :remote => true %>
           <% end %>
@@ -90,7 +83,7 @@ $(document).ready(function() {
 
       </div>
     </div>
-  <div id="footer">FOOTER
+  <div id="footer">powered by MongoDB<br>☢ 2011<br>
     <%= debug(params) if Rails.env.development? %>
   </div>
   </div>
