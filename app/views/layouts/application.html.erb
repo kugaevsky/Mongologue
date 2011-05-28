@@ -8,26 +8,27 @@
 
   <%= csrf_meta_tag %>
 <script type="text/javascript">
-$(document).ready(function() {
-  $('.rightbutton, #paginator, #logopic')
-    .hover(function() {
-    $(this).animate({ fontSize: "120%" }, 'fast');
-    }, function() {
-    $(this).animate({ fontSize: "100%" }, 'fast');
-  });
+  $(document).ready(function() {
+    $('.rightbutton, #paginator, #logopic')
+      .hover(function() {
+      $(this).animate({ fontSize: "120%" }, 'fast');
+      }, function() {
+      $(this).animate({ fontSize: "100%" }, 'fast');
+    });
 
-  $("#tagsbutton")
-    .click(function() {
-    $("#tagscloud").slideToggle();
-  });
+    $("#tagsbutton")
+      .click(function() {
+      $("#tagscloud").slideToggle();
+    });
 
-  $("#aboutbutton")
-    .click(function() {
-    $("#abouttext").slideToggle();
-  });
+    $("#aboutbutton")
+      .click(function() {
+      $("#abouttext").slideToggle();
+    });
+ });
 
+</script>
 
-});
 </script>
 </head>
 <body>

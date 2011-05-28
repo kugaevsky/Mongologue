@@ -7,19 +7,19 @@
     <p><% if signed_in? %>
          <% if current_user.admin? %>
            <%= link_to 'Edit', edit_post_path(post), :remote => true %>,  |
-           <%= link_to 'Delete', post, :confirm => 'Are you sure?', :method => :delete, 
-                                       :remote => true %> |       
-         <% end %>      
+           <%= link_to 'Delete', post, :confirm => 'Are you sure?', :method => :delete,
+                                       :remote => true %> |
+         <% end %>
        <% end %>
        <% cc="Comments: #{post.comments_counter.to_i}" %>
        <% if controller.action_name == "index" %>
-         <%= link_to cc, expand_comments_post_path(post), 
+         <%= link_to cc, expand_comments_post_path(post),
              :remote => true,
-             :id => "showc#{post.pid}" %></p>
+             :id => "showc#{post.pid}", :class => "ajaxlink" %></p>
        <% else %>
-         <%= link_to cc, collapse_comments_post_path(post), 
+         <%= link_to cc, collapse_comments_post_path(post),
              :remote => true,
-             :id => "showc#{post.pid}"%></p>
+             :id => "showc#{post.pid}", :class => "ajaxlink" %></p>
        <% end %>
   </div>
-</div>    
+</div>
