@@ -35,7 +35,6 @@ $(document).ready(function() {
   <div id="header">
     <div id="logo">
       <h1><%= link_to "<span id='logopic'>☢</span> Mongologue".html_safe, root_path %></h1>
-      <p id="notice"><%= notice %></p>
     </div>
     <div id="clientinfo">
       <% if signed_in? %>
@@ -47,6 +46,8 @@ $(document).ready(function() {
                               'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+
                               request.fullpath) %></p>
       <% end %>
+      <p id="notice" style="float:left"; >
+      “First they ignore you, then they laugh at you, then they fight you, then you win.”</p>
     </div>
   </div>
   <div id="container">
@@ -58,7 +59,7 @@ $(document).ready(function() {
         <% if controller.action_name == "index" %>
           <p>Posts: <span id="postscounter"><%= "#{@posts.count}" %></span>
           <% if authorized_admin? %>
-             | <%= link_to 'New post', new_post_path, :id => "newpostlink", :remote => true %>
+             <%= link_to '[ New post ]', new_post_path, :id => "newpostlink", :remote => true %>
           <% end %>
           </p>
         <% end %>
