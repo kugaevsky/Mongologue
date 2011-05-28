@@ -39,7 +39,7 @@ module ApplicationHelper
       else
         t_tag = t['_id']
       end
-      tt << link_to(t_tag, root_path(:tag => t['_id']), :title => t['value'].to_i)
+      tt << link_to(t_tag, root_path(:s => t['_id']), :title => t['value'].to_i)
       # tt << "test"
     end
     tt.join(", ")
@@ -48,7 +48,7 @@ module ApplicationHelper
   def tags_list(tags_array)
     tt = []
     tags_array.each do |t|
-      tt << link_to(t, posts_path(:tag => t))
+      tt << link_to(t, posts_path(:s => t))
     end
     tt.join(", ")
   end
@@ -149,7 +149,7 @@ def link_to_next_page(scope, name, options = {}, &block)
                      "$( 'html, body' ).animate( { scrollTop: 0 }, 'slow' );"
   else
     link_to_unless scope.last_page?, name, {param_name => (scope.current_page + 1),
-                                           :tag => params[:tag]},
+                                           :s => params[:s]},
                                             options.merge(:rel => 'next') do
       block.call if block
     end

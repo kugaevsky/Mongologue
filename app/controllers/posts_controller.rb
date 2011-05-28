@@ -10,11 +10,13 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.xml
   def index
-    if params[:tag]
-      @posts = Post.without(:comments).where(:tags => params[:tag]).\
-      order_by([:created_at, :desc]).page(params[:page]).per(10)
+    # Ok, fulltext search goes here
+
+    if params[:s]
+      @posts = Post.my_search(params[:s]).order_by([:created_at, :desc]).page(params[:page]).per(10)
     else
-      @posts = Post.without(:comments).order_by([:created_at, :desc]).page(params[:page]).per(10)
+      @posts = Post.without(:comments).order_by([:created_at, :desc]).\
+      page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html # index.html.erb
