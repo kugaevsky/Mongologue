@@ -73,12 +73,15 @@ margin-right: 10px;
 }
 
 #searchbox {
+  height: 50px;
+  width: 485px;
   padding: 7px 0px 0px 10px;
   display:block;
   float:left
 }
 
 #search {
+  float:left;
   text-align: left;
   font-size: 1.3em;
   margin: 0px 0px 2px 0px;
@@ -88,6 +91,8 @@ margin-right: 10px;
 }
 
 #searchbox p {
+  float:left;
+  display:block;
   padding: 0px;
   margin: 0px;
 
