@@ -17,50 +17,84 @@ a:link, a:active, a:visited {
 
 #wrapper {
   text-align: left;
-  margin: 0px auto;
+  margin: 0 auto 0 auto;
   padding: 0px;
   border:0;
   width: 960px;
 }
 
+#container {
+  width: 960px;
+  min-height: 500px;
+}
+
+.box {
+display: inline;
+float: left;
+margin-left: 10px;
+margin-right: 10px;
+}
+
+
+#header {
+  width: 100%;
+  height: 60px;
+  margin: 0;
+  border-bottom: 2px dotted #000000;
+  padding: 0 5px 5px 0;
+}
+
+
 #logo {
-  float: left;
+  height: 55px;
   text-align: left;
-  padding: 0 15px 0 15px;
+  padding: 0 15px 0 10px;
   margin: 0;
   background: orange;
 }
 
 #logopic {
   display: block;
+  text-align: center;
   float:left;
-  padding 0;
-  margin 0;
-  height: 20px;
-  width: 35px;
+  padding: 0;
+  margin: 0;
+  height: 25px;
+  width: 30px;
+  font-size: 100%;
 }
 
 #clientinfo {
-  float: right;
-  margin: 0;
-  text-align: right;
+  margin: 0 0 0 20px;
+  text-align: left;
+  float: left;
+  width: 200px;
+  font-size: 0.8em;
 }
 
-#header {
-  width: 100%;
-  height: 50px;
-  margin: 0;
-  border-bottom: 2px dotted #000000;
-  padding: 0 5px 5px 0;
+#searchbox {
+  padding: 7px 0px 0px 10px;
+  display:block;
+  float:left
 }
 
-#site_info {
-  height: 30px;
+#search {
+  text-align: left;
+  font-size: 1.3em;
+  margin: 0px 0px 2px 0px;
+  height: 25px;
+  width: 485px;
+
+}
+
+#searchbox p {
+  padding: 0px;
+  margin: 0px;
 
 }
 
 #side-b {
-  float: right;
+  float: left;
   width: 225px;
   margin-left: 5px;
   margin-right: 5px;
@@ -75,13 +109,22 @@ a:link, a:active, a:visited {
 }
 
 #footer {
-  width:960px;
-  height: 20px;
-  padding: 5px;
   clear: left;
+  display: block;
+  width:960px;
+  height: 60px;
+  margin: 0px;
+  padding: 5px;
   border-top: 2px dotted #000000;
   text-align: right;
   font-size: 0.9em;
+}
+
+#footer p {
+  padding: 0;
+  margin: 0;
+  display: block;
+  width: 100%;
 }
 
 
@@ -122,8 +165,6 @@ font-size: 1em;
 #postform {
   padding: 0 10px 0 5px;
   margin: 0;
-  background: ;
-  background: #F4F3EB;
 }
 
 .commentbox {
@@ -189,7 +230,7 @@ p.moderatecomment {
   margin: 0;
 }
 
-#header h1, #header p {
+#header h1 {
   margin: 0;
   padding: 0;
 }
@@ -206,22 +247,39 @@ a:hover { background-color:orange; }
   width: 225px;
   height: 25px;
   padding: 0px;
+  margin: 10px 0 0 0;
   text-align: center;
 }
 
-.rightbutton p {
+#newpostbutton {
+  display: block;
+  background-color: orange;
+  width: 700px;
+  height: 25px;
+  padding: 0px;
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+
+
+.rightbutton p, #newpostbutton p {
   margin: 0;
   padding: 3px;
   width: 100%;
-  font-style: bold;
 }
 
-.rightbutton:hover {
+
+
+
+.rightbutton:hover, #newpostbutton:hover {
   background: #FFFFFF;
   cursor: pointer;
 }
 
-#tagscloud, #abouttext {
+
+
+#tagscloud, #abouttext, #siteinfo {
   font-size: 0.9em;
   border: 1px dotted #666;
   background: #FFFFFF;
@@ -237,7 +295,7 @@ a:hover { background-color:orange; }
   text-decoration: none;
 }
 
-#abouttext p {
+#abouttext p, #siteinfo p {
   margin: 0;
 }
 
@@ -245,8 +303,6 @@ a:hover { background-color:orange; }
   font-size: 1.3em;
   font-style: bold;
 }
-
-
 
 blockquote {
   background-color: #EEEEEE;
@@ -278,9 +334,10 @@ input[type=text], textarea {
 }
 
 #paginator {
+  display: block;
   background: orange;
-  width: 690px;
-  margin: 0;
+  width: 700px;
+  margin: 0 0 10px 0;
   padding: 0px;
   text-align: center;
 
@@ -289,7 +346,7 @@ input[type=text], textarea {
 #paginator a:link {
   display: block;
   text-decoration: none;
-  width: 100%;
-  padding: 5px;
+  width: 694px;
+  padding: 3px;
 
 ;

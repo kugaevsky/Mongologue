@@ -1,5 +1,5 @@
 $('<%= "#pc#{@post.pid}" %>').remove()
 $('<%= "#p#{@post.pid}" %>').slideUp()
-var postscounter = $("#postscounter").text()-1
+var postscounter = parseInt($("#postscounter").text())-1
 $("#postscounter").text(postscounter)
 $("#tagscloud").html("<%= escape_javascript(tags_cloud.html_safe) %>")

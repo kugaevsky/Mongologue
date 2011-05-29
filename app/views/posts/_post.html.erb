@@ -2,7 +2,6 @@
   <div class="post">
     <h2><%= link_to post.title, post %></h2>
     <p><%= typa_graf(post.content).html_safe %></p>
-    <p>Keywords: <%= post.keywords.inspect %></p>
     <p class="postinfo"><%= time_info(post.created_at, post.updated_at) %>
       Tags: <%= tags_list(post.tags).html_safe %></p>
     <p><% if signed_in? %>
@@ -13,7 +12,7 @@
          <% end %>
        <% end %>
        <% cc="Comments: #{post.comments_counter.to_i}" %>
-       <% if controller.action_name == "index" %>
+       <% if controller.action_name == "index" or controller.action_name == "create" %>
          <%= link_to cc, expand_comments_post_path(post),
              :remote => true,
              :id => "showc#{post.pid}" %></p>

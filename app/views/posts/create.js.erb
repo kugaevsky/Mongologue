@@ -1,6 +1,7 @@
-$("#new_post").remove()
-$("#newpostlink").show();
-var postscounter = $("#postscounter").text()+1
+$("#new_post")[0].reset()
+$("#newpostbox").slideUp()
+var postscounter = parseInt($("#postscounter").text())+1
 $("#postscounter").text(postscounter)
+$('<div id=<%= "pc#{@post.pid}" %> style="display:none;"></div>').insertAfter("#firstpost")
 $("<%= escape_javascript(render :partial => 'post', :locals => { :post => @post }) %>").insertAfter("#firstpost")
 $("#tagscloud").html("<%= escape_javascript(tags_cloud.html_safe) %>")

@@ -4,16 +4,22 @@
 <head>
   <title>☢ Mongologue</title>
   <%= stylesheet_link_tag 'custom', :media => 'screen' %>
-  <%= javascript_include_tag 'jquery-1.6.min', 'rails', 'application' %>
+  <%= javascript_include_tag 'jquery-1.6.min', 'jquery.cookie' 'rails', 'application' %>
 
   <%= csrf_meta_tag %>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('.rightbutton, #paginator, #logopic')
+    $('.rightbutton, #paginator, #newpostbutton')
       .hover(function() {
       $(this).animate({ fontSize: "120%" }, 'fast');
       }, function() {
       $(this).animate({ fontSize: "100%" }, 'fast');
+    });
+
+
+    $("#newpostbutton")
+      .click(function() {
+      $("#newpostbox").slideToggle();
     });
 
     $("#tagsbutton")
@@ -25,6 +31,13 @@
       .click(function() {
       $("#abouttext").slideToggle();
     });
+
+    $("#siteinfobutton")
+      .click(function() {
+      $("#siteinfo").slideToggle();
+    });
+
+
  });
 
 </script>
@@ -34,21 +47,29 @@
 <body>
 <div id="wrapper">
   <div id="header">
-    <div id="logo">
+    <div id="logo" class="box">
       <h1><%= link_to "<span id='logopic'>☢</span> Mongologue".html_safe, root_path %></h1>
     </div>
-    <div id="clientinfo">
-      <% if signed_in? %>
-        <p>Hello, <%= "master" if current_user.admin? %>
-           <%= link_to identity_or_name(current_user), current_user.identity %> |
-           <%= link_to "Sign out", signout_path, :method => :delete %></p>
-      <% else %>
-        <p><%= loginza_button_tag("Sign in",
-                              'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+
-                              request.fullpath) %></p>
+    <div id="searchbox">
+      <form accept-charset="UTF-8" action="/" method="get">
+         <input class="box" id="search" name="s" type="text" value="<%= params[:s] %>" />
+      </form>
+
+      <% if controller.action_name == "index" %>
+        <p>Posts: <span id="postscounter"><%= "#{@posts.count}" %></span></p>
       <% end %>
-      <p id="notice" style="float:left"; >
-      “First they ignore you, then they laugh at you, then they fight you, then you win.”</p>
+    </div>
+
+    <div id="clientinfo" class="box">
+      <% if signed_in? %>
+        Hello, <%= "master" if current_user.admin? %>
+           <%= link_to identity_or_name(current_user), current_user.identity %> |
+           <%= link_to "Sign out", signout_path, :method => :delete %>
+      <% else %>
+        <%= loginza_button_tag("Sign in",
+                               'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+
+                                request.fullpath) %>
+      <% end %>
     </div>
   </div>
   <div id="container">
@@ -56,21 +77,11 @@
       <%= yield %>
     </div>
     <div id="side-b">
-      <div id="site_info">
-        <% if controller.action_name == "index" %>
-          <p>Posts: <span id="postscounter"><%= "#{@posts.count}" %></span>
-          <% if authorized_admin? %>
-             <%= link_to '[ New post ]', new_post_path, :id => "newpostlink", :remote => true %>
-          <% end %>
-          </p>
-        <% end %>
-      </div>
       <div id="tagsbutton" class="rightbutton"><p>TAGS</p></div>
       <% cache('tagscloud') do %>
-        <div id="tagscloud" style="display: none;" ><p><%= tags_cloud.html_safe %></p></div>
+        <div id="tagscloud" style="display:none;" ><p><%= tags_cloud.html_safe %></p></div>
       <% end %>
-      <hr>
-      <div id="aboutbutton" class="rightbutton"><p>ABOUT</p></div>
+      <div id="aboutbutton" class="rightbutton"><p>ABOUT AUTHOR</p></div>
       <div id="abouttext" style="display: none;" >
         <p>about author</br>
            facebook</br>
@@ -82,12 +93,20 @@
            icq: 22233344</br>
            <a href="mailto:example@example.com">author@example.com</a></p>
       </div>
-
+      <div id="siteinfobutton" class="rightbutton"><p>ABOUT SITE</p></div>
+      <div id="siteinfo" style="display: none;">
+        <p>Created with:<br><a href="http://rubyonrails.org/">Ruby on Rails 3</a>,
+           <a href="http://mongoid.org">Mongoid</a>,
+           <a href="https://github.com/amatsuda/kaminari">Kaminari</a>,
+           <a href="https://github.com/galetahub/loginza">Liginza</a>,
+           <a href="http://jquery.com/">jQuery</a>.</p>
+        <p>Inspired by: <a href="http://spectator.ru">Dmitry Smirnov</a>.</p>
       </div>
     </div>
-  <div id="footer">powered by MongoDB<br>☢ 2011<br>
-    <%= debug(params) if Rails.env.development? %>
-  </div>
+    <div id="footer"><p>powered by MongoDB<br>☢ 2011<br>
+      “First they ignore you, then they laugh at you, then they fight you, then you win.”</p>
+      <%= debug(params) if Rails.env.development? %>
+    </div>
   </div>
 </div>
 

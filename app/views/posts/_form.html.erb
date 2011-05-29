@@ -1,8 +1,5 @@
 <div id="postform">
 <%= form_for(@post, :remote => true) do |f| %>
-  <% if @post.new_record? %>
-    <h2>New post</h2>
-  <% end %>
   <%= render "shared/error_messages", :object => @post %>
   <div class="field">
     <%= f.label :title %><br />
@@ -17,11 +14,9 @@
     <%= f.text_field :tags_helper %>
   </div>
   <div class="actions">
-    <%= f.submit %> 
+    <%= f.submit %>
     <% unless @post.new_record? %>
       <%= link_to "Cancel", @post, :remote => true %>
-    <% else %>
-      <%= link_to_function "Cancel", '$("#new_post").slideUp(); $("#newpostlink").show(); ' %> 
     <% end %>
   </div>
 <% end %>

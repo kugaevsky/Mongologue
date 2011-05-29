@@ -10,8 +10,10 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.xml
   def index
-    # Ok, fulltext search goes here
+    # We have new post form embedded into index
+    @post=Post.new
 
+    # Ok, fulltext search goes here
     if params[:s]
       @posts = Post.my_search(params[:s]).order_by([:created_at, :desc]).page(params[:page]).per(10)
     else
@@ -39,7 +41,6 @@ class PostsController < ApplicationController
   end
 
   def collapse_comments
-    #@post = Post.find(params[:id])
     @new_comment = Comment.new
     respond_to do |format|
       format.js
@@ -47,7 +48,6 @@ class PostsController < ApplicationController
   end
 
   def expand_comments
-    #@post = Post.find(params[:id])
     @new_comment = Comment.new
     respond_to do |format|
       format.js
@@ -58,18 +58,17 @@ class PostsController < ApplicationController
   # GET /posts/new
   # GET /posts/new.xml
   def new
-    @post = Post.new
+    # @post = Post.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @post }
-      format.js
+      # format.html # new.html.erb
+      # format.xml  { render :xml => @post }
+      # format.js
     end
   end
 
   # GET /posts/1/edit
   def edit
-    #@post = Post.find(params[:id])
     respond_to do |format|
       format.js
     end
@@ -84,11 +83,11 @@ class PostsController < ApplicationController
       if @post.save
         expire_cloud
         expire_post(:id => @post.id)
-        format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
+        # format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
         format.xml  { render :xml => @post, :status => :created, :location => @post }
         format.js { render 'create.js.erb' }
       else
-        format.html { render :action => "new" }
+        # format.html { render :action => "new" }
         format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
         format.js { render 'shared/error_messages.js.erb', :locals => { :object => @post } }
       end
@@ -98,17 +97,16 @@ class PostsController < ApplicationController
   # PUT /posts/1
   # PUT /posts/1.xml
   def update
-    #@post = Post.find(params[:id])
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
         expire_cloud
         expire_post(params[:id])
-        format.html { redirect_back_or root_path }
+        # format.html { redirect_back_or root_path }
         format.xml  { head :ok }
         format.js   { render 'show.js.erb' }
       else
-        format.html { render :action => "edit" }
+        # format.html { render :action => "edit" }
         format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
         format.js   { render 'shared/error_messages.js.erb', :locals => { :object => @post } }
       end
@@ -118,12 +116,11 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.xml
   def destroy
-    # @post = Post.find(params[:id])
     @post.destroy
     expire_cloud
     expire_post(:id => @post.id)
     respond_to do |format|
-      format.html { redirect_to(posts_url) }
+      # format.html { redirect_to(posts_url) }
       format.xml  { head :ok }
       format.js { render 'destroy.js.erb' }
     end

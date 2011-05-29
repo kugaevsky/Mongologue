@@ -1,3 +1,12 @@
+<% if Rails.env.development? %>
+<p><%= Post.my_search(params[:s]).inspect %></p>
+<% end %>
+<% if authorized_admin? %>
+  <div id="newpostbutton"><p>NEW POST</p></div>
+  <div id="newpostbox" class="postbox" style="display:none;">
+    <%= render :partial => 'form' %>
+  </div>
+<% end %>
 <div id="posts">
   <div id="firstpost"></div>
   <% @posts.each do |post| %>

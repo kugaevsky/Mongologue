@@ -101,12 +101,14 @@ def self.my_search(s)
      is_keyword = false
      is_tag = false
      is_not = false
+     is_like = false
 
      t=term.strip.downcase
      is_not = true if t.chr=="!"
      if t.rindex("*")!=nil
        is_keyword = true
        is_tag = false
+       is_like = true
      end
 
      t=t.gsub(/[^0-9a-zа-я]+/,'')
@@ -114,6 +116,10 @@ def self.my_search(s)
        is_keyword = true
      else
        is_tag = true unless is_keyword == true
+     end
+
+     if is_like == true
+       t= /^#{t}/
      end
 
      if is_keyword == true
