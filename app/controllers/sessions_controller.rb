@@ -11,7 +11,7 @@
         user = User.find_or_create_by(:identity => data["identity"])
         # First user to sign in becomes blog admin
         if User.count == 1
-          @user.admin = true;
+          user.admin = true;
         end
 
         if user.encrypted_password.nil?
