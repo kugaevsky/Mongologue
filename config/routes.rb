@@ -6,7 +6,7 @@ Mongologue::Application.routes.draw do
     end
     resources :comments
   end
-  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -16,6 +16,14 @@ Mongologue::Application.routes.draw do
 
   match 'signin' => 'sessions#create'
   match 'signout' => 'sessions#destroy'
+
+  # admin actions go here
+  namespace :admin do
+    resources :users
+    resources :posts do
+      resources :comments
+    end
+  end
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase

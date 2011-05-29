@@ -1,8 +1,9 @@
 $("#new_post").remove()
 $("<div id='new_post' class='postbox'></div>").insertAfter('#firstpost')
-$("#new_post").hide().html("<%= escape_javascript(render :partial => 'form') %>").slideDown()
+$("#new_post").hide().html("<%= escape_javascript(render :partial => 'admin/posts/form') %>").slideDown()
 $("#newpostlink").replaceWith("<%= escape_javascript(
                   link_to_function "CANCEL",
 "$('#new_post').slideUp();\
- $('#newpostlink').replaceWith('#{link_to 'NEW POST', new_post_path,
+ $('#newpostlink').replaceWith('#{link_to 'NEW POST', new_admin_post_path,
                                    :id => "newpostlink", :remote => true }')", :id=>"newpostlink") %>")
+$("#tagscloud").html("<%= escape_javascript(tags_cloud.html_safe) %>")

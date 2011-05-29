@@ -1,5 +1,10 @@
 <div id="postform">
-<%= form_for(@post, :remote => true) do |f| %>
+<% if controller.action_name == "index"
+     path_to_action = admin_posts_path
+   else
+     path_to_action = admin_post_path(@post)
+   end %>
+<%= form_for(@post, :url => path_to_action, :remote => true) do |f| %>
   <%= render "shared/error_messages", :object => @post %>
   <div class="field">
     <%= f.label :title %><br />

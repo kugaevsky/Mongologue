@@ -1,0 +1,5 @@
+<%= form_for [@post, @comment], :url => admin_post_comment_path(@post,@comment), :remote => true do |f| %>
+  <%= render "shared/error_messages", :object => @comment %>
+  <%= f.text_area :reply, :rows => 10 %>
+  <%= f.submit "Update reply" %>
+<% end %>

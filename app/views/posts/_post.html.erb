@@ -6,9 +6,9 @@
       Tags: <%= tags_list(post.tags).html_safe %></p>
     <p><% if signed_in? %>
          <% if current_user.admin? %>
-           <%= link_to 'Edit', edit_post_path(post), :remote => true %>,  |
-           <%= link_to 'Delete', post, :confirm => 'Are you sure?', :method => :delete,
-                                       :remote => true %> |
+           <%= link_to 'Edit', edit_admin_post_path(post), :remote => true %>,  |
+           <%= link_to 'Delete', admin_post_path(post), :confirm => 'Are you sure?', :method => :delete,
+                                             :remote => true %> |
          <% end %>
        <% end %>
        <% cc="Comments: #{post.comments_counter.to_i}" %>
