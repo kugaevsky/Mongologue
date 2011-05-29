@@ -145,8 +145,9 @@ def link_to_next_page(scope, name, options = {}, &block)
   param_name = options.delete(:param_name) || Kaminari.config.param_name
   # Patched for search
   if scope.last_page?
-    link_to_function "&uarr; UP &uarr;".html_safe,
-                     "$( 'html, body' ).animate( { scrollTop: 0 }, 'slow' );"
+    # put "up!" button permanently, experimental
+    # link_to_function "&uarr; UP &uarr;".html_safe,
+    #                  "$( 'html, body' ).animate( { scrollTop: 0 }, 'slow' );"
   else
     link_to_unless scope.last_page?, name, {param_name => (scope.current_page + 1),
                                            :s => params[:s]},

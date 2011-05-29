@@ -333,7 +333,7 @@ input[type=text], textarea {
   line-height: 1.3em;
 }
 
-#paginator {
+.bottombutton {
   display: block;
   background: orange;
   width: 700px;
@@ -343,7 +343,7 @@ input[type=text], textarea {
 
 }
 
-#paginator a:link {
+.bottombutton a:link {
   display: block;
   text-decoration: none;
   width: 694px;

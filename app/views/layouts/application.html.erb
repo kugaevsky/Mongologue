@@ -9,7 +9,7 @@
   <%= csrf_meta_tag %>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('.rightbutton, #paginator, #newpostbutton')
+    $('.rightbutton, .bottombutton, #newpostbutton')
       .hover(function() {
       $(this).animate({ fontSize: "120%" }, 'fast');
       }, function() {
@@ -61,6 +61,7 @@
     </div>
 
     <div id="clientinfo" class="box">
+      <div id="greeting">
       <% if signed_in? %>
         Hello, <%= "master" if current_user.admin? %>
            <%= link_to identity_or_name(current_user), current_user.identity %> |
@@ -70,13 +71,30 @@
                                'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+
                                 request.fullpath) %>
       <% end %>
+      </div>
+      <% if signed_in? %>
+      <div id="passwordinfo">
+        <% if current_user.encrypted_password.nil? %>
+          Warning, no password set!<br>
+          <%= link_to "SET PASSWORD", edit_admin_user_path(current_user), :remote => true %>
+        <% else %>
+          Everything is ok.<br>
+          <%= link_to "CHANGE PASSWORD", edit_admin_user_path(current_user), :remote => true %>
+        <% end %>
+      </div>
+      <% end %>
     </div>
   </div>
   <div id="container">
     <div id="content">
+      <% flash.each do |key, value| %>
+        <div class="flash <%= key %>"><%= value %></div>
+      <% end %>
+
       <%= yield %>
     </div>
     <div id="side-b">
+      <div id="edituser"></div>
       <div id="tagsbutton" class="rightbutton"><p>TAGS</p></div>
       <% cache('tagscloud') do %>
         <div id="tagscloud" style="display:none;" ><p><%= tags_cloud.html_safe %></p></div>
@@ -99,7 +117,7 @@
         <p>Created with:<br><a href="http://rubyonrails.org/">Ruby on Rails 3</a>,
            <a href="http://mongoid.org">Mongoid</a>,
            <a href="https://github.com/amatsuda/kaminari">Kaminari</a>,
-           <a href="https://github.com/galetahub/loginza">Liginza</a>,
+           <a href="https://github.com/galetahub/loginza">Loginza</a>,
            <a href="http://jquery.com/">jQuery</a>.</p>
         <p>Inspired by <a href="http://spectator.ru">Dmitry Smirnov</a>.</p>
       </div>

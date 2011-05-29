@@ -32,7 +32,7 @@ class User
   end
 
   def self.authenticate(identity,submitted_password)
-    user = find(:identity => identity)
+    user = where(:identity => identity).first
     return nil  if user.nil?
     return user if user.has_password?(submitted_password)
   end

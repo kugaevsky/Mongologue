@@ -14,12 +14,15 @@ Mongologue::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
 
-  match 'signin' => 'sessions#create'
+  match 'signin' => 'sessions#new'
   match 'signout' => 'sessions#destroy'
+
+  resources :sessions
 
   # admin actions go here
   namespace :admin do
-    resources :users
+    resources :users do
+    end
     resources :posts do
       resources :comments
     end

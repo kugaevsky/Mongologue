@@ -1,4 +1,5 @@
 <% if authorized_admin? %>
+  <p>User has password(nil): <%= current_user.encrypted_password.nil? %></p>
   <div id="newpostbutton"><p>NEW POST</p></div>
   <div id="newpostbox" class="postbox" style="display:none;">
     <%= render :partial => 'admin/posts/form' %>
@@ -13,6 +14,10 @@
     <% end %>
   <% end %>
 </div>
-<div id="paginator">
+<div id="up" class="bottombutton">
+  <%= link_to_function "&uarr; UP &uarr;".html_safe,
+                     "$( 'html, body' ).animate( { scrollTop: 0 }, 'slow' );" %>
+</div>
+<div id="paginator" class="bottombutton">
   <%= link_to_next_page(@posts, "&darr; MORE POSTS &darr;".html_safe, :remote => true ) %>
 </div>

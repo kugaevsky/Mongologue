@@ -18,10 +18,10 @@ module SessionsHelper
   def user_from_remember_token
     remember_token = cookies[:remember_token]
     user=User.where(:remember_token => remember_token).first unless remember_token.nil?
-    if user.nil? 
+    if user.nil?
       cookies.delete(:remember_token)
     end
-    user 
+    user
   end
 
   def signed_in?
@@ -79,5 +79,5 @@ module SessionsHelper
       end
     end
     return false
-  end  
+  end
 end
