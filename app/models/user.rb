@@ -48,7 +48,7 @@ class User
 
      def encrypt_password
        unless password.nil?
-         make_salt if self.salt.nil?
+         self.salt=make_salt if self.salt.nil?
          self.encrypted_password = encrypt(password)
        end
     end
