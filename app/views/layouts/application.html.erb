@@ -63,7 +63,7 @@
     <div id="clientinfo" class="box">
       <div id="greeting">
       <% if signed_in? %>
-           <%= "(adm)" if current_user.admin? %>
+           <%= "(A)" if current_user.admin? %>
            <%= link_to identity_or_name(current_user), current_user.identity %><br>
            <%= link_to "Sign out", signout_path, :method => :delete %>
       <% else %>
