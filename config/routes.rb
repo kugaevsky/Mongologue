@@ -16,6 +16,8 @@ Mongologue::Application.routes.draw do
 
   match 'signin' => 'sessions#new'
   match 'signout' => 'sessions#destroy'
+  match 'admin/posts' => 'posts#index'
+  match "admin/posts/:id" => 'posts#show'
 
   resources :sessions
 
@@ -27,6 +29,8 @@ Mongologue::Application.routes.draw do
       resources :comments
     end
   end
+
+
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase

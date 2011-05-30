@@ -1,4 +1,6 @@
+<% cache(:action => "show", :id => @post.pid, :action_suffix => authorized_admin? ) do %>
 <%= render @post %>
 <div id=<%= "pc#{@post.pid}" %> >
   <%= render 'posts/comments' %>
 </div>
+<% end %>

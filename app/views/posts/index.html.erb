@@ -7,8 +7,10 @@
 <div id="posts">
   <div id="firstpost"></div>
   <% @posts.each do |post| %>
-    <%= render post %>
-    <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
+    <% cache(:action => "index", :id => post.pid, :action_suffix => authorized_admin? ) do %>
+      <%= render post %>
+      <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
+    <% end %>
   <% end %>
 </div>
 <div id="up" class="bottombutton">
