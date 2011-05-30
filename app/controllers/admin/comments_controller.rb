@@ -14,6 +14,7 @@ class Admin::CommentsController < ApplicationController
   end
 
   def edit
+     @comment.reverse_newlines
     respond_to do |format|
       format.js { render 'edit_reply.js.erb' }
       format.html { render 'edit_reply.html.erb' }

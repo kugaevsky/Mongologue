@@ -22,6 +22,7 @@ class Admin::PostsController < ApplicationController
 
 
   def edit
+    @post.reverse_newlines
     respond_to do |format|
       format.html
       format.js

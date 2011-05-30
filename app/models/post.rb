@@ -5,6 +5,8 @@ class Post
   include Mongoid::Timestamps
   include Mongoid::Attributes
   include ActionView::Helpers
+  include ApplicationHelper
+
 
   field :pid
   field :title
@@ -28,6 +30,7 @@ class Post
   index "comments.updated_at"
   index :keywords
   before_save :process_keywords
+  before_save :convert_newlines
   after_save :rebuild_tags
   after_destroy :rebuild_tags
   before_create :assign_pid
@@ -36,7 +39,7 @@ class Post
     tagcloud = Mongoid.master.collection('tagcloud')
     opts = { :sort => ["value", :desc] }
     opts[:limit] = limit unless limit.nil?
-    tagcloud.find({}, opts).to_a
+    tagcloud.find({}, opts).to_set
   end
 
   # OMG Hack!
@@ -83,8 +86,28 @@ class Post
     end
     # Build list of keywords
     # Not sure if I should strip tags, need to think about this
-    self.keywords=sanitize(self.content,:tags =>%w()).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
+    self.keywords=sanitize(self.content,:tags =>%w(a img blockquote)).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
 
+  end
+
+  def convert_newlines
+     rules = {
+          /\r\n/ => "\n",
+          /\n/ => "<br>\n",
+      }
+      rules.each do |regexp, replacement|
+        self.content.gsub!(regexp, replacement)
+      end
+      self.content = typo(self.content); #.gilensize(:raw_output => true)
+  end
+
+  def reverse_newlines
+     rules = {
+          /<br>\n/ => "\n"
+      }
+      rules.each do |regexp, replacement|
+        self.content.gsub!(regexp, replacement)
+      end
   end
 
 def self.my_search(s)

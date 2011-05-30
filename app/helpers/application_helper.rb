@@ -26,23 +26,18 @@ module ApplicationHelper
 
   # List of "best" tags
   def fav_tags
-    ["чебурашка","consequatur", "voluptas", "assumenda", "modi"]
+    Set.new ["чебурашка","consequatur", "voluptas", "assumenda", "modi"]
   end
 
+  # Note to self: link_to speed sucks balls
   def tags_cloud
-    tt = Array.new
-    bo,bc = "<span class='favtag'>".html_safe,"</span>".html_safe
-    rawlist = Post.all_tags
-    rawlist.each do |t|
-      if fav_tags.include? t['_id']
-        t_tag = bo+t['_id']+bc
-      else
-        t_tag = t['_id']
-      end
-      tt << link_to(t_tag, root_path(:s => t['_id']), :title => t['value'].to_i)
-      # tt << "test"
+    bo,bc = '<span class=favtag>','</span>'
+    alist=String.new
+    Post.all_tags.each do |hsh|
+      id_text=fav_tags.include?(hsh['_id']) ? "#{bo}#{hsh['_id']}#{bc}" : hsh['_id']
+      alist="#{alist}, <a href='?s=#{hsh['_id'].gsub(' ','%20')}' title=#{hsh['value'].to_i}>#{id_text}</a>"
     end
-    tt.join(", ")
+    alist.sub(', ','') # remove things at start
   end
 
   def tags_list(tags_array)
@@ -53,93 +48,53 @@ module ApplicationHelper
     tt.join(", ")
   end
 
-  # Блок ниже взят со страницы http://faramag.com/answer/show/722
 
-  SYMBOLS = [
-      # экранирование спецсимволов
- #     [/&/        , '&'    , '&amp;'    ,  '&#38;'],
- #     [/</        , '<'    , '&lt'      ,  '&#60;'],
- #     [/>/        , '>'    , '&gt'      ,  '&#62;'],
-
-
-      # простые замены
-      [/\(c\)/i   , '©'    , '&copy;'   , '&#169;'],
-      [/\(tm\)/i  , '™'    , '&trade;'  , '&#153;'],
-      [/\'/       , '’'    , '&rsquo;'  , '&#146;'],
-
-      # кавычковая магия: обычные кавычки — ёлочки
-      [/(^|\s)\"/ , '\1«', '\1&laquo;', '\1&#171;'],
-      [/\"/ , '»', '&raquo;', '&#187;'],
-
-      # кавычковая магия: вложенные кавычки заменяем на лапки
-      [/(«|&laquo;)(.+)(?:«|&laquo;)(.+)(?:»|&raquo;)(.+)(»|&raquo;)/,
-          '\1\2„\3“\4\5',
-          '\1\2&bdquo;\3&ldquo;\4\5',
-          '\1\2&#8222;\3&#147;\4\5',
-      ],
-
-      # тире
-      [/-(\s)/    , '—\1', '&mdash;\1', '&#151;\1'],
-
-      # короткие слова привязываем неразрывным пробелом;
-      # прогоняем два раза, чтобы обработать расставленные в первом прогоне &nbsp;
-      [/(^|\s)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/, '\1\2 ', '\1\2&nbsp;', '\1\2&#160;'],
-      [/( |&nbsp;|&\#160;)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/, '\1\2 ', '\1\2&nbsp;', '\1\2&#160;']
-  ]
-
-  # русская типографика
-  # аргументы:
-  #   line — текст, который нужно оттипографить
-  #   replacement — опция замены (:symbols — готовые символы, :names — буквенные
-  #        коды, :codes — числовые коды)
-  def typa_graf(line, replacement = :symbols)
-      symbols = case replacement
-          when :symbols
-              SYMBOLS.map{|regex, *replacements| [regex, replacements[0]]}
-          when :names
-              SYMBOLS.map{|regex, *replacements| [regex, replacements[1]]}
-          when :codes
-              SYMBOLS.map{|regex, *replacements| [regex, replacements[2]]}
-          else
-              raise(ArgumentError, "Expecting one of :symbols, :names, :codes, #{replacement.inspect} obtained")
-      end
-
-      cleanups = {
-          # Приводим переводы строк к юникс-варианту
-          /\r/ => "",
-          # Два и более перевода строк превращаем в два
-          /\n\n+/ => "\n\n",
-          # Двойной перевод строк обозначает конец параграфа
-          /\n\n/ => '</p><p>',
-          # Одинарный перевод строки обозначает новую строку в параграфе
-          /([^\n])(\n)([^\n])/ => '\1<br>\3',
-          # Множественные пробелы превращаем в один
-          /[ \t]+/ => ' ',
-          # Ну и тут ещё какая-то хрень
-          /(\S+(?:-\S+)+)/ => '<nobr>\1</nobr>'
-      }
-
-      # заменяем спецсимволы
-      symbols[0..2].each do |regexp, replacement|
-          line.gsub!(regexp, replacement)
-      end
-
-      # заменяем всё остальное
-      symbols[3..-1].each do |regexp, replacement|
-          line.gsub!(regexp, replacement)
-      end
-
-      # прогоняем очистку пробельных символов
-      cleanups.each do |regexp, replacement|
-          line.gsub!(regexp, replacement)
-      end
-
-      line
+  def gilenconf
+  {
+     "inches"    => false,   # преобразовывать дюймы в знак дюйма;
+     "laquo"     => true,    # кавычки-ёлочки
+     "quotes"    => true,    # кавычки-английские лапки
+     "dash"      => true,    # короткое тире (150)
+     "emdash"    => true,    # длинное тире двумя минусами (151)
+     "initials"  => false,   # тонкие шпации в инициалах
+     "copypaste" => false,   # замена непечатных и "специальных" юникодных символов на entities
+     "(c)"       => true,    # обрабатывать знак копирайта
+     "(r)"       => true,
+     "(tm)"      => true,
+     "(p)"       => false,
+     "acronyms"  => false,   # Акронимы с пояснениями - ЖЗЛ(Жизнь Замечатльных Людей)
+     "+-"        => true,    # спецсимволы, какие - понятно
+     "degrees"   => false,    # знак градуса
+     "dashglue"  => false, "wordglue" => false, # приклеивание предлогов и дефисов
+     "spacing"   => true,    # запятые и пробелы, перестановка
+     "phones"    => false,    # обработка телефонов
+     "html"      => true,    # разрешение использования тагов html
+     "de_nobr"   => false,   # при true все <nobr/> заменяются на <span class="nobr"/>
+     "raw_output" => true,   # выводить UTF-8 вместо entities
+     "skip_attr" => true,    # при true не отрабатывать типографику в атрибутах тегов
+     "skip_code" => true,    # при true не отрабатывать типографику внутри <code/>, <tt/>, CDATA
+     "enforce_en_quotes" => false, # только латинские кавычки
+     "enforce_ru_quotes" => false, # только русские кавычки (enforce_en_quotes при этом игнорируется)
+  }
   end
 
-  def display(content)
-    auto_link(typa_graf(sanitize(content,:tags =>%w())))
+  def typo(line)
+    line.gilensize(gilenconf)
   end
+
+  def allowed_tags
+    %w(br i b)
+  end
+
+  def display_comment(content)
+    auto_link(sanitize(content,:tags =>allowed_tags))
+  end
+
+  def strip_comment(content)
+    sanitize(content,:tags =>allowed_tags)
+  end
+
+
 
   def password_status_text(user)
     if user.encrypted_password.nil?

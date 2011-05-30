@@ -11,6 +11,7 @@ gem 'bson_ext', '>= 1.3.0'
 gem 'kaminari'
 gem 'unicode'
 gem 'fast_xs'
+gem 'gilenson'
 
 # Use unicorn as the web server
 # gem 'unicorn'

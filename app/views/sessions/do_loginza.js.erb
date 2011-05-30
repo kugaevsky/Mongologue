@@ -1,0 +1,3 @@
+$("#wloginza").show()
+<% clients_url = 'http://'+request.env["HTTP_HOST"]+signin_path %>
+$("#wloginza").html("<%= escape_javascript(loginza_frame_tag(clients_url, { :providers => [:google, :yandex, :openid] }, { :style => "width:400px;height:350px;" })) %>");

@@ -68,8 +68,7 @@
            <%= link_to "Sign out", signout_path, :method => :delete %>
       <% else %>
         <%= loginza_button_tag("Sign in",
-                               'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+
-                                request.fullpath) %>
+                               'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+request.fullpath) %>
       <% end %>
       </div>
       <% if signed_in? %>
@@ -85,6 +84,7 @@
       <% flash.each do |key, value| %>
         <div class="flash <%= key %>"><%= value %></div>
       <% end %>
+      <div id="wloginza"></div>
 
       <%= yield %>
     </div>

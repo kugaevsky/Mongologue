@@ -1,6 +1,7 @@
 Planned things:
 
 Remember the sidebar settings (cookies now/user settings later, perhaps both)
+Allow to collapse/expand posts ("mark as read") and remember this setting
 (done) Allow to remove a password (not just make it blank)
 Ask for an old password when setting a new password
 Add an ability to reset a password with an email link

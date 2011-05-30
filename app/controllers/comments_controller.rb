@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
   def show
     respond_to do |format|
       format.js { render 'show_reply.js.erb' }
-      format.html {render :inline => 'COMMENTS' }
+      format.html { redirect_to @post }
     end
   end
 

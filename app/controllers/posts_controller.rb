@@ -11,17 +11,25 @@ class PostsController < ApplicationController
     # We have new post form embedded into index
     @post=Post.new
 
+    items_per_per=50
+    if request.format.html?
+      items_per_page=10
+    end
+
     # Ok, fulltext search goes here
     if params[:s]
-      @posts = Post.my_search(params[:s]).order_by([:created_at, :desc]).page(params[:page]).per(10)
+      @posts = Post.my_search(params[:s]).order_by([:created_at, :desc]).\
+                    page(params[:page]).per(items_per_page)
     else
       @posts = Post.without(:comments).order_by([:created_at, :desc]).\
-      page(params[:page]).per(10)
+                    page(params[:page]).per(items_per_page)
     end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @posts }
       format.js
+      format.rss  { response.headers["Content-Type"] = "application/xml; charset=utf-8";
+                    render :rss => @posts }
     end
   end
 

@@ -1,7 +1,11 @@
+#encoding: utf-8
+
 class Comment
   include Mongoid::Document
   include Mongoid::Timestamps
   include ActionView::Helpers
+  include ApplicationHelper
+
 
   field :pid
   field :name
@@ -20,29 +24,39 @@ class Comment
   attr_accessible :content
 
   embedded_in :post, :inverse_of => :comments, :index => true
-  before_save :strip_comment
+  before_save :process_content
 
 
-  def strip_comment
-    return true if self.content.nil?
+  def process_content
 
-    self.content=sanitize(self.content,:tags =>%w())
-
-    cleanups = {
+     self.content=strip_comment(self.content)
+     rules = {
           /\r\n/ => "\n",
           /\n\n+/ => "\n\n",
-          /[ \t]+/ => ' ',
+          /\n/ => "<br>\n",
       }
 
-    cleanups.each do |regexp, replacement|
-      self.content.gsub!(regexp, replacement)
-    end
-
+      rules.each do |regexp, replacement|
+        self.content.gsub!(regexp, replacement)
+        self.reply.gsub!(regexp, replacement) unless self.reply.nil?
+      end
+      self.content = typo(self.content)
+      self.reply = typo(self.reply) unless self.reply.nil?
     return true
   end
 
   def to_param
     pid
+  end
+
+  def reverse_newlines
+     rules = {
+          /<br>/ => "\n"
+      }
+      rules.each do |regexp, replacement|
+        self.reply.gsub!(regexp, replacement) unless self.reply.nil?
+        # self.content.gsub!(regexp, replacement)
+      end
   end
 
   protected
