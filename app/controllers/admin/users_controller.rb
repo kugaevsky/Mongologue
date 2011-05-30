@@ -19,10 +19,13 @@ class Admin::UsersController < ApplicationController
   def update
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if params[:user][:password].empty?
+        @user.remove_password
+        format.js { render 'admin/users/update', :locals => { :user => @user } }
+      elsif @user.update_attributes(params[:user])
         # format.html { redirect_back_or root_path }
         format.xml  { head :ok }
-        format.js   { render :inline => "$('#edituser').slideUp();" }
+        format.js { render 'admin/users/update', :locals => { :user => @user } }
       else
         # format.html { render :action => "edit" }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }

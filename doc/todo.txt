@@ -1,0 +1,24 @@
+Planned things:
+
+Remember the sidebar settings (cookies now/user settings later, perhaps both)
+Allow to remove a password (not just make it blank)
+Ask for an old password when setting a new password
+Add an ability to reset a password with an email link
+Make the password dialogs more pretty (put the Loginza dialog into an iframe of the top level transparent div?)
+Add an RSS feed with search results
+Add the sitemap
+Add the "user settings" embedded document/hash into the Users model
+Add email subscriptions (new posts, new comments, new replies, other notifications)
+Add the "user settings" panel, make it Ajax (slideDown/slideUp top level div)
+Add the "global application settings" panel for the admins
+Add the "user administration" panel for the admins
+Add the "author" field to the posts
+Add the "author" role to allow partial posting/moderation access
+Add the "private" field to the comments (only user and author/admin will be able to see the comment and its reply)
+Add statistics module and some page/panel for it (hits/hosts/etc, not sure if its a good idea though)
+Add security log (track actions from the Admin controller)
+Add the "surrounding posts" block to the sidebar
+Add the "top rated/commented posts" block to the sidebar
+Add the "draft" flag for posts (not published). New action (draftindex) in the Admin controller?
+Allow to change the "created_at" field for the posts (or better add the "published_at" field)
+Allow to future-publish posts setting their date to some point in future (will be visible after that time)

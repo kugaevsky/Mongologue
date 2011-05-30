@@ -1,5 +1,4 @@
 <% if authorized_admin? %>
-  <p>User has password(nil): <%= current_user.encrypted_password.nil? %></p>
   <div id="newpostbutton"><p>NEW POST</p></div>
   <div id="newpostbox" class="postbox" style="display:none;">
     <%= render :partial => 'admin/posts/form' %>

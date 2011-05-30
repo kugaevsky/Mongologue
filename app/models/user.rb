@@ -37,21 +37,28 @@ class User
     return user if user.has_password?(submitted_password)
   end
 
-  private
+  def remove_password
+    User.skip_callback(:save, :before, :encrypt_password)
+    self.encrypted_password = nil
+    self.save
+    User.set_callback(:save, :before, :encrypt_password)
+  end
 
-    def encrypt_password
-      unless password.nil?
-        self.salt = make_salt
-        self.encrypted_password = encrypt(password)
-      end
+  protected
+
+     def encrypt_password
+       unless password.nil?
+         make_salt if self.salt.nil?
+         self.encrypted_password = encrypt(password)
+       end
     end
 
     def make_salt
-      secure_hash("#{Time.now.utc}#{password}")
+      secure_hash("#{Time.now.utc}--#{password}")
     end
 
     def encrypt(string)
-      secure_hash("#{salt}#{string}")
+      secure_hash("#{salt}--#{string}")
     end
 
     def secure_hash(string)

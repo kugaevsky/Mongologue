@@ -141,21 +141,28 @@ module ApplicationHelper
     auto_link(typa_graf(sanitize(content,:tags =>%w())))
   end
 
-def link_to_next_page(scope, name, options = {}, &block)
-  param_name = options.delete(:param_name) || Kaminari.config.param_name
-  # Patched for search
-  if scope.last_page?
-    # put "up!" button permanently, experimental
-    # link_to_function "&uarr; UP &uarr;".html_safe,
-    #                  "$( 'html, body' ).animate( { scrollTop: 0 }, 'slow' );"
-  else
-    link_to_unless scope.last_page?, name, {param_name => (scope.current_page + 1),
-                                           :s => params[:s]},
-                                            options.merge(:rel => 'next') do
-      block.call if block
+  def password_status_text(user)
+    if user.encrypted_password.nil?
+       link_to("No password protection. Set now.", edit_admin_user_path(current_user), :remote => true).html_safe
+    else
+       link_to("Change/remove password.", edit_admin_user_path(current_user), :remote => true).html_safe
     end
   end
-end
 
+  def link_to_next_page(scope, name, options = {}, &block)
+    param_name = options.delete(:param_name) || Kaminari.config.param_name
+    # Patched for search
+    if scope.last_page?
+      # put "up!" button permanently, experimental
+      # link_to_function "&uarr; UP &uarr;".html_safe,
+      #                  "$( 'html, body' ).animate( { scrollTop: 0 }, 'slow' );"
+    else
+      link_to_unless scope.last_page?, name, {param_name => (scope.current_page + 1),
+                                             :s => params[:s]},
+                                              options.merge(:rel => 'next') do
+        block.call if block
+      end
+    end
+  end
 
 end

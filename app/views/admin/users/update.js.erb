@@ -1,0 +1,7 @@
+<% if user.encrypted_password.nil? %>
+  $('#jsflash').show().html('<h2 style="text-align:center">Password removed.</h2>').slideUp(3000);
+<% else %>
+  $('#jsflash').show().html('<h2 style="text-align:center">New password set.</h2>').slideUp(3000);
+<% end %>
+$('#edituser').slideUp();
+$('#passwordinfo').html('<%= escape_javascript(password_status_text(user)) %>');

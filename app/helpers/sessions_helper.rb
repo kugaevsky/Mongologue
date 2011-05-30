@@ -37,6 +37,14 @@ module SessionsHelper
     user == current_user
   end
 
+  def current_user_name
+    if current_user.nil?
+      "Anonymous"
+    else
+      identity_or_name(current_user)
+    end
+  end
+
   def authenticate
     deny_access unless signed_in?
   end

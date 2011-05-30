@@ -1,7 +1,5 @@
  class SessionsController < ApplicationController
 
-
-
   def new
     unless params[:token].nil?
       if data = Loginza.user_data(params[:token])
@@ -40,8 +38,6 @@
       redirect_to root_path
     end
   end
-
-
 
   def destroy
     sign_out

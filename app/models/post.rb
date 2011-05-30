@@ -68,23 +68,24 @@ class Post
     sanitize(self.content,:tags =>%w()).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
   end
 
-    def process_keywords
-      # Remove leading and trailing spaces from every tag, force tags into downcase
-      self.tags.each_with_index do |t, index|
-        self.tags[index] = t.strip.downcase
-      end
-      # Remove duplicated tags if any
-      self.tags.delete("")
-      self.tags=self.tags.uniq
-      # Finally add tagless tag if no tags specified and remove it, if there is any
-      self.tags.delete("tagless")
-      if self.tags.size == 0
-        self.tags << "tagless"
-      end
-      # Build list of keywords
-      self.keywords=sanitize(self.content,:tags =>%w()).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
-
+  def process_keywords
+    # Remove leading and trailing spaces from every tag, force tags into downcase
+    self.tags.each_with_index do |t, index|
+      self.tags[index] = t.strip.downcase
     end
+    # Remove duplicated tags if any
+    self.tags.delete("")
+    self.tags.uniq
+    # Finally add tagless tag if no tags specified and remove it, if there is any
+    self.tags.delete("tagless")
+    if self.tags.empty?
+      self.tags << "tagless"
+    end
+    # Build list of keywords
+    # Not sure if I should strip tags, need to think about this
+    self.keywords=sanitize(self.content,:tags =>%w()).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
+
+  end
 
 def self.my_search(s)
   if !s.blank?

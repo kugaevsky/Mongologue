@@ -37,7 +37,7 @@ class Admin::CommentsController < ApplicationController
     respond_to do |format|
 
       @comment.reply = params[:comment][:reply]
-      if @comment.reply == ''
+      if @comment.reply.empty?
         @comment.reply = nil
         @comment.reply_name = nil
         @comment.reply_url = nil
