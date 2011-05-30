@@ -36,7 +36,7 @@ class Admin::PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         expire_cloud
-        expire_post(:id => @post.id)
+        expire_post(@post)
         # format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
         format.xml  { render :xml => @post, :status => :created, :location => @post }
         format.js { render 'create.js.erb' }
@@ -56,7 +56,7 @@ class Admin::PostsController < ApplicationController
     respond_to do |format|
       if @post.update_attributes(params[:post])
         expire_cloud
-        expire_post(params[:id])
+        expire_post(@post)
         # format.html { redirect_back_or root_path }
         format.xml  { head :ok }
         format.js   { render 'posts/show.js.erb' }
@@ -73,7 +73,7 @@ class Admin::PostsController < ApplicationController
   def destroy
     @post.destroy
     expire_cloud
-    expire_post(:id => @post.id)
+    expire_post(@post)
     respond_to do |format|
       # format.html { redirect_to(posts_url) }
       format.xml  { head :ok }

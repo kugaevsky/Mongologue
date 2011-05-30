@@ -23,7 +23,7 @@ class Admin::CommentsController < ApplicationController
   def destroy
     @comment.destroy
     @post.inc(:comments_counter, -1)
-    expire_post(:id => @post.id)
+    expire_post(@post)
     respond_to do |format|
       format.html { redirect_to @post }
       format.xml  { head :ok }
@@ -46,7 +46,7 @@ class Admin::CommentsController < ApplicationController
         @comment.reply_url = current_user.identity
       end
       if @comment.save
-        expire_post(params[:post_id])
+        expire_post(@post)
         format.html { redirect_to( @post, :notice => "Reply updated.") }
         format.xml  { head :ok }
         format.js   { render 'comments/show_reply.js.erb' }

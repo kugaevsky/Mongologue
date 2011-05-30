@@ -17,17 +17,14 @@
         if user.encrypted_password.nil?
           user.update_attributes(data)
           sign_in(user)
-          redirect_to root_path
         else
           session[:data]=data
           render 'new'
+          return
         end
-      else
-        redirect_to root_path
       end
-    else
-      redirect_to root_path
     end
+    redirect_to root_path
   end
 
   def create

@@ -8,7 +8,7 @@
 <div id="posts">
   <div id="firstpost"></div>
   <% @posts.each do |post| %>
-    <%= cache(:action => "index", :id => post.id) do %>
+    <%= cache(:action => "index", :id => post.pid) do %>
        <%= render post %>
        <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
     <% end %>
