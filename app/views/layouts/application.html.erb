@@ -47,18 +47,20 @@
 <body>
 <div id="wrapper">
   <div id="header">
-    <div id="logo" class="box">
-      <h1><%= link_to "<span id='logopic'>☢</span> Mongologue".html_safe, root_path %></h1>
+    <div id="logo">
+    <a href="/" title="Powerd by MongoDB"><img src="/images/rad-30px.png" id='logopic'/><h1>Mongologue</h1></a>
+    <p>Powered by MongoDB</p></a>
     </div>
-    <div id="searchbox">
-      <form accept-charset="UTF-8" action="/" method="get">
-         <input class="box" id="search" name="s" type="text" value="<%= params[:s] %>" />
+      <form id="searchbox" accept-charset="UTF-8" action="/" method="get">
+         <input id="search" name="s" type="text" value="<%= params[:s] %>" />
       </form>
 
       <% if controller.action_name == "index" %>
-        <p>Posts: <span id="postscounter"><%= "#{@posts.count}" %></span></p>
+        <div id="rss">
+        <a href="/posts.rss?s=<%= params[:s] %>" title="Get RSS feed of this search!">
+        <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
+        <%= "#{@posts.count}" %></span></p></a></div>
       <% end %>
-    </div>
 
     <div id="clientinfo" class="box">
       <div id="greeting">

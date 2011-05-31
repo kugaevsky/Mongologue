@@ -9,11 +9,24 @@ body {
 
 }
 
+h1 {font-size:200%}
+h2 {font-size:150%}
+p {font-size:100%}
+
 a:link, a:active, a:visited {
   color: black;
   background-color: inherit;
   text-decoration: underline;
 }
+
+h1, h2 {
+  font-weight: normal;
+  font-variant: small-caps;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0;
+}
+
 
 #wrapper {
   text-align: left;
@@ -23,9 +36,12 @@ a:link, a:active, a:visited {
   width: 960px;
 }
 
-#container {
-  width: 960px;
-  min-height: 500px;
+#header {
+  width: 100%;
+  height: 60px;
+  margin: 0;
+  border-bottom: 2px dotted #000000;
+  padding: 0 5px 5px 0;
 }
 
 .box {
@@ -36,73 +52,149 @@ margin-right: 10px;
 }
 
 
-#header {
-  width: 100%;
-  height: 60px;
+#logo {
+  display: block-inline;
+  float: left;
+  height: 55px;
+  width: 205px;
+  text-align: left;
+  padding: 0;
   margin: 0;
-  border-bottom: 2px dotted #000000;
-  padding: 0 5px 5px 0;
+  background: #FFFFFF;
+  border: 1px solid #000000;
+
 }
 
-
-#logo {
+#logo a{
+  position: relative;
+  display: block;
+  width: 100%;
   height: 55px;
-  text-align: left;
-  padding: 0 15px 0 10px;
+  padding: 0;
   margin: 0;
-  background: orange;
+  text-decoration: none;
 }
 
 #logopic {
+  float: left;
+  position: relative;
+  left: 5px;
+  top: 5px;
   display: block;
-  text-align: center;
   float:left;
-  padding: 0;
-  margin: 0;
-  height: 25px;
+  height: 30px;
   width: 30px;
-  font-size: 100%;
+  border: 0px;
 }
 
-#clientinfo {
-  margin: 0 0 0 20px;
-  text-align: left;
+#logo h1 {
   float: left;
-  width: 200px;
-  font-size: 0.8em;
+  position: relative;
+  left: 10px;
+  top: 2px;
+  display: block;
+  margin: 0;
+  height: 35px;
+  line-height: 35px;
+}
+
+#logo p {
+  position: relative;
+  top: -20px;
+  right: 5px;
+  font-size: 80%;
+  padding: 0;
+  margin: 0;
+  float: right;
+
+
 }
 
 #searchbox {
-  height: 50px;
-  width: 485px;
-  padding: 7px 0px 0px 10px;
+  height: 25px;
+  width: 385px;
+  padding: 15px 0px 0px 5px;
   display:block;
   float:left
 }
 
 #search {
+  display: inline-block;
   float:left;
   text-align: left;
-  font-size: 1.3em;
-  margin: 0px 0px 2px 0px;
-  height: 25px;
-  width: 485px;
+  font-size: 1.1em;
+  margin: 0px 0px 0px 0px;
+  height: 24px;
+  width: 100%;
+  padding: 0px 0px 0px 0px;
+  position: static;
+}
+
+#rss {
+  float: left;
+
+  width: 117px;
+  height: 24px;
+  display:block;
+  padding: 0px;
+  margin: 15px 0px 0px 5px;
+  border: 1px solid #000000;
+  background: #FFFFFF;
 
 }
 
-#searchbox p {
-  float:left;
-  display:block;
+#rss img {
+  display: inline-block;
+  position: relative;
   padding: 0px;
-  margin: 0px;
+  margin: 2px 2px 0 2px;
+  height: 20px;
+  border: 0;
+}
 
+#rss p {
+  display: inline-block;
+  position: relative;
+  top: -5px;
+  padding: 0px;
+  margin: 0px 0px 0px 2px;
+  height: 20px;
+}
+
+#rss a{
+  text-decoration: none;
+  display: block;
+  position: relative;
+  margin: 0px;
+  width: 100%;
+  height: 24px;
+}
+
+
+#clientinfo {
+  font-family: Verdana, Arial;
+  display: block;
+  margin: 2px 0px 0 12px;
+  padding: 0 0 0 0px;
+  text-align: left;
+  float: left;
+  width: 220px;
+  font-size: 0.7em;
+}
+
+#greeting, #passwordinfo {
+  padding: 0 0 0 0px;
+}
+
+#container {
+  width: 960px;
 }
 
 #side-b {
   float: left;
   width: 225px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
+  margin-right: 0px;
 }
 
 #content {
@@ -111,6 +203,9 @@ margin-right: 10px;
   padding: 10px;
   text-align: left;
   line-height: 1.3em;
+  border: 1px dotted #666;
+  margin: 10px 0 10px 0;
+  min-height: 450px;
 }
 
 #footer {
@@ -132,14 +227,6 @@ margin-right: 10px;
   width: 100%;
 }
 
-
-h1, h2 {
-  font-weight: normal;
-  font-variant: small-caps;
-  line-height: 1.6em;
-  margin: 0;
-  padding: 0;
-}
 
 h3 {
 font-size: 1em;
@@ -234,11 +321,6 @@ p.moderatecomment {
 #clientinfo p {
   font-size: 0.8em;
   margin: 0;
-}
-
-#header h1 {
-  margin: 0;
-  padding: 0;
 }
 
 h2 a:link, h2 a:active, h2 a:visited, h2 a:hover, h2 a:focus,
