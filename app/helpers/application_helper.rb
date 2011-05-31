@@ -79,22 +79,37 @@ module ApplicationHelper
   end
 
   def typo(line)
-    line.gilensize(gilenconf)
+    # Доделаем часть работы
+    cleanups = {
+          /\(c\)/i => '©',
+          # короткие слова привязываем неразрывным пробелом;
+          # прогоняем два раза, чтобы обработать расставленные в первом прогоне &nbsp;
+          /(^|\s)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/ => '\1\2 ',
+          /( |&nbsp;|&\#160;)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/ => '\1\2 ',
+          # длинное тире
+          /-(\s)/ => '—\1',
+          /\r\n/ => "\n",
+          /\n\n+/ => "\n\n",
+          /[ \t]+/ => ' ',
+          /(\S+(?:-\S+)+)/ => '<nobr>\1</nobr>',
+          /[ ]$/m => "",
+          /^[ ]/m => ""
+      }
+      cleanups.each do |regexp, replacement|
+        line.gsub!(regexp, replacement)
+      end
+
+    line=line.gilensize(gilenconf)
+    line
   end
 
   def allowed_tags
-    %w(br i b)
-  end
-
-  def display_comment(content)
-    auto_link(sanitize(content,:tags =>allowed_tags))
+    %w(i b)
   end
 
   def strip_comment(content)
-    sanitize(content,:tags =>allowed_tags)
+    auto_link(sanitize(content,:tags =>allowed_tags))
   end
-
-
 
   def password_status_text(user)
     if user.encrypted_password.nil?

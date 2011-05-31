@@ -44,8 +44,8 @@ module Mongologue
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-#    config.middleware.use "ResponseTimer", "Load Time" 
- 
+#    config.middleware.use "ResponseTimer", "Load Time"
+
     # add unicode support for strings everywhere
      String.class_eval  'def downcase
          Unicode::downcase(self)
@@ -72,6 +72,7 @@ module Mongologue
          ActionController::Base.helpers.strip_tags(self)
        end'
 
- 
+
+
   end
 end

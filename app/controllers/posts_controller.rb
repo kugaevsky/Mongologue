@@ -12,7 +12,7 @@ class PostsController < ApplicationController
     @post=Post.new
 
     items_per_per=50
-    if request.format.html?
+    if request.format.html? || request.format.js?
       items_per_page=10
     end
 

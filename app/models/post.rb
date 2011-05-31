@@ -30,7 +30,7 @@ class Post
   index "comments.updated_at"
   index :keywords
   before_save :process_keywords
-  before_save :convert_newlines
+  before_save :prepare_text
   after_save :rebuild_tags
   after_destroy :rebuild_tags
   before_create :assign_pid
@@ -90,94 +90,102 @@ class Post
 
   end
 
-  def convert_newlines
-     rules = {
-          /\r\n/ => "\n",
-          /\n/ => "<br>\n",
-      }
-      rules.each do |regexp, replacement|
-        self.content.gsub!(regexp, replacement)
-      end
-      self.content = typo(self.content); #.gilensize(:raw_output => true)
+  def prepare_text
+    self.content = '<p>'+typo(self.content)+'</p>'
+    rules = {
+      /\n/ => "<br>\n",
+      /<br>\n<br>\n/ => "</p>\n<p>"
+    }
+    rules.each do |regexp, replacement|
+      self.content.gsub!(regexp, replacement)
+    end
+    return true
   end
 
-  def reverse_newlines
-     rules = {
-          /<br>\n/ => "\n"
-      }
-      rules.each do |regexp, replacement|
-        self.content.gsub!(regexp, replacement)
-      end
+  def unprepare_text
+    rules = {
+        /<\/p>\n<p>/ => "<br>\n<br>\n",
+        /<br>\n/ => "\n",
+        /<p>/ => '',
+        /<\/p>/ => '',
+        /<nobr>/ => '',
+        /<\/nobr>/ => ''
+    }
+    rules.each do |regexp, replacement|
+      self.content.gsub!(regexp, replacement)
+    end
+    return true
   end
 
-def self.my_search(s)
-  if !s.blank?
-   terms = s.split(',')
-   my_tags = all_tags
+  # One crappy piece of code. Refactor.
+  def self.my_search(s)
+    if !s.blank?
+     terms = s.split(',')
+     my_tags = all_tags
 
-   crit = Post.without(:comments)
-   keywords_and = []
-   keywords_not = []
-   tags_and = []
-   tags_not = []
+     crit = Post.without(:comments)
+     keywords_and = []
+     keywords_not = []
+     tags_and = []
+     tags_not = []
 
-   terms.each do |term|
-     is_keyword = false
-     is_tag = false
-     is_not = false
-     is_like = false
-
-     t=term.strip.downcase
-     is_not = true if t.chr=="!"
-     if t.rindex("*")!=nil
-       is_keyword = true
+     terms.each do |term|
+       is_keyword = false
        is_tag = false
-       is_like = true
-     end
+       is_not = false
+       is_like = false
 
-     t=t.gsub(/[^0-9a-zа-я]+/,'')
-     if my_tags.select {|f| f["_id"] == t }==[]
-       is_keyword = true
-     else
-       is_tag = true unless is_keyword == true
-     end
-
-     if is_like == true
-       t= /^#{t}/
-     end
-
-     if is_keyword == true
-       if is_not == true
-         keywords_not << t
-       else
-         keywords_and << t
+       t=term.strip.downcase
+       is_not = true if t.chr=="!"
+       if t.rindex("*")!=nil
+         is_keyword = true
+         is_tag = false
+         is_like = true
        end
-     else
-       if is_not == true
-         tags_not << t
+
+       t=t.gsub(/[^0-9a-zа-я]+/,'')
+       if my_tags.select {|f| f["_id"] == t }==[]
+         is_keyword = true
        else
-         tags_and << t
+         is_tag = true unless is_keyword == true
+       end
+
+       if is_like == true
+         t= /^#{t}/
+       end
+
+       if is_keyword == true
+         if is_not == true
+           keywords_not << t
+         else
+           keywords_and << t
+         end
+       else
+         if is_not == true
+           tags_not << t
+         else
+           tags_and << t
+         end
        end
      end
-   end
-   if tags_and!=[]
-     crit=crit.all_in(:tags => tags_and)
-   end
-   if keywords_and!=[]
-     crit=crit.all_in(:keywords => keywords_and)
-   end
-   if tags_not!=[]
-     crit=crit.not_in(:tags => tags_not)
-   end
-   if keywords_not!=[]
-     crit=crit.not_in(:keywords => keywords_not)
-   end
+     if tags_and!=[]
+       crit=crit.all_in(:tags => tags_and)
+     end
+     if keywords_and!=[]
+       crit=crit.all_in(:keywords => keywords_and)
+     end
+     if tags_not!=[]
+       crit=crit.not_in(:tags => tags_not)
+     end
+     if keywords_not!=[]
+       crit=crit.not_in(:keywords => keywords_not)
+     end
 
-   return crit
-  else
-   all
+     return crit
+    else
+     all
+    end
   end
-end
 
   protected
 

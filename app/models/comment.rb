@@ -24,24 +24,24 @@ class Comment
   attr_accessible :content
 
   embedded_in :post, :inverse_of => :comments, :index => true
-  before_save :process_content
+  before_save :prepare_text
 
 
-  def process_content
-
+  def prepare_text
      self.content=strip_comment(self.content)
+     self.content = '<p>'+typo(self.content)+'</p>'
+     self.reply = '<p>'+typo(self.reply)+'</p>' unless self.reply.nil?
+
      rules = {
-          /\r\n/ => "\n",
-          /\n\n+/ => "\n\n",
-          /\n/ => "<br>\n",
+        /\n/ => "<br>\n",
+        /<br>\n<br>\n/ => "</p>\n<p>"
       }
 
       rules.each do |regexp, replacement|
         self.content.gsub!(regexp, replacement)
         self.reply.gsub!(regexp, replacement) unless self.reply.nil?
       end
-      self.content = typo(self.content)
-      self.reply = typo(self.reply) unless self.reply.nil?
+
     return true
   end
 
@@ -49,14 +49,24 @@ class Comment
     pid
   end
 
-  def reverse_newlines
-     rules = {
-          /<br>/ => "\n"
+  def unprepare_text
+    rules = {
+          /<\/p>\n<p>/ => "<br>\n<br>\n",
+          /<br>\n/ => "\n",
+          /<p>/ => '',
+          /<\/p>/ => '',
+          /<nobr>/ => '',
+          /<\/nobr>/ => ''
       }
+
       rules.each do |regexp, replacement|
+        self.content.gsub!(regexp, replacement)
         self.reply.gsub!(regexp, replacement) unless self.reply.nil?
-        # self.content.gsub!(regexp, replacement)
       end
+
+      self.content=sanitize(self.content,:tags =>%())
+
+      return true
   end
 
   protected

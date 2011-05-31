@@ -1,7 +1,7 @@
 <div id=<%= "p#{post.pid}" %> class="postbox" >
   <div class="post">
     <h2><%= link_to post.title, post %></h2>
-    <p><%= post.content.html_safe %></p>
+    <%= post.content.html_safe %>
     <p class="postinfo"><%= time_info(post.created_at, post.updated_at) %>
       Tags: <%= tags_list(post.tags).html_safe %></p>
     <p><% if signed_in? %>

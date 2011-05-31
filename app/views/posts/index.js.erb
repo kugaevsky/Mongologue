@@ -1,5 +1,5 @@
 $('<% @posts.each do |post| %>\
-    <%= cache(:action => "index", :id => post.id) do %>\
+    <%= cache(:action => "index", :id => post.pid) do %>\
        <%= escape_javascript render post %>\
        <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>\
     <% end %>\
