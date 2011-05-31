@@ -1,5 +1,8 @@
+// todo: эффект должен совпадать с "html вариантом", т.е. не должно отображаться более одной страницы
+// удалять предыдущие страницы?
+
 $('<% @posts.each do |post| %>\
-    <%= cache(:action => "index", :id => post.pid) do %>\
+    <% cache(:action => "index", :id => post.pid, :action_suffix => authorized_admin? ) do %>\
        <%= escape_javascript render post %>\
        <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>\
     <% end %>\

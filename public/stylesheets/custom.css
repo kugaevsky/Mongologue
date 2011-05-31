@@ -39,7 +39,7 @@ h1, h2 {
 #header {
   width: 100%;
   height: 60px;
-  margin: 0;
+  margin: 5px 0 0 0;
   border-bottom: 2px dotted #000000;
   padding: 0 5px 5px 0;
 }
@@ -60,7 +60,7 @@ margin-right: 10px;
   text-align: left;
   padding: 0;
   margin: 0;
-  background: #FFFFFF;
+  background: orange;
   border: 1px solid #000000;
 
 }
@@ -139,7 +139,7 @@ margin-right: 10px;
   padding: 0px;
   margin: 15px 0px 0px 5px;
   border: 1px solid #000000;
-  background: #FFFFFF;
+  background: orange;
 
 }
 
