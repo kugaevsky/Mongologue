@@ -143,7 +143,7 @@ class Post
          is_like = true
        end
 
-       t=t.gsub(/[^0-9a-zа-я ]+/,'')
+       t=t.gsub(/[^0-9a-zа-яё ]+/,'')
        if my_tags.select {|f| f["_id"] == t }==[]
          is_keyword = true
        else

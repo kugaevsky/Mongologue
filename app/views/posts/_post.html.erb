@@ -2,9 +2,9 @@
   <div class="post">
     <h2><%= link_to post.title, post %></h2>
     <%= post.content.html_safe %>
-    <p class="postinfo"><%= time_info(post.created_at, post.updated_at) %>
-      Tags: <%= tags_list(post.tags).html_safe %></p>
-    <p><% if signed_in? %>
+    <div class="docinfo"><%= time_info(post.created_at, post.updated_at) %>
+      Tags: <%= tags_list(post.tags).html_safe %></div>
+    <div class="docbuttons"><% if signed_in? %>
          <% if current_user.admin? %>
            <%= link_to 'Edit', edit_admin_post_path(post), :remote => true %>,  |
            <%= link_to 'Delete', admin_post_path(post), :confirm => 'Are you sure?', :method => :delete,
@@ -15,11 +15,11 @@
        <% if controller.action_name == "index" or controller.action_name == "create" %>
          <%= link_to cc, expand_comments_post_path(post),
              :remote => true,
-             :id => "showc#{post.pid}" %></p>
+             :id => "showc#{post.pid}" %></div>
        <% else %>
          <%= link_to cc, collapse_comments_post_path(post),
              :remote => true,
-             :id => "showc#{post.pid}" %></p>
+             :id => "showc#{post.pid}" %></div>
        <% end %>
   </div>
 </div>

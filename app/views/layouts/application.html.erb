@@ -52,14 +52,16 @@
     </div>
       <form id="searchbox" accept-charset="UTF-8" action="/" method="get">
          <input id="search" name="s" type="text" value="<%= params[:s] %>" />
-      </form>
 
       <% if controller.action_name == "index" %>
+        <div id="fakesearch"></div>
         <div id="rss">
         <a href="/posts.rss?s=<%= params[:s] %>" title="Get RSS feed of this search!">
         <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
         <%= "#{@posts.count}" %></span></p></a></div>
       <% end %>
+    </form>
+
 
     <div id="clientinfo" class="box">
       <div id="greeting">

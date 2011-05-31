@@ -15,7 +15,7 @@ class Comment
   field :reply
   field :reply_name
   field :reply_url
-  validates_length_of :content, :within => 5..500
+  validates_length_of :content, :within => 5..600
   validates_length_of :reply, :maximum => 500
   validates_length_of :name, :maximum => 50
   validates_length_of :url, :maximum => 200
