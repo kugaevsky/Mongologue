@@ -16,8 +16,13 @@ Mongologue::Application.routes.draw do
 
   match 'signin' => 'sessions#new'
   match 'signout' => 'sessions#destroy'
+  match 'authorize' => 'sessions#authorize'
 
-  resources :sessions
+  resources :sessions do
+    member do
+      put :authorize
+    end
+  end
 
   # admin actions go here
   namespace :admin do

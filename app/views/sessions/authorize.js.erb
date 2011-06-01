@@ -1,0 +1,6 @@
+<% if user.nil? %>
+  $('#jsflash').html('<h2 style="text-align:center">Wrong password.</h2>').show("slide", { direction: "up" });;
+<% end %>
+$('#content').hide("slide", { direction: "down" }, (function(){
+$('#content').html("<%= escape_javascript(render :file => 'sessions/authorize.html.erb' ) %>").show("slide", { direction: "up" });
+}));

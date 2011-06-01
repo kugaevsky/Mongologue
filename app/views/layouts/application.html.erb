@@ -4,6 +4,7 @@
 <head>
   <title><%= current_user_name %> - ☢ Mongologue</title>
   <%= stylesheet_link_tag 'custom', :media => 'screen' %>
+  <%= stylesheet_link_tag 'orange/jquery-ui-1.8.13.custom.css', :media => 'screen' %>
   <%= javascript_include_tag 'jquery-1.6.min', 'jquery.cookie', "jquery-ui-1.8.13.custom.min",
                              'rails', 'application' %>
 
@@ -73,8 +74,7 @@
            <%= link_to identity_or_name(current_user), current_user.identity %><br>
            <%= link_to "Sign out", signout_path, :method => :delete %>
       <% else %>
-        <%= loginza_button_tag("Sign in",
-                               'http://'+request.env["HTTP_HOST"]+signin_path+'?return_to='+request.fullpath) %>
+           <%= link_to "Sign in", signin_path %>
       <% end %>
       </div>
       <% if signed_in? %>
@@ -85,11 +85,11 @@
     </div>
   </div>
   <div id="container">
+    <div id="jsflash"></div>
+    <% flash.each do |key, value| %>
+      <div class="flash <%= key %>"><%= value %></div>
+    <% end %>
     <div id="content">
-      <div id="jsflash"></div>
-      <% flash.each do |key, value| %>
-        <div class="flash <%= key %>"><%= value %></div>
-      <% end %>
       <%= yield %>
     </div>
     <div id="side-b">

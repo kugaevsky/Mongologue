@@ -1,9 +1,4 @@
-<% form_for(:session, :url => sessions_path) do |f| %>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Sign in" %>
-  </div>
-<% end %>
+<div class="loginza">
+<% url = 'http://'+request.env["HTTP_HOST"]+authorize_path+'?return_to='+request.fullpath %>
+<%= loginza_frame_tag(url, { :style => "width:400px;height:100px;" }) %>
+</div>

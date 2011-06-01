@@ -12,4 +12,13 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError.new('Not Found')
   end
 
+  # fix to handle redirect_to from ajax requests
+  def redirect_to(options = {}, response_status = {})
+    if request.xhr?
+      render(:update) {|page| page.redirect_to(options)}
+    else
+      super(options, response_status)
+    end
+  end
+
 end
