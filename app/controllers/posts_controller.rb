@@ -13,7 +13,7 @@ class PostsController < ApplicationController
 
     items_per_per=50
     if request.format.html? || request.format.js?
-      items_per_page=10
+      items_per_page=20
     end
 
     # Ok, fulltext search goes here

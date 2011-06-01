@@ -1,5 +1,5 @@
 <% if authorized_admin? %>
-  <div id="newpostbutton"><p>NEW POST</p></div>
+  <div class="contentbutton button" id="newpostbutton">NEW POST</div>
   <div id="newpostbox" class="postbox" style="display:none;">
     <%= render :partial => 'admin/posts/form' %>
   </div>
@@ -8,15 +8,13 @@
   <div id="firstpost"></div>
   <% @posts.each do |post| %>
     <% cache("index@posts@#{post.pid}@#{authorized_admin?}") do %>
-      <%= render post %>
+      <div id=<%= "p#{post.pid}" %> class="postbox" >
+        <%= render post %>
+      </div>
       <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
     <% end %>
   <% end %>
 </div>
-<div id="up" class="bottombutton">
-  <%= link_to_function "&uarr; UP &uarr;".html_safe,
-                     "$( 'html, body' ).animate( { scrollTop: 0 }, 'slow' );" %>
-</div>
-<div id="paginator" class="bottombutton">
-  <%= link_to_next_page(@posts, "&darr; MORE POSTS &darr;".html_safe, :remote => true ) %>
+<div id="paginator" class="button contentbutton">
+  <%= link_to_next_page(@posts, "NEXT PAGE &rarr;".html_safe, :remote => true ) %>
 </div>

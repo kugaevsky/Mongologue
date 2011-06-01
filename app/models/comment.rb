@@ -6,7 +6,6 @@ class Comment
   include ActionView::Helpers
   include ApplicationHelper
 
-
   field :pid
   field :name
   field :url
@@ -22,12 +21,9 @@ class Comment
   before_create :assign_pid
   after_create :inc_counter
   after_destroy :dec_counter
-
   attr_accessible :content
-
-  embedded_in :post, :inverse_of => :comments, :index => true
   before_save :prepare_text
-
+  embedded_in :post, :inverse_of => :comments, :index => true
 
   def prepare_text
      self.content=strip_comment(self.content)

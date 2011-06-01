@@ -1,12 +1,13 @@
 Planned things:
 
+Add posts auto-tagging
 Remember the sidebar settings (cookies now/user settings later, perhaps both)
 Allow to collapse/expand posts ("mark as read") and remember this setting
 (done) Allow to remove a password (not just make it blank)
 Ask for an old password when setting a new password
 Add an ability to reset a password with an email link
-Make the password dialogs more pretty (put the Loginza dialog into an iframe of the top level transparent div?)
-Add an RSS feed with search results
+Make the password dialogs more pretty (also the Loginza dialog into transparent div?)
+(done) Add an RSS feed with search results
 Add the sitemap
 Add the "user settings" embedded document/hash into the Users model
 Add email subscriptions (new posts, new comments, new replies, other notifications)

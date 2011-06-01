@@ -1,9 +1,11 @@
+$('<%= "#p#{@post.pid}" %>').hide("slide", { direction: "left" }, (function(){
 var changebutton = 0;
 if ($('<%= "#pc#{@post.pid}" %>').css("display") == "none") {
 	changebutton = 1;
  }
-$('<%= "#p#{@post.pid}" %>').replaceWith("<%= escape_javascript(
+$('<%= "#p#{@post.pid}" %>').html("<%= escape_javascript(
                                               render :partial => 'posts/post', :locals => { :post => @post }) %>")
+$('<%= "#p#{@post.pid}" %>').show("slide", { direction: "right" })
 
 if (changebutton == 1) {
 	$('<%= "#showc#{@post.pid}" %>').replaceWith("<%= escape_javascript(link_to "Comments: #{@post.comments_counter.to_i}", expand_comments_post_path(@post), :remote => true, :id => "showc#{@post.pid}") %>")
@@ -11,3 +13,4 @@ if (changebutton == 1) {
 <% if controller.action_name == "update" %>
   $("#tagscloud").html("<%= escape_javascript(tags_cloud.html_safe) %>")
 <% end %>
+}));

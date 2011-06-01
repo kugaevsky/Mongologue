@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_filter :authenticate
-#  before_filter :admin_user
-  before_filter :find_user, :except => ["password_check"]
+  before_filter :find_user
+  before_filter :correct_user
 
   def find_user
     @user = User.find(params[:id]) || not_found
@@ -33,5 +33,11 @@ class Admin::UsersController < ApplicationController
       end
     end
   end
+
+  def correct_user
+#   @user = User.find(params[:id])
+    redirect_to(root_path) unless (current_user?(@user) or current_user.admin?)
+  end
+
 
 end

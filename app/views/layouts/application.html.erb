@@ -4,38 +4,42 @@
 <head>
   <title><%= current_user_name %> - ☢ Mongologue</title>
   <%= stylesheet_link_tag 'custom', :media => 'screen' %>
-  <%= javascript_include_tag 'jquery-1.6.min', 'jquery.cookie', 'rails', 'application' %>
+  <%= javascript_include_tag 'jquery-1.6.min', 'jquery.cookie', "jquery-ui-1.8.13.custom.min",
+                             'rails', 'application' %>
 
   <%= csrf_meta_tag %>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('.rightbutton, .bottombutton, #newpostbutton')
-      .hover(function() {
-      $(this).animate({ fontSize: "120%" }, 'fast');
-      }, function() {
-      $(this).animate({ fontSize: "100%" }, 'fast');
-    });
+
+    $.fn.disableSelection = function() {
+        $(this).attr('unselectable', 'on')
+               .css('-moz-user-select', 'none')
+               .each(function() {
+                   this.onselectstart = function() { return false; };
+                });
+    };
+
+    $(".button").disableSelection();
 
     $("#newpostbutton")
       .click(function() {
-      $("#newpostbox").slideToggle();
+      $("#newpostbox").toggle({ effect: "blind"});
     });
 
     $("#tagsbutton")
       .click(function() {
-      $("#tagscloud").slideToggle();
+      $("#tagscloud").toggle({ effect: "blind"});
     });
 
     $("#aboutbutton")
       .click(function() {
-      $("#abouttext").slideToggle();
+      $("#abouttext").toggle({ effect: "blind"});
     });
 
     $("#siteinfobutton")
       .click(function() {
-      $("#siteinfo").slideToggle();
+      $("#siteinfo").toggle({ effect: "blind"});
     });
-
 
  });
 
@@ -47,24 +51,22 @@
 <div id="wrapper">
   <div id="header">
     <div id="logo">
-      <a href="/" title="Powerd by MongoDB"><img src="/images/rad-30px-white.png" id='logopic'/>
+      <a href="/" title="Powered by MongoDB"><img src="/images/rad-30px-white.png" id='logopic'/>
       <h1>Mongologue</h1></a>
     <p>Powered by MongoDB</p></a>
     </div>
       <form id="searchbox" accept-charset="UTF-8" action="/" method="get">
-         <input id="search" name="s" type="text" value="<%= params[:s] %>" />
+     <input id="search" name="s" type="text" value='<%=
+      "#{mainpage? ? params[:s] : ""}" %>'
+       title="Enter comma-separated keywords and press Enter." />
 
-      <% if controller.action_name == "index" %>
         <div id="fakesearch"></div>
         <div id="rss">
         <a href="/posts.rss?s=<%= params[:s] %>" title="Get RSS feed of this search!">
         <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
-        <%= "#{@posts.count}" %></span></p></a></div>
-      <% end %>
-    </form>
-
-
-    <div id="clientinfo" class="box">
+        <%= "#{mainpage? ? @posts.count : Post.count}" %></span></p></a></div>
+      </form>
+    <div id="clientinfo">
       <div id="greeting">
       <% if signed_in? %>
            <%= "(A)" if current_user.admin? %>
@@ -92,11 +94,11 @@
     </div>
     <div id="side-b">
       <div id="edituser"></div>
-      <div id="tagsbutton" class="rightbutton"><p>TAGS</p></div>
+      <div id="tagsbutton" class="button rightbutton">TAGS</div>
       <% cache('tagscloud') do %>
         <div id="tagscloud" style="display:none;" ><p><%= tags_cloud.html_safe %></p></div>
       <% end %>
-      <div id="aboutbutton" class="rightbutton"><p>AUTHOR INFO</p></div>
+      <div id="aboutbutton" class="button rightbutton">AUTHOR INFO</div>
       <div id="abouttext" style="display: none;" >
         <p><a href="#">About author</a><br>
            Facebook</br>
@@ -108,7 +110,7 @@
            ICQ: 22233344</br>
            <a href="mailto:example@example.com">author@example.com</a></p>
       </div>
-      <div id="siteinfobutton" class="rightbutton"><p>SITE INFO</p></div>
+      <div id="siteinfobutton" class="button rightbutton">SITE INFO</div>
       <div id="siteinfo" style="display: none;">
         <p><a href="#">About this site</a>.</p>
         <p>Created with:<br><a href="http://rubyonrails.org/">Ruby on Rails 3</a>,
@@ -119,10 +121,10 @@
         <p>Inspired by <a href="http://spectator.ru">Dmitry Smirnov</a>.</p>
       </div>
     </div>
-    <div id="footer"><p>☢ 2011<br>
+  </div>
+  <div id="footer"><p>☢ 2011<br>
       “First they ignore you, then they laugh at you, then they fight you, then you win.”</p>
       <%= debug(params) if Rails.env.development? %>
-    </div>
   </div>
 </div>
 

@@ -1,6 +1,8 @@
 <% cache("show@posts@#{@post.pid}@#{authorized_admin?}") do %>
-<%= render @post %>
-<div id=<%= "pc#{@post.pid}" %> >
+<div id=<%= "p#{@post.pid}" %> class="postbox" >
+  <%= render @post %>
+  <div id=<%= "pc#{@post.pid}" %> >
   <%= render 'posts/comments' %>
+  </div>
 </div>
 <% end %>

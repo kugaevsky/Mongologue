@@ -1,2 +1,3 @@
-$('<%= "#p#{@post.pid}" %>').html("<%= escape_javascript(render('form')) %>")
-$("#tagscloud").html("<%= escape_javascript(tags_cloud.html_safe) %>")
+$('<%= "#p#{@post.pid}" %>').hide("slide", { direction: "right" },(function(){
+$('<%= "#p#{@post.pid}" %>').html("<%= escape_javascript(render('form')) %>").show("slide", { direction: "left" })
+}));

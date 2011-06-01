@@ -6,6 +6,13 @@ module ApplicationHelper
     "Roses are red<br>Diamonds are blue<br>".html_safe
   end
 
+  def mainpage?
+    if controller_name == "posts" and controller.action_name == "index"
+      return true
+    end
+    return false
+  end
+
   def cache_unless_admin *args
     unless authorized_admin?
       cache args do
@@ -35,7 +42,7 @@ module ApplicationHelper
     alist=String.new
     Post.all_tags.each do |hsh|
       id_text=fav_tags.include?(hsh['_id']) ? "#{bo}#{hsh['_id']}#{bc}" : hsh['_id']
-      alist="#{alist}, <a href='?s=#{hsh['_id'].gsub(' ','%20')}' title=#{hsh['value'].to_i}>#{id_text}</a>"
+      alist="#{alist}, <a href='/?s=#{hsh['_id'].gsub(' ','%20')}' title=#{hsh['value'].to_i}>#{id_text}</a>"
     end
     alist.sub(', ','') # remove things at start
   end
@@ -153,8 +160,8 @@ module ApplicationHelper
     # Patched for search
     if scope.last_page?
       # put "up!" button permanently, experimental
-      # link_to_function "&uarr; UP &uarr;".html_safe,
-      #                  "$( 'html, body' ).animate( { scrollTop: 0 }, 'slow' );"
+      link_to_function "&uarr; UP &uarr;".html_safe,
+                        "$( 'html, body' ).animate( { scrollTop: 0 }, 0 );"
     else
       link_to_unless scope.last_page?, name, {param_name => (scope.current_page + 1),
                                              :s => params[:s]},

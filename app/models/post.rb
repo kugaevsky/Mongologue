@@ -21,7 +21,7 @@ class Post
   validates_length_of :title, :maximum => 60
   validates_length_of :content, :maximum => 100000
 
-  embeds_many :comments, index: true
+  embeds_many :comments, :inverse_of => :post, index: true
   index :pid
   index "comments.pid"
   index :tags

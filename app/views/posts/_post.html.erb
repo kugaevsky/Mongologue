@@ -1,4 +1,3 @@
-<div id=<%= "p#{post.pid}" %> class="postbox" >
   <div class="post">
     <h2><%= link_to post.title, post %></h2>
     <%= (post.html_content.nil? ? prepare_text(post.content)+('<br><b>realtime render</b><br>') : post.html_content).html_safe %>
@@ -22,4 +21,3 @@
              :id => "showc#{post.pid}" %></div>
        <% end %>
   </div>
-</div>
