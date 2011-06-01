@@ -11,6 +11,7 @@ class Post
   field :pid
   field :title
   field :content
+  field :html_content
   field :tags, type: Array
   field :comments_counter, type: Integer
   field :keywords, type: Array
@@ -29,8 +30,8 @@ class Post
   index "comments.created_at"
   index "comments.updated_at"
   index :keywords
-  before_save :process_keywords
-  before_save :prepare_text
+  before_save :process_tags_and_keywords
+  before_save :render_content
   after_save :rebuild_tags
   after_destroy :rebuild_tags
   before_create :assign_pid
@@ -71,7 +72,7 @@ class Post
     sanitize(self.content,:tags =>%w()).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
   end
 
-  def process_keywords
+  def process_tags_and_keywords
     # Remove leading and trailing spaces from every tag, force tags into downcase
     self.tags.each_with_index do |t, index|
       self.tags[index] = t.strip.downcase
@@ -90,31 +91,8 @@ class Post
 
   end
 
-  def prepare_text
-    self.content = '<p>'+typo(self.content)+'</p>'
-    rules = {
-      /\n/ => "<br>\n",
-      /<br>\n<br>\n/ => "</p>\n<p>"
-    }
-    rules.each do |regexp, replacement|
-      self.content.gsub!(regexp, replacement)
-    end
-    return true
-  end
-
-  def unprepare_text
-    rules = {
-        /<\/p>\n<p>/ => "<br>\n<br>\n",
-        /<br>\n/ => "\n",
-        /<p>/ => '',
-        /<\/p>/ => '',
-        /<nobr>/ => '',
-        /<\/nobr>/ => ''
-    }
-    rules.each do |regexp, replacement|
-      self.content.gsub!(regexp, replacement)
-    end
-    return true
+  def render_content
+    self.html_content = prepare_text(self.content)
   end
 
   # One crappy piece of code. Refactor.

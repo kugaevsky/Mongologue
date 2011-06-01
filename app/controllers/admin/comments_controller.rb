@@ -14,7 +14,6 @@ class Admin::CommentsController < ApplicationController
   end
 
   def edit
-     @comment.unprepare_text
     respond_to do |format|
       format.js { render 'edit_reply.js.erb' }
       format.html { render 'edit_reply.html.erb' }
@@ -23,7 +22,6 @@ class Admin::CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    @post.inc(:comments_counter, -1)
     expire_post(@post)
     respond_to do |format|
       format.html { redirect_to @post }

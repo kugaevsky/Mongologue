@@ -24,7 +24,6 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @new_comment.save
-        @post.inc(:comments_counter, 1)
         expire_post(@post)
 
         format.html { redirect_to @post }

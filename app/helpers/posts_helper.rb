@@ -1,10 +1,10 @@
 module PostsHelper
 
   def expire_post(post)
-    expire_fragment(:controller => "posts", :action => "index", :id => post.pid, :action_suffix => true)
-    expire_fragment(:controller => "posts", :action => "index", :id => post.pid, :action_suffix => false)
-    expire_fragment(:controller => "posts", :action => "show", :id => post.pid, :action_suffix => true)
-    expire_fragment(:controller => "posts", :action => "show", :id => post.pid, :action_suffix => false)
+    expire_fragment("index@posts@#{post.pid}@true")
+    expire_fragment("index@posts@#{post.pid}@false")
+    expire_fragment("show@posts@#{post.pid}@true")
+    expire_fragment("show@posts@#{post.pid}@false")
   end
 
   def expire_cloud

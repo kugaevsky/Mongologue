@@ -111,6 +111,35 @@ module ApplicationHelper
     auto_link(sanitize(content,:tags =>allowed_tags))
   end
 
+  def prepare_text(text)
+    text = '<p>'+typo(text)+'</p>'
+    rules = {
+      /\n/ => "<br>\n",
+      /<br>\n<br>\n/ => "</p>\n<p>"
+    }
+    rules.each do |regexp, replacement|
+      text.gsub!(regexp, replacement)
+    end
+    return text
+  end
+
+  def unprepare_text(text)
+    rules = {
+        /<\/p>\n<p>/ => "<br>\n<br>\n",
+        /<br>\n/ => "\n",
+        /<p>/ => '',
+        /<\/p>/ => '',
+        /<nobr>/ => '',
+        /<\/nobr>/ => ''
+    }
+    rules.each do |regexp, replacement|
+      text.gsub!(regexp, replacement)
+    end
+    return text
+  end
+
+
+
   def password_status_text(user)
     if user.encrypted_password.nil?
        link_to("No password protection. Set now.", edit_admin_user_path(current_user), :remote => true).html_safe

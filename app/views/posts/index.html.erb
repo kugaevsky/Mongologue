@@ -7,7 +7,7 @@
 <div id="posts">
   <div id="firstpost"></div>
   <% @posts.each do |post| %>
-    <% cache(:action => "index", :id => post.pid, :action_suffix => authorized_admin? ) do %>
+    <% cache("index@posts@#{post.pid}@#{authorized_admin?}") do %>
       <%= render post %>
       <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
     <% end %>

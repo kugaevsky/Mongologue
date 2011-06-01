@@ -22,7 +22,7 @@ class Admin::PostsController < ApplicationController
 
 
   def edit
-    @post.unprepare_text
+
     respond_to do |format|
       format.html
       format.js
