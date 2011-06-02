@@ -1,4 +1,3 @@
-<% next_page = nil %>
 <% if authorized_admin? %>
   <div class="contentbutton button" id="newpostbutton" onclick='$("#newpostbox").toggle({ effect: "blind"});'>
   NEW POST</div>
@@ -9,21 +8,21 @@
 <div id="posts">
   <div id="firstpost"></div>
   <% @posts.each_with_index do |post,index| %>
-    <% if index < items_per_page %>
+    <% if post.pid == @next_page_pid %>
+      <% break %>
+    <% end %>
     <% cache("index@posts@#{post.pid}@#{authorized_admin?}") do %>
         <div id=<%= "p#{post.pid}" %> class="postbox">
         <%= render post %>
         </div>
         <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
     <% end %>
-    <% else %>
-      <% next_page = post.pid %>
-    <% end %>
   <% end %>
 </div>
 <div id="paginator" class="button contentbutton" >
-<% unless next_page.nil? %>
-  <%= link_to 'NEXT PAGE &rarr;'.html_safe, posts_path({:p => next_page, :s => params[:s] }), :remote => true %>
+<% unless @next_page_pid.nil? %>
+  <%= link_to 'NEXT PAGE &rarr;'.html_safe,
+              posts_path({:p => @next_page_pid, :s => params[:s] }), :remote => true %>
 <% else %>
   <%= link_to_function "&uarr; UP &uarr;".html_safe,
                         "$( 'html, body' ).animate( { scrollTop: 0 }, 0 );" %>
