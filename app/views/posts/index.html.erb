@@ -9,15 +9,15 @@
 <div id="posts">
   <div id="firstpost"></div>
   <% @posts.each_with_index do |post,index| %>
+    <% if index < items_per_page %>
     <% cache("index@posts@#{post.pid}@#{authorized_admin?}") do %>
-      <% if index < items_per_page %>
         <div id=<%= "p#{post.pid}" %> class="postbox">
         <%= render post %>
         </div>
         <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
-      <% else %>
-        <% next_page = post.pid %>
-      <% end %>
+    <% end %>
+    <% else %>
+      <% next_page = post.pid %>
     <% end %>
   <% end %>
 </div>
