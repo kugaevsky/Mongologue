@@ -79,7 +79,7 @@ class Post
     end
     # Remove duplicated tags if any
     self.tags.delete("")
-    self.tags.uniq
+    self.tags = self.tags.uniq
     # Finally add tagless tag if no tags specified and remove it, if there is any
     self.tags.delete("tagless")
     if self.tags.empty?
@@ -193,7 +193,7 @@ class Post
 
       tmpcloud=Post.collection.map_reduce(map,reduce, :raw => true, :out => 'tagcloud' )
       Mongoid.master.collection('tagcloud').create_index([["value", Mongo::DESCENDING]])
-      Tag.all.each {|t| t.update_attribute(:link,"<a href='/?s=#{t.id}' title=#{t.value.to_i}>#{t.id}</a>" )}
+      # Tag.all.each {|t| t.update_attribute(:link,"<a href='/?s=#{t.id}' title=#{t.value.to_i}>#{t.id}</a>" )}
     end
 
 end

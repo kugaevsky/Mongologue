@@ -41,7 +41,8 @@ module ApplicationHelper
     bo,bc = '<span class=favtag>','</span>'
     tlist=String.new
     Tag.order_by(:value => "desc").all.each do |t|
-      tlink=fav_tags.include?(t.id) ? "#{bo}#{t.link}#{bc}" : t.link
+      tid=fav_tags.include?(t.id) ? "#{bo}#{t.id}#{bc}" : t.id
+      tlink="<a href='/?s=#{t.id}' title=#{t.value.to_i}>#{tid}</a>"
       tlist="#{tlist}, #{tlink}"
     end
     tlist.sub(', ','') # remove things at start
