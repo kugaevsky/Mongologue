@@ -6,8 +6,6 @@ class ApplicationController < ActionController::Base
   include CommentsHelper
   protect_from_forgery
 
-  filter_parameter_logging :password
-
   def not_found
     raise ActionController::RoutingError.new('Not Found')
   end

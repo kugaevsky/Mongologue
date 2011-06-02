@@ -30,6 +30,9 @@ class PostsController < ApplicationController
       format.js
       format.rss  { response.headers["Content-Type"] = "application/xml; charset=utf-8";
                     render :rss => @posts }
+
+      format.json { response.headers["Content-Type"] = "application/json; charset=utf-8";
+                    render :json => @posts }
     end
   end
 

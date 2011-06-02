@@ -2,6 +2,7 @@ $("#new_post")[0].reset()
 $("#newpostbox").slideUp()
 var postscounter = parseInt($("#postscounter").text())+1
 $("#postscounter").text(postscounter)
-$('<div id=<%= "pc#{@post.pid}" %> style="display:none;"></div>').insertAfter("#firstpost")
-$("<%= escape_javascript(render :partial => 'posts/post', :locals => { :post => @post }) %>").insertAfter("#firstpost")
+$('<div id=<%= "p#{@post.pid}" %> class="postbox" ></div>\
+   <div id=<%= "pc#{@post.pid}" %> style="display:none;"></div>').insertAfter("#firstpost")
+$('<%= "#p#{@post.pid}" %>').html("<%= escape_javascript(render :partial => 'posts/post', :locals => { :post => @post }) %>")
 $("#tagscloud").html("<%= escape_javascript(tags_cloud.html_safe) %>")

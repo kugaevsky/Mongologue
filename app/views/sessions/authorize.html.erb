@@ -1,5 +1,5 @@
 <div class="loginza">
-<h2 text-align:centered>Password authorization required.</h2>
+<h2 text-align:centered>Password authentication required.</h2>
 <br>You are trying to sign in as <%= link_to identity_or_name(session[:data]), session[:data]['identity'] %>.<br>
 <br>
 <%= form_for(:session, :url => sessions_path, :remote => true) do |f| %>

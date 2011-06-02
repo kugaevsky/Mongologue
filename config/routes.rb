@@ -18,6 +18,8 @@ Mongologue::Application.routes.draw do
   match 'signout' => 'sessions#destroy'
   match 'authorize' => 'sessions#authorize'
 
+  resources :tags
+
   resources :sessions do
     member do
       put :authorize

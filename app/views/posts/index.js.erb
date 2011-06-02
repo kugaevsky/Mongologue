@@ -1,7 +1,7 @@
 // todo: эффект должен совпадать с "html вариантом", т.е. не должно отображаться более одной страницы
 // удалять предыдущие страницы?
 $('#posts').hide("slide", { direction: "left" }, (function(){
-$('#posts').html('  <div id="firstpost"></div>\
+$('#posts').html('<div id="firstpost"></div>\
 <% @posts.each do |post| %>\
     <% cache("index@posts@#{post.pid}@#{authorized_admin?}") do %>\
       <div id=<%= "p#{post.pid}" %> class="postbox" >\

@@ -42,6 +42,10 @@
       $("#siteinfo").toggle({ effect: "blind"});
     });
 
+    $( "#search" ).multicomplete({ source: '<%= tags_path+'.json' %>',
+                   delay: 300, autoFocus: true });
+
+
  });
 
 </script>
@@ -96,7 +100,7 @@
       <div id="edituser"></div>
       <div id="tagsbutton" class="button rightbutton">TAGS</div>
       <% cache('tagscloud') do %>
-        <div id="tagscloud" style="display:none;" ><p><%= tags_cloud.html_safe %></p></div>
+        <%= render :file => '_tagscloud.html.erb' %>
       <% end %>
       <div id="aboutbutton" class="button rightbutton">AUTHOR INFO</div>
       <div id="abouttext" style="display: none;" >

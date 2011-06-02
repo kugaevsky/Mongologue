@@ -39,20 +39,20 @@ module ApplicationHelper
   # Note to self: link_to speed sucks balls
   def tags_cloud
     bo,bc = '<span class=favtag>','</span>'
-    alist=String.new
-    Post.all_tags.each do |hsh|
-      id_text=fav_tags.include?(hsh['_id']) ? "#{bo}#{hsh['_id']}#{bc}" : hsh['_id']
-      alist="#{alist}, <a href='/?s=#{hsh['_id'].gsub(' ','%20')}' title=#{hsh['value'].to_i}>#{id_text}</a>"
+    tlist=String.new
+    Tag.order_by(:value => "desc").all.each do |t|
+      tlink=fav_tags.include?(t.id) ? "#{bo}#{t.link}#{bc}" : t.link
+      tlist="#{tlist}, #{tlink}"
     end
-    alist.sub(', ','') # remove things at start
+    tlist.sub(', ','') # remove things at start
   end
 
   def tags_list(tags_array)
-    tt = []
+    tlist = String.new
     tags_array.each do |t|
-      tt << link_to(t, posts_path(:s => t))
+      tlist="#{tlist}, <a href='/?s=#{t}'>#{t}</a>"
     end
-    tt.join(", ")
+    tlist.sub(', ','')
   end
 
 

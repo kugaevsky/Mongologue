@@ -193,6 +193,7 @@ class Post
 
       tmpcloud=Post.collection.map_reduce(map,reduce, :raw => true, :out => 'tagcloud' )
       Mongoid.master.collection('tagcloud').create_index([["value", Mongo::DESCENDING]])
+      Tag.all.each {|t| t.update_attribute(:link,"<a href='/?s=#{t.id}' title=#{t.value.to_i}>#{t.id}</a>" )}
     end
 
 end
