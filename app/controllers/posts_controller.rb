@@ -20,7 +20,7 @@ class PostsController < ApplicationController
     @posts = @posts.where(:pid.lt => params[:p].to_i+1) if params[:p]
     @posts = @posts.limit(items_per_page+1)
 
-    @next_page_pid = @posts.pop.pid
+    @next_page_pid = @posts.size == items_per_page+1 ? @posts.pop.pid : nil
 
     respond_to do |format|
       format.html # index.html.erb
