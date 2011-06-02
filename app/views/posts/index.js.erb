@@ -1,18 +1,8 @@
 // todo: эффект должен совпадать с "html вариантом", т.е. не должно отображаться более одной страницы
 // удалять предыдущие страницы?
-$('#posts').hide("slide", { direction: "left" }, (function(){
-$('#posts').html('<div id="firstpost"></div>\
-<% @posts.each do |post| %>\
-    <% cache("index@posts@#{post.pid}@#{authorized_admin?}") do %>\
-      <div id=<%= "p#{post.pid}" %> class="postbox" >\
-        <%= escape_javascript render post %>\
-      </div>\
-      <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>\
-    <% end %>\
-  <% end %>');
-$('#paginator').html('<%= escape_javascript(\
-                link_to_next_page(@posts, "NEXT PAGE &rarr;".html_safe, :remote => true)) %>');
-$("#posts").show("slide", { direction: "right" });
+$('#content').hide("slide", { direction: "left" }, (function(){
+$('#content').html('<%= escape_javascript(render :file => "/posts/index.html.erb") %>');
+$("#content").show("slide", { direction: "right" });
 $( 'html, body' ).animate( { scrollTop: 0 }, 0 );
 
 }));

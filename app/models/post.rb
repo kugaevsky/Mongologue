@@ -8,7 +8,7 @@ class Post
   include ApplicationHelper
 
 
-  field :pid
+  field :pid, type: Integer
   field :title
   field :content
   field :html_content
@@ -35,6 +35,19 @@ class Post
   after_save :rebuild_tags
   after_destroy :rebuild_tags
   before_create :assign_pid
+
+  # Extremely slow, use only for bookmarking feature
+  def self.page_number(pid, per_page = 20)
+    @qposts = Post.only(:pid).order_by([:created_at, :desc])
+    @position = 1
+    @qposts.each do |pp|
+      if pp.pid == pid then
+        break
+      end
+      @position = @position + 1
+    end
+    return (@position.to_f/per_page).ceil
+  end
 
   def self.all_tags(limit = nil)
     tagcloud = Mongoid.master.collection('tagcloud')
@@ -65,7 +78,7 @@ class Post
   end
 
   def to_param
-    pid
+    pid.to_s
   end
 
   def get_keywords

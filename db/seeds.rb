@@ -9,22 +9,21 @@ require 'faker'
 
 puts "Fill database with sample data"
 
-100.times do |n|
+500.times do |n|
   title  = "Post number #{n+1}"
-  content = Faker::Lorem.sentence(100)
+  content = Faker::Lorem.sentence(200)
   Post.create!(:title => title,
                :content => content,
-               :tags => Faker::Lorem.words(10),
-               :comments_counter => 10,
-               :created_at => (100-n).days.ago)
+               :tags => Faker::Lorem.words(5),
+               :created_at => (500-n).days.ago)
 end
 
 Post.all.each do |post|
-  10.times do |n|
+  5.times do |n|
     name = Faker::Name.name
-    content = Faker::Lorem.sentence(10)
+    content = Faker::Lorem.sentence(50)
     cc=post.comments.build(  :content => content,
-                          :created_at => n.minutes.ago)
+                             :created_at => n.minutes.ago)
     cc.name = name
     cc.url = "http://www.example.com/#{name.gsub(' ','-')}"
     cc.ip = Array.new(4){rand(256)}.join('.')

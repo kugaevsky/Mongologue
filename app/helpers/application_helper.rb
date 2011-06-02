@@ -2,6 +2,14 @@
 
 module ApplicationHelper
 
+  def items_per_page
+    if request.format.html? or request.format.js?
+      return 20
+    else
+      return 50
+    end
+  end
+
   def site_info
     "Roses are red<br>Diamonds are blue<br>".html_safe
   end

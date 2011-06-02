@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  include ApplicationHelper
+
   before_filter :find_post, :except => [:index]
 
   def find_post
@@ -11,19 +13,13 @@ class PostsController < ApplicationController
     # We have new post form embedded into index
     @post=Post.new
 
-    items_per_per=50
-    if request.format.html? || request.format.js?
-      items_per_page=20
-    end
-
     # Ok, fulltext search goes here
-    if params[:s]
-      @posts = Post.my_search(params[:s]).order_by([:created_at, :desc]).\
-                    page(params[:page]).per(items_per_page)
-    else
-      @posts = Post.without(:comments).order_by([:created_at, :desc]).\
-                    page(params[:page]).per(items_per_page)
-    end
+    @posts = Post.without(:comments)
+    @posts = @posts.my_search(params[:s]) if params[:s]
+    @posts = @posts.order_by([:created_at, :desc])
+    @posts = @posts.where(:pid.lt => params[:p].to_i+1) if params[:p]
+    @posts = @posts.limit(items_per_page+1)
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @posts }
