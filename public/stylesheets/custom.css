@@ -10,7 +10,6 @@ body {
 }
 
 h1 {font-size:140%}
-h2 {font-size:105%}
 p {font-size:100%}
 
 a:link, a:active, a:visited {
@@ -19,7 +18,7 @@ a:link, a:active, a:visited {
   text-decoration: underline;
 }
 
-h1, h2 {
+h1 {
   font-weight: normal;
   text-transform: uppercase;
   line-height: 1.6em;
@@ -29,10 +28,17 @@ h1, h2 {
 
 }
 
+h2 {
+  font-weight: normal;
+  line-height: 1.6em;
+  margin: 0;
+  padding: 0;
+  word-spacing: 1px;
+  font-variant: small-caps;
+}
+
+
 h1:first-letter  { font-size: 145%;}
-h2:first-letter  { font-size: 140%;  }
-
-
 
 #wrapper {
   text-align: left;
