@@ -85,6 +85,10 @@ class Post
     sanitize(self.content,:tags =>%w()).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
   end
 
+  def remove_autotags
+    self.tags = self.tags.to_set.subtract(autotags.values.flatten.to_set).to_a
+  end
+
   def process_tags_and_keywords
     # Remove leading and trailing spaces from every tag, force tags into downcase
     self.tags.each_with_index do |t, index|
@@ -97,7 +101,7 @@ class Post
 
     # Add autotags
     # Delete any autotags, in case user entered any
-    self.tags = self.tags.to_set.subtract(autotags.values.flatten.to_set).to_a
+    self.remove_autotags
 
     # Add tagless first
     if self.tags.empty?

@@ -69,7 +69,6 @@ module ApplicationHelper
     }
   end
 
-
   # Note to self: link_to speed sucks balls
   def tags_cloud
     bo,bc = '<span class=favtag>','</span>'

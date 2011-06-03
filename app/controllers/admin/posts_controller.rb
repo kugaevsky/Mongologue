@@ -23,6 +23,7 @@ class Admin::PostsController < ApplicationController
 
   def edit
 
+    @post.remove_autotags
     respond_to do |format|
       format.html
       format.js
@@ -33,6 +34,7 @@ class Admin::PostsController < ApplicationController
   # POST /posts.xml
   def create
     @post = Post.new(params[:post])
+    @post.created_at = Time.now
 
     respond_to do |format|
       if @post.save
