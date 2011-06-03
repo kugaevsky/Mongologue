@@ -58,7 +58,7 @@
       <form id="searchbox" accept-charset="UTF-8" action="/" method="get">
      <input id="search" name="s" type="text" value='<%=
       "#{mainpage? ? params[:s] : ""}" %>'
-       title="Enter comma-separated keywords and press Enter." />
+       title="This is a search field. Please, enter comma-separated keywords and press Enter." />
 
         <div id="fakesearch"></div>
         <div id="rss">
@@ -93,11 +93,11 @@
     </div>
     <div id="side-b">
       <div id="edituser"></div>
-      <div id="tagsbutton" class="button rightbutton">TAGS</div>
+      <div id="tagsbutton" class="button rightbutton">All tags</div>
       <% cache('tagscloud') do %>
         <%= render :file => '_tagscloud.html.erb' %>
       <% end %>
-      <div id="aboutbutton" class="button rightbutton">AUTHOR INFO</div>
+      <div id="aboutbutton" class="button rightbutton">Author info</div>
       <div id="abouttext" style="display: none;" >
         <p><a href="#">About author</a><br>
            Facebook</br>
@@ -109,12 +109,12 @@
            ICQ: 22233344</br>
            <a href="mailto:example@example.com">author@example.com</a></p>
       </div>
-      <div id="siteinfobutton" class="button rightbutton">SITE INFO</div>
+      <div id="siteinfobutton" class="button rightbutton">Site info</div>
       <div id="siteinfo" style="display: none;">
         <p><a href="#">About this site</a>.</p>
         <p>Created with:<br><a href="http://rubyonrails.org/">Ruby on Rails 3</a>,
            <a href="http://mongoid.org">Mongoid</a>,
-           <a href="https://github.com/amatsuda/kaminari">Kaminari</a>,
+           <a href="https://github.com/julik/gilenson">Gilenson</a>,
            <a href="https://github.com/galetahub/loginza">Loginza</a>,
            <a href="http://jquery.com/">jQuery</a>.</p>
         <p>Inspired by <a href="http://spectator.ru">Dmitry Smirnov</a>.</p>

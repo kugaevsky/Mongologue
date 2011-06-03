@@ -11,7 +11,7 @@ puts "Fill database with sample data"
 
 500.times do |n|
   title  = "Post number #{n+1}"
-  content = Faker::Lorem.sentence(200)
+  content = Faker::Lorem.sentence(rand(500)+1)
   Post.create!(:title => title,
                :content => content,
                :tags => Faker::Lorem.words(5),

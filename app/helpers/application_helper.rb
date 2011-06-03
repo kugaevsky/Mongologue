@@ -44,6 +44,32 @@ module ApplicationHelper
     Set.new ["чебурашка","consequatur", "voluptas", "assumenda", "modi"]
   end
 
+  # Autotags:
+  # 0 = tagless
+  # 1 = html specific
+  # 2 = year
+  # 3 = month
+  # 4 = day of week
+  # 5 = post size
+  # 6 = not safe for children (swearing)
+  # You can customize these tags in any way you want
+  # For example, you can use names instead of day numbers
+  def autotags
+    {
+      :tagless => ["tagless"],
+      :html =>    ["img","link","quote","code","irony"],
+      :year =>    ["2010","2011","2012","2013","2014","2015","2016"],
+      :month =>   ["january","february","march","april","may","june",
+                   "july","august","september","october","december"],
+      :mday =>    ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15",
+                   "16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
+      :wday =>    ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"],
+      :size =>    ["tiny","small","big","huge"],
+      :safety =>  ["nsfc"]
+    }
+  end
+
+
   # Note to self: link_to speed sucks balls
   def tags_cloud
     bo,bc = '<span class=favtag>','</span>'

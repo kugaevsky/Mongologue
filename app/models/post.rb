@@ -90,17 +90,41 @@ class Post
     self.tags.each_with_index do |t, index|
       self.tags[index] = t.strip.downcase
     end
-    # Remove duplicated tags if any
+
+    # Remove duplicated and empty tags if any
     self.tags.delete("")
     self.tags = self.tags.uniq
-    # Finally add tagless tag if no tags specified and remove it, if there is any
-    self.tags.delete("tagless")
+
+    # Add autotags
+    # Delete any autotags, in case user entered any
+    self.tags = self.tags.to_set.subtract(autotags.values.flatten.to_set).to_a
+
+    # Add tagless first
     if self.tags.empty?
-      self.tags << "tagless"
+      self.tags << autotags[:tagless][0]
     end
+
+    # Add html-content related tags
+
+    # Add date
+    self.tags << autotags[:year][self.created_at.year-2010]
+    self.tags << autotags[:month][self.created_at.month-1]
+    self.tags << autotags[:mday][self.created_at.mday-1]
+    self.tags << autotags[:wday][self.created_at.wday-1]
+
+    # Add html specific
+
     # Build list of keywords
-    # Not sure if I should strip tags, need to think about this
-    self.keywords=sanitize(self.content,:tags =>%w(a img blockquote)).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
+    # Strip all html tags
+    self.keywords=sanitize(self.content,:tags =>%w()).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
+
+    # Post size
+    self.tags << case self.content.length
+      when 1..140     then autotags[:size][0]
+      when 141..999   then autotags[:size][1]
+      when 1000..3999 then autotags[:size][2]
+      else                 autotags[:size][3]
+    end
 
   end
 
