@@ -11,4 +11,8 @@ module PostsHelper
     expire_fragment('tagscloud')
   end
 
+  def expire_sitemap
+    expire_fragment('sitemap')
+  end
+
 end

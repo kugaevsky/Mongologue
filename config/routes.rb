@@ -3,6 +3,7 @@ Mongologue::Application.routes.draw do
     member do
       get :expand_comments
       get :collapse_comments
+      get :sitemap
     end
     resources :comments
   end
@@ -17,6 +18,7 @@ Mongologue::Application.routes.draw do
   match 'signin' => 'sessions#new'
   match 'signout' => 'sessions#destroy'
   match 'authorize' => 'sessions#authorize'
+  match 'sitemap' => 'posts#sitemap'
 
   resources :tags
 

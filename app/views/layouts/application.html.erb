@@ -15,9 +15,7 @@
 
     $.ajax({ type: "GET", url: "/tags.txt", success: function(data) {
       var tags = data.split("|");
-//      $( "#search" ).multicomplete({ source: tags, delay: 300, autoFocus: true });
         var obj = new autosuggest("search",tags);
-
     }});
 
 
@@ -64,11 +62,11 @@
       <form id="searchbox" accept-charset="UTF-8" action="/" method="get" autocomplete="off">
      <input id="search" name="s" type="text" value='<%=
       "#{mainpage? ? params[:s] : ""}" %>'
-       title="This is a search field. Please, enter comma-separated keywords and press Enter." />
+       title="Enter comma-separated words and press Enter." />
 
         <div id="fakesearch"></div>
         <div id="rss">
-        <a href="/posts.rss?s=<%= params[:s] %>" title="Get RSS feed of this search!">
+        <a href="/posts.rss?s=<%= params[:s] %>" title="RSS feed.">
         <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
         <%= "#{mainpage? ? @posts.count : Post.count}" %></span></p></a></div>
       </form>

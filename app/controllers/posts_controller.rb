@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   include ApplicationHelper
 
-  before_filter :find_post, :except => [:index]
+  before_filter :find_post, :except => [:index, :sitemap]
 
   def find_post
     @post = Post.where(:pid => params[:id]).first || not_found
@@ -58,6 +58,14 @@ class PostsController < ApplicationController
     @new_comment = Comment.new
     respond_to do |format|
       format.js
+    end
+  end
+
+  def sitemap
+    @posts=Post.order_by([:created_at, :desc]).only(:pid).all
+    @tags=Tag.order_by([:value, :desc]).all
+    respond_to do |format|
+      format.xml  { response.headers["Content-Type"] = "application/xml; charset=utf-8"; }
     end
   end
 
