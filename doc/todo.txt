@@ -2,7 +2,7 @@ Planned things:
 
 (done) Remake pagination to display next N posts starting from specific post number (performance issues)
 (done) Add auto-complete for the search form
-Add posts auto-tagging
+(done) Add posts auto-tagging
 Remember the sidebar settings (cookies now/user settings later, perhaps both)
 Allow to collapse/expand posts ("mark as read") and remember this setting
 (done) Allow to remove a password (not just make it blank)

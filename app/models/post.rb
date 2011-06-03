@@ -126,6 +126,9 @@ class Post
       else                 autotags[:size][3]
     end
 
+    self.tags.delete("")
+    self.tags.delete(nil)
+
   end
 
   def render_content

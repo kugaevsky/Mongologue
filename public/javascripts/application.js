@@ -129,35 +129,3 @@
 		}
 	};
 })(jQuery);
-
-(function($){
-	$.fn.multicomplete = function(opt) {
-		var $t = $(this);
-		// When menu item is selected and TAB is pressed, focus should remain on current element to allow adding more values
-		$t.bind('keydown', function(e) {
-			if ($t.data('autocomplete').menu.active && e.keyCode == $.ui.keyCode.TAB) {
-				e.preventDefault();
-			}
-		});
-
-		// Call autocomplete() with our modified select/focus callbacks
-		$t.autocomplete($.extend(opt,{
-			// When a selection is made, replace everything after the last "," with the selection instead of replacing everything
-			select: function(event,ui) {
-				this.value = this.value.replace(/[^,]+$/,(this.value.indexOf(',') != -1 ?' ':'')+ui.item.value ); // + ', ');
-				return false;
-			},
-			// Disable replacing value on focus
-			focus: function(){return false;}
-		}));
-
-		// Get the "source" callback that jQuery-UI prepared
-		var $source = $t.data('autocomplete').source;
-
-		// Modify the source callback to change request.term to everything after the last ",", than delegate to $source
-		$t.autocomplete('option', 'source', function(request, response) {
-			request.term = request.term.match(/\s*([^,]*)\s*$/)[1]; // get everything after the last "," and trim it
-			$source(request, response);
-		});
-	};
-})(jQuery);

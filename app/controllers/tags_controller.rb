@@ -13,6 +13,7 @@ class TagsController < ApplicationController
       format.xml  { response.headers["Content-Type"] = "application/xml; charset=utf-8";
                     render :inline => '<?xml version="1.0" encoding="UTF-8" standalone="yes"?> '+
                                       "<listdata>#{@tags.map(&:id).join('|')}</listdata>" };
+      format.text { render :inline => "#{@tags.map(&:id).join('|')}" }
 
     end
   end
