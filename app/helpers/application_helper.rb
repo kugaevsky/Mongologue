@@ -60,7 +60,7 @@ module ApplicationHelper
       :html =>    ["img","link","quote","code","irony"],
       :year =>    ["2010","2011","2012","2013","2014","2015","2016"],
       :month =>   ["january","february","march","april","may","june",
-                   "july","august","september","october","december"],
+                   "july","august","september","october", "november", "december"],
       :mday =>    ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15",
                    "16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
       :wday =>    ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"],
