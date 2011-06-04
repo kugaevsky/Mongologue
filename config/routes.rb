@@ -1,4 +1,7 @@
 Mongologue::Application.routes.draw do
+
+  match '/posts' => redirect('/')
+
   resources :posts do
     member do
       get :expand_comments
@@ -18,7 +21,7 @@ Mongologue::Application.routes.draw do
   match 'signin' => 'sessions#new'
   match 'signout' => 'sessions#destroy'
   match 'authorize' => 'sessions#authorize'
-  match 'sitemap' => 'posts#sitemap'
+  match 'sitemap' => 'possts#sitemap'
 
   resources :tags
 
@@ -36,8 +39,6 @@ Mongologue::Application.routes.draw do
       resources :comments
     end
   end
-
-
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase

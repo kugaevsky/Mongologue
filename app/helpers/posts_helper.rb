@@ -9,6 +9,7 @@ module PostsHelper
 
   def expire_cloud
     expire_fragment('tagscloud')
+    expire_fragment('sitemap')
   end
 
   def expire_sitemap

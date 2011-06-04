@@ -6,12 +6,53 @@
   <%= stylesheet_link_tag 'custom', :media => 'screen' %>
   <%= stylesheet_link_tag 'orange/jquery-ui-1.8.13.custom.css', :media => 'screen' %>
   <%= javascript_include_tag 'jquery-1.6.min', 'jquery.cookie', "jquery-ui-1.8.13.custom.min", "autosuggest",
-                             'rails', 'application' %>
+                              'jquery.address', 'rails', 'application' %>
 
   <%= csrf_meta_tag %>
 <script type="text/javascript">
+  var direction=0;
+  var history = window.history;
+  var loaded = false;
 
   $(document).ready(function() {
+
+  $.address.externalChange(function(event) {
+    console.log("External",event);
+
+    if (!loaded) {
+      loaded = true;
+      return;
+    }
+    $.getScript(event.value);
+  });
+
+  $.address.internalChange(function(event) {
+
+  });
+
+
+  $.address.init(function(event) {
+
+  });
+
+
+
+
+    // window.onpopstate = function(event) {
+    //    if (!loaded) {
+    //        loaded = true;
+    //        return;
+    //    }
+    //   if (event.state = null) {
+    //     $.getScript(document.location.href);
+
+    //     // initial page load OR return to initial URL via e.g. back button.
+    //     // t.b.d.: how best to identify whether we need to re-render page or not?
+    //   } else {
+    //     $.getScript(document.location.href);
+    //     console.log(document.location.href)
+    //   };
+    // };
 
     $.ajax({ type: "GET", url: "/tags.txt", success: function(data) {
       var tags = data.split("|");

@@ -1,8 +1,14 @@
 // todo: эффект должен совпадать с "html вариантом", т.е. не должно отображаться более одной страницы
 // удалять предыдущие страницы?
-$('#content').hide("slide", { direction: "left" }, (function(){
-$('#content').html('<%= escape_javascript(render :file => "/posts/index.html.erb") %>');
-$("#content").show("slide", { direction: "right" });
-$( 'html, body' ).animate( { scrollTop: 0 }, 0 );
 
+<% if params[:_] %>
+  $('#content').html('<%= escape_javascript(render :file => "/posts/index.html.erb") %>');
+<% else %>
+  $('#content').hide("slide", { direction: 'left' }, (function(){
+  $('#content').html('<%= escape_javascript(render :file => "/posts/index.html.erb") %>');
+  $("#content").show("slide", { direction: 'right' });
+  $( 'html, body' ).animate( { scrollTop: 0 }, 0 );
+  var url='<%= "#{root_path(:p => params[:p], :s => params[:s])}".html_safe %>'
+  $.address.value(url);
 }));
+<% end %>

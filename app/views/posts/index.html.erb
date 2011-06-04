@@ -22,9 +22,8 @@
 <div id="paginator" class="button contentbutton" >
 <% unless @next_page_pid.nil? %>
   <%= link_to 'NEXT PAGE &rarr;'.html_safe,
-              posts_path({:p => @next_page_pid, :s => params[:s] }), :remote => true %>
+              root_url({:p => @next_page_pid, :s => params[:s] }), :remote => true %>
 <% else %>
-  <%= link_to_function "&uarr; UP &uarr;".html_safe,
-                        "$( 'html, body' ).animate( { scrollTop: 0 }, 0 );" %>
+  <%= link_to_function "&uarr; UP &uarr;".html_safe, "$( 'html, body' ).animate( { scrollTop: 0 }, 0 );" %>
 <% end %>
 </div>

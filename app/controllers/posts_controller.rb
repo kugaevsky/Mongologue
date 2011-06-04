@@ -23,7 +23,10 @@ class PostsController < ApplicationController
     @next_page_pid = @posts.size == items_per_page+1 ? @posts.pop.pid : nil
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { if params[:l]
+                      render @posts, :layout => false
+                    end
+                    }
       format.xml  { render :xml => @posts }
       format.js
       format.rss  { response.headers["Content-Type"] = "application/xml; charset=utf-8";
