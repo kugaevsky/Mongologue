@@ -1,5 +1,11 @@
 Mongologue::Application.routes.draw do
 
+  match 'signin' => 'sessions#new'
+  match 'signout' => 'sessions#destroy'
+  match 'authorize' => 'sessions#authorize'
+  match 'sitemap' => 'posts#sitemap'
+  match 'feed' => 'posts#index'
+
   match '/posts' => redirect('/')
 
   resources :posts do
@@ -18,10 +24,6 @@ Mongologue::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
 
-  match 'signin' => 'sessions#new'
-  match 'signout' => 'sessions#destroy'
-  match 'authorize' => 'sessions#authorize'
-  match 'sitemap' => 'possts#sitemap'
 
   resources :tags
 

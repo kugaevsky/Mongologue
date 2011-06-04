@@ -17,7 +17,7 @@
   $(document).ready(function() {
 
   $.address.externalChange(function(event) {
-    console.log("External",event);
+//    console.log("External",event);
 
     if (!loaded) {
       loaded = true;
@@ -27,7 +27,7 @@
   });
 
   $.address.internalChange(function(event) {
-
+//    console.log("Internal",event);
   });
 
 
@@ -107,7 +107,7 @@
 
         <div id="fakesearch"></div>
         <div id="rss">
-        <a href="/posts.rss?s=<%= params[:s] %>" title="RSS feed.">
+        <a href="/feed.rss<% "?s=#{params[:s]}" if params[:s] %>" title="RSS feed.">
         <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
         <%= "#{mainpage? ? @posts.count : Post.count}" %></span></p></a></div>
       </form>
