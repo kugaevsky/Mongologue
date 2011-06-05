@@ -36,19 +36,6 @@ class Post
   after_destroy :rebuild_tags
   before_create :assign_pid
 
-  # Extremely slow, use only for bookmarking feature
-  def self.page_number(pid, per_page = 20)
-    @qposts = Post.only(:pid).order_by([:created_at, :desc])
-    @position = 1
-    @qposts.each do |pp|
-      if pp.pid == pid then
-        break
-      end
-      @position = @position + 1
-    end
-    return (@position.to_f/per_page).ceil
-  end
-
   def self.all_tags(limit = nil)
     tagcloud = Mongoid.master.collection('tagcloud')
     opts = { :sort => ["value", :desc] }
@@ -65,15 +52,13 @@ class Post
     end
   end
 
-  def tags_helper
+  def tags_as_string
     tags.join(",") unless tags.nil?
   end
 
-  def tags_helper=(arg)
+  def tags_as_string=(arg)
     if (arg.is_a? String)
       self.tags=arg.split(",")
-    else
-      self.tags=arg
     end
   end
 
@@ -142,8 +127,8 @@ class Post
   # One crappy piece of code. Refactor.
   def self.my_search(s)
     if !s.blank?
-     terms = s.split(',')
-     my_tags = all_tags
+     terms = s.gsub(/ *, */,',').gsub(/[^!*0-9a-zа-яё ,]+/,'').strip.downcase.split(',')
+     my_tags = Tag.without(:value).all.map(&:id).to_set
 
      crit = Post.without(:comments)
      keywords_and = []
@@ -151,58 +136,46 @@ class Post
      tags_and = []
      tags_not = []
 
-     terms.each do |term|
+     terms.each do |t|
        is_keyword = false
        is_tag = false
        is_not = false
        is_like = false
 
-       t=term.strip.downcase
-       is_not = true if t.chr=="!"
-       if t.rindex("*")!=nil
+       is_not = true if t.start_with?("!")
+       if t.end_with?("*")
          is_keyword = true
-         is_tag = false
          is_like = true
        end
 
-       t=t.gsub(/[^0-9a-zа-яё ]+/,'')
-       if my_tags.select {|f| f["_id"] == t }==[]
-         is_keyword = true
+       t.gsub!(/[!*]/,'')
+
+       if my_tags.include?(t)
+         is_tag = true unless is_keyword
        else
-         is_tag = true unless is_keyword == true
+         is_keyword = true
        end
 
-       if is_like == true
-         t= /^#{t}/
-       end
+       t= /^#{t}/ if is_like
 
-       if is_keyword == true
-         if is_not == true
+       if is_keyword
+         if is_not
            keywords_not << t
          else
            keywords_and << t
          end
        else
-         if is_not == true
+         if is_not
            tags_not << t
          else
            tags_and << t
          end
        end
      end
-     if tags_and!=[]
-       crit=crit.all_in(:tags => tags_and)
-     end
-     if keywords_and!=[]
-       crit=crit.all_in(:keywords => keywords_and)
-     end
-     if tags_not!=[]
-       crit=crit.not_in(:tags => tags_not)
-     end
-     if keywords_not!=[]
-       crit=crit.not_in(:keywords => keywords_not)
-     end
-
+     crit=crit.all_in(:tags => tags_and) unless tags_and.empty?
+     crit=crit.all_in(:keywords => keywords_and) unless keywords_and.empty?
+     crit=crit.not_in(:tags => tags_not) unless tags_not.empty?
+     crit=crit.not_in(:keywords => keywords_not) unless keywords_not.empty?
      return crit
     else
      all
