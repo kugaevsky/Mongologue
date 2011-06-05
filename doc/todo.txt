@@ -19,7 +19,6 @@ Add the "user administration" panel for the admins
 Add the "author" field to the posts
 Add the "author" role to allow partial posting/moderation access
 Add the "private" field to the comments (only user and author/admin will be able to see the comment and its reply)
-Add statistics module and some page/panel for it (hits/hosts/etc, not sure if its a good idea though)
 Add security log (track actions from the Admin controller)
 Add the "surrounding posts" block to the sidebar
 Add the "top rated/commented posts" block to the sidebar

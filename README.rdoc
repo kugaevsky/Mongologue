@@ -1,23 +1,47 @@
 == Welcome to Mongologue
 
-Ok, this is my first attempt to create something using Ruby on Rails after "Ruby on Rails Tutorial: Learn by example" book.
-I didn't came up with something better than blog engine.
+Ok, this is my first attempt to create something using Ruby on Rails after "Ruby on Rails Tutorial: Learn by example" book and I didn't came up with something better than Yet Another Blog Engine.
+Well, the problem is - this is NOT yet another blog engine. Its better :)
 
-Anyway.
+This blog uses fancy MongoDB+Mongoid combination to store all data.
+Authorization handled with Loginza using plugin (https://github.com/galetahub/loginza).
+Ajax magic and effects (there are lot of them) are sponsored by jQuery library.
 
-This blog uses MongoDB (http://mongodb.org) through Mongoid ORM (http://mongoid.org).
-Authorization handled with Loginza (http://loginza.ru) using plugin (https://github.com/galetahub/loginza).
-I replaced Prototype library with jQuery because I have no clue how to use both.
-There is some jQuery magic, inplace editing, expand/collapse for comments and so on.
+Main features:
+- Fast ajaxy interface offers inplace editing for almost everything.
+- Loginza (OpenID) authorization for all visitors, optional password protection if you feel paranoid.
+- Tags and autotags. Autotags automatically tag each post with year, month, days of week and month,
+  post size (tiny/small/big/huge). Posts with no user tags get "tagless".
+- Search engine performs fulltext search, distinguishes tags and keywords in a search query, allows
+  you to use "not includes" (!word) and "like" (word*) symbols.
+- Tags autosuggestion as you type them.
+- Automatic typography (russian rules :)). Long dashes, "right" quotes and so on.
+- RSS feeds for search queries.
+- Sitemap.
+- Fragment page caching.
 
-Oh! And also there is some "serious" typography function to make posts and comments look better (for russian language mostly).
+Planned features:
+- Administrative panel.
+- New class of users: authors. Authors can write their own posts and moderate them.
+- Private comments/replies.
+- Individual user settings panel for each identified visitor.
+- Favorites for each identified visitor.
+- E-mail subscriptions for new posts/comments.
+- Password reset feature.
+- Image hosting. You hotlink some picture in your post, Mongolgue downloads it, stores locally via GridFS and
+  rewrites your link.
+- Security log.
+- Recent top commented posts section.
+- "You are here" section. Displays links to N previous/next posts.
+- Draft flag for the posts.
+- Future-publishing for the posts, so they become visible only after specified time.
 
 == Installation and Setup:
 
 For development and looking around:
 
-Populate new mongo database with rake db:seed, rake db:create_indexes.
-This should generate 100 posts with some comments.
+Populate new mongo database: rake db:drop, rake db:seed, rake db:create_indexes.
+This should generate some "lorem ipsum" posts with comments.
 
 For development or production:
 
