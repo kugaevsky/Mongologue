@@ -12,10 +12,10 @@
       <% break %>
     <% end %>
     <% cache("index@posts@#{post.pid}@#{authorized_admin?}") do %>
-        <div id=<%= "p#{post.pid}" %> class="postbox">
+      <div id=<%= "p#{post.pid}" %> class="postbox">
         <%= render post %>
-        </div>
-        <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
+      </div>
+      <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
     <% end %>
   <% end %>
 </div>

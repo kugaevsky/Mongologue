@@ -1,4 +1,4 @@
-<% store_location %>
+<% store_location unless controller.controller_name == "sessions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,9 +116,9 @@
       <% if signed_in? %>
            <%= "(A)" if current_user.admin? %>
            <%= link_to identity_or_name(current_user), current_user.identity %><br>
-           <%= link_to "Sign out", signout_path, :method => :delete %>
+           <%= link_to "Sign out", signout_path %>
       <% else %>
-           <%= link_to "Sign in", signin_path %>
+           <%= link_to "Sign in", signin_path(:rt => session[:return_to]) %>
       <% end %>
       </div>
       <% if signed_in? %>

@@ -5,39 +5,35 @@
   end
 
   def authorize
-
     @session = params[:session]
-      unless params[:token].nil?
-        if data = Loginza.user_data(params[:token])
-          reset_session
-          session[:return_to]=params[:return_to]
+    unless params[:token].nil?
+      if data = Loginza.user_data(params[:token])
+        session[:return_to] = params[:rt]
 
-          user = User.find_or_create_by(:identity => data["identity"])
-          # First user to sign in becomes blog admin
-          #if User.count == 1
-          # temporary all users = admins (testing)
-          # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-          user.admin = true;
-          user.save
-          #end
-          # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        user = User.find_or_create_by(:identity => data["identity"])
+        # First user to sign in becomes blog admin
+        #if User.count == 1
+        # temporary all users = admins (testing)
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        user.admin = true;
+        user.save
+        #end
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-          if user.encrypted_password.nil?
-            user.update_attributes(data)
-            sign_in(user)
-          else
-            session[:data]=data
-            respond_to do |format|
-              format.js { render 'authorize', :locals => {:user => user} }
-              format.html
-            end
-            return
+        if user.encrypted_password.nil?
+          user.update_attributes(data)
+          sign_in(user)
+        else
+          session[:data]=data
+          respond_to do |format|
+            format.js { render 'authorize', :locals => {:user => user} }
+            format.html
           end
+          return
         end
       end
-
-    redirect_to root_path
-
+    end
+    redirect_back_or root_path
   end
 
   def create
@@ -52,8 +48,8 @@
       user.update_attributes(session[:data])
       sign_in user
       session[:data]=''
-      format.js  { redirect_to root_path }
-      format.html { redirect_to root_path }
+      format.js  { redirect_back_or root_path }
+      format.html { redirect_back_or root_path }
     end
     end
   end

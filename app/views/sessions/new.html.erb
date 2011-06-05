@@ -1,4 +1,4 @@
 <div class="loginza">
-<% url = 'http://'+request.env["HTTP_HOST"]+authorize_path+'?return_to='+request.fullpath %>
+<% url = authorize_url(:rt => params[:rt]) %>
 <%= loginza_frame_tag(url, { :style => "width:400px;height:100px;" }) %>
 </div>
