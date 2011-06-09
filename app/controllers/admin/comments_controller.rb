@@ -1,4 +1,6 @@
 class Admin::CommentsController < ApplicationController
+  include ApplicationHelper
+
   before_filter :authenticate
   before_filter :admin_user
 
@@ -13,7 +15,10 @@ class Admin::CommentsController < ApplicationController
     @comment = @post.comments.where(:pid => params[:id]).first || not_found
   end
 
+  # Handles only replies
   def edit
+    @comment.reply = unprepare_text(@comment.reply) unless @comment.reply.nil?
+    # @comment.content = unprepare_text(@comment.content)
     respond_to do |format|
       format.js { render 'edit_reply.js.erb' }
       format.html { render 'edit_reply.html.erb' }
@@ -22,7 +27,7 @@ class Admin::CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    expire_post(@post)
+    expire_post_with_comments(@post)
     respond_to do |format|
       format.html { redirect_to @post }
       format.xml  { head :ok }
@@ -30,6 +35,7 @@ class Admin::CommentsController < ApplicationController
     end
   end
 
+  # Handles only replies
   def update
     @new_comment = Comment.new
 
@@ -45,13 +51,13 @@ class Admin::CommentsController < ApplicationController
         @comment.reply_url = current_user.identity
       end
       if @comment.save
-        expire_post(@post)
+        expire_comments(@post)
         format.html { redirect_to( @post, :notice => "Reply updated.") }
-        format.xml  { head :ok }
+        # format.xml  { head :ok }
         format.js   { render 'comments/show_reply.js.erb' }
       else
         format.html { render :template => 'posts/show' }
-        format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
+        # format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
         format.js   { render 'shared/error_messages.js.erb', :locals => { :object => @comment } }
       end
     end

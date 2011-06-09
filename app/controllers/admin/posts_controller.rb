@@ -11,10 +11,10 @@ class Admin::PostsController < ApplicationController
   # GET /posts/new
   # GET /posts/new.xml
   def new
-    # @post = Post.new
+    @post = Post.new
 
     respond_to do |format|
-      # format.html # new.html.erb
+      format.html # new.html.erb
       # format.xml  { render :xml => @post }
       # format.js
     end
@@ -23,7 +23,7 @@ class Admin::PostsController < ApplicationController
 
   def edit
 
-    @post.remove_autotags
+    @post_autotags=@post.remove_autotags!
     respond_to do |format|
       format.html
       format.js
@@ -39,7 +39,7 @@ class Admin::PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         expire_cloud
-        expire_post(@post)
+        # expire_post(@post)
         # format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
         format.xml  { render :xml => @post, :status => :created, :location => @post }
         format.js { render 'create.js.erb' }
@@ -76,7 +76,7 @@ class Admin::PostsController < ApplicationController
   def destroy
     @post.destroy
     expire_cloud
-    expire_post(@post)
+    expire_post_with_comments(@post)
     respond_to do |format|
       # format.html { redirect_to(posts_url) }
       format.xml  { head :ok }

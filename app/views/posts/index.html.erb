@@ -11,12 +11,12 @@
     <% if post.pid == @next_page_pid %>
       <% break %>
     <% end %>
-    <% cache("index@posts@#{post.pid}@#{authorized_admin?}") do %>
+    <% cache("p#{post.pid}@#{authorized_admin?}") do %>
       <div id=<%= "p#{post.pid}" %> class="postbox">
         <%= render post %>
       </div>
-      <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
     <% end %>
+    <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
   <% end %>
 </div>
 <div id="paginator" class="button contentbutton" >

@@ -5,7 +5,6 @@
      path_to_action = admin_post_path(@post)
    end %>
 <%= form_for(@post, :url => path_to_action, :remote => true) do |f| %>
-  <%= render "shared/error_messages", :object => @post %>
   <div class="field">
     <%= f.label :title %><br />
     <%= f.text_field :title %>

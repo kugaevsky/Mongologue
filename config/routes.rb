@@ -33,6 +33,8 @@ Mongologue::Application.routes.draw do
     end
   end
 
+  resources :users
+
   # admin actions go here
   namespace :admin do
     resources :users do
@@ -41,6 +43,7 @@ Mongologue::Application.routes.draw do
       resources :comments
     end
   end
+
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase

@@ -1,10 +1,13 @@
 class TagsController < ApplicationController
 
   def index
-    if params[:term].nil?
-      @tags = Tag.without(:value).all
+    if !params[:term]
+      @tags = Tag.only(:_id).all
+
+      # Twice faster
+      # @tags = Mongoid.master.collection('tagcloud').find({})
     else
-      @tags = Tag.where(:_id => /^#{params[:term].strip}/).without(:value).all
+      @tags = Tag.where(:_id => /^#{params[:term].strip}/).only(:_id).all
     end
 
     respond_to do |format|
@@ -13,7 +16,7 @@ class TagsController < ApplicationController
       format.xml  { response.headers["Content-Type"] = "application/xml; charset=utf-8";
                     render :inline => '<?xml version="1.0" encoding="UTF-8" standalone="yes"?> '+
                                       "<listdata>#{@tags.map(&:id).join('|')}</listdata>" };
-      format.text { render :inline => "#{@tags.map(&:id).join('|')}" };
+      format.text { render :inline => "#{@tags.map{|m| m['_id']}.join('|')}" };
     end
   end
 

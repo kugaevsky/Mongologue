@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= current_user_name %> - ☢ Mongologue</title>
+  <title><%= page_title %></title>
   <%= stylesheet_link_tag 'custom', :media => 'screen' %>
   <%= stylesheet_link_tag 'orange/jquery-ui-1.8.13.custom.css', :media => 'screen' %>
   <%= javascript_include_tag 'jquery-1.6.min', 'jquery.cookie', "jquery-ui-1.8.13.custom.min", "autosuggest",
-                              'jquery.address', 'rails', 'application' %>
+                             'jquery.address', 'rails', 'application' %>
 
   <%= csrf_meta_tag %>
 <script type="text/javascript">
@@ -56,9 +56,10 @@
 
     $.ajax({ type: "GET", url: "/tags.txt", success: function(data) {
       var tags = data.split("|");
-        var obj = new autosuggest("search",tags);
+      var obj = new autosuggest("search",tags);
     }});
 
+    // var obj = new autosuggest("search","","/tags.xml?term=");
 
     $.fn.disableSelection = function() {
         $(this).attr('unselectable', 'on')
@@ -109,7 +110,7 @@
         <div id="rss">
         <a href="/feed.rss<% "?s=#{params[:s]}" if params[:s] %>" title="RSS feed.">
         <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
-        <%= "#{mainpage? ? @posts.count : Post.count}" %></span></p></a></div>
+        <%= "#{mainpage? ? @posts_count : Post.count}" %></span></p></a></div>
       </form>
     <div id="clientinfo">
       <div id="greeting">
@@ -138,6 +139,12 @@
     </div>
     <div id="side-b">
       <div id="edituser"></div>
+      <div id="toppostsbutton" class="button rightbutton">Top commented</div>
+      <div id="topposts"></div>
+
+      <div id="youareherebutton" class="button rightbutton">You are here</div>
+      <div id="youarehere"></div>
+
       <div id="tagsbutton" class="button rightbutton">All tags</div>
       <% cache('tagscloud') do %>
         <%= render :file => '_tagscloud.html.erb' %>

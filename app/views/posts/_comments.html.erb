@@ -1,4 +1,4 @@
-<% cache("pc#{@post.pid}") do %>
+<% cache("pc#{@post.pid}@#{authorized_admin?}") do %>
   <% if @post.comments.size > 0 %>
     <% for comment in @post.comments.order_by(:created_at => :asc) %>
       <% unless comment.new_record? %>

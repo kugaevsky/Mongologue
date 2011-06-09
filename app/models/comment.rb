@@ -22,49 +22,18 @@ class Comment
   after_create :inc_counter
   after_destroy :dec_counter
   attr_accessible :content
-  before_save :prepare_text
+  before_save :render_text
   embedded_in :post, :inverse_of => :comments, :index => true
 
-  def prepare_text
-     self.content=strip_comment(self.content)
-     self.content = '<p>'+typo(self.content)+'</p>'
-     self.reply = '<p>'+typo(self.reply)+'</p>' unless self.reply.nil?
-
-     rules = {
-        /\n/ => "<br>\n",
-        /<br>\n<br>\n/ => "</p>\n<p>"
-      }
-
-      rules.each do |regexp, replacement|
-        self.content.gsub!(regexp, replacement)
-        self.reply.gsub!(regexp, replacement) unless self.reply.nil?
-      end
-
-    return true
+  def render_text
+     self.content=auto_link(sanitize(content,:tags =>%w(i b)))
+     self.content=prepare_text(self.content)
+     self.reply=prepare_text(self.reply) unless self.reply.nil?
+     return true
   end
 
   def to_param
     pid
-  end
-
-  def unprepare_text
-    rules = {
-          /<\/p>\n<p>/ => "<br>\n<br>\n",
-          /<br>\n/ => "\n",
-          /<p>/ => '',
-          /<\/p>/ => '',
-          /<nobr>/ => '',
-          /<\/nobr>/ => ''
-      }
-
-      rules.each do |regexp, replacement|
-        self.content.gsub!(regexp, replacement)
-        self.reply.gsub!(regexp, replacement) unless self.reply.nil?
-      end
-
-      self.content=sanitize(self.content,:tags =>%())
-
-      return true
   end
 
   protected

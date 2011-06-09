@@ -1,0 +1,13 @@
+<h2>Listing users</h2>
+<table style="border:1px solid #000000" width="100%">
+<th>Name</th>
+<th>Provider</th>
+<th>UID</th>
+<% @users.each do |user| %>
+  <tr>
+    <td><%= link_to(identity_or_name(user), user) %> </td>
+    <td><%= user.provider %></td>
+    <td><%= user.uid %></td>
+  </tr>
+<% end %>
+</table>

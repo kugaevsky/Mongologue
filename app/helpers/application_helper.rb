@@ -2,11 +2,13 @@
 
 module ApplicationHelper
 
-  def items_per_page
-    if request.format.html? or request.format.js?
-      return 20
+  # Return a title on a per-page basis.
+  def page_title
+    base_title = "☢ Mongologue"
+    if @title.nil?
+      base_title
     else
-      return 50
+      "#{h @title} #{base_title}"
     end
   end
 
@@ -32,16 +34,12 @@ module ApplicationHelper
   end
 
   def time_info(created,updated)
-    output = "Posted #{time_ago_in_words(created)} ago."
-	# if created!=updated
-	#   output = "#{output} Updated #{time_ago_in_words(updated)} ago."
-  #    end
-    output
+    "#{time_ago_in_words(created)} ago."
   end
 
   # List of "best" tags
   def fav_tags
-    Set.new ["чебурашка","consequatur", "voluptas", "assumenda", "modi"]
+    Set.new ["consequatur", "voluptas", "assumenda", "modi"]
   end
 
   # Autotags:
@@ -55,30 +53,34 @@ module ApplicationHelper
   # You can customize these tags in any way you want
   # For example, you can use names instead of day numbers
   def autotags
-    {
-      :tagless => ["tagless"],
-      :html =>    ["img","link","quote","code","irony"],
-      :year =>    ["2010","2011","2012","2013","2014","2015","2016"],
-      :month =>   ["january","february","march","april","may","june",
-                   "july","august","september","october", "november", "december"],
-      :mday =>    ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15",
-                   "16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"],
-      :wday =>    ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"],
-      :size =>    ["tiny","small","big","huge"],
-      :safety =>  ["nsfc"]
+    @@autotags ||= {
+      :tagless => %w(tagless),
+      :html =>    %w(img link quote code irony),
+      :year =>    %w(2010 2011 2012 2013 2014 2015 2016),
+      :month =>   %w(january february march april may june july august september october november december),
+      :mday =>    %w(01 02 03 04 05 06 07 08 09 10 11 12 13 14 15
+                     16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31),
+      :wday =>    %w(monday tuesday wednesday thursday friday saturday sunday),
+      :size =>    %w(tiny small big huge),
+      :safety =>  %w(nsfc)
     }
   end
+
+  def autotags_flat
+    @@autotags_flat ||= autotags.flatten.to_set
+  end
+
 
   # Note to self: link_to speed sucks balls
   def tags_cloud
     bo,bc = '<span class=favtag>','</span>'
     tlist=String.new
-    Tag.order_by(:value => "desc").all.each do |t|
+    Tag.order_by(:value => "desc").each do |t|
       tid=fav_tags.include?(t.id) ? "#{bo}#{t.id}#{bc}" : t.id
       tlink="<a href='/?s=#{t.id}' title=#{t.value.to_i}>#{tid}</a>"
       tlist="#{tlist}, #{tlink}"
     end
-    tlist.sub(', ','') # remove things at start
+    tlist.sub(', ','').html_safe # remove things at start
   end
 
   def tags_list(tags_array)
@@ -86,12 +88,12 @@ module ApplicationHelper
     tags_array.each do |t|
       tlist="#{tlist}, <a href='/?s=#{t}'>#{t}</a>"
     end
-    tlist.sub(', ','')
+    tlist.sub(', ','').html_safe
   end
 
 
   def gilenconf
-  {
+    @@gilenconf ||= {
      "inches"    => false,   # преобразовывать дюймы в знак дюйма;
      "laquo"     => true,    # кавычки-ёлочки
      "quotes"    => true,    # кавычки-английские лапки
@@ -140,34 +142,16 @@ module ApplicationHelper
         line.gsub!(regexp, replacement)
       end
 
-    line=line.gilensize(gilenconf)
-    line
-  end
-
-  def allowed_tags
-    %w(i b)
-  end
-
-  def strip_comment(content)
-    auto_link(sanitize(content,:tags =>allowed_tags))
+    line.gilensize(gilenconf)
   end
 
   def prepare_text(text)
-    text = '<p>'+typo(text)+'</p>'
-    rules = {
-      /\n/ => "<br>\n",
-      /<br>\n<br>\n/ => "</p>\n<p>"
-    }
-    rules.each do |regexp, replacement|
-      text.gsub!(regexp, replacement)
-    end
-    return text
+    return simple_format(typo(text))
   end
 
   def unprepare_text(text)
     rules = {
-        /<\/p>\n<p>/ => "<br>\n<br>\n",
-        /<br>\n/ => "\n",
+        /<br \/>/ => '',
         /<p>/ => '',
         /<\/p>/ => '',
         /<nobr>/ => '',

@@ -307,18 +307,29 @@ font-size: 1em;
   padding 0;
 }
 
-.docinfo {
+.postinfo {
   display: block;
   font-size: 0.8em;
   margin: 15px 0 5px 0;
 }
 
-.docbuttons {
+.postpanel {
   display: block;
-  margin: 0 0 15px 0;
-  padding: 0;
-
+  width: 100%;
+  height: 20px;
 }
+
+.postadm {
+  display: inline-block;
+  float: left;
+}
+
+.postcomm {
+  display: inline-block;
+  float: right;
+  text-align: right;
+}
+
 
 
 #postform {

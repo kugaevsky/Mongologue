@@ -1,23 +1,21 @@
   <div class="post">
     <h2><%= link_to post.title, post %></h2>
     <%= (post.html_content.nil? ? prepare_text(post.content)+('<br><b>realtime render</b><br>') : post.html_content).html_safe %>
-    <div class="docinfo"><%= time_info(post.created_at, post.updated_at) %><br>
-      Tags: <%= tags_list(post.tags).html_safe %></div>
-    <div class="docbuttons">
+    <div class="postinfo"><%= time_info(post.created_at, post.updated_at) %><br>
+      Tags: <%= tags_list(post.tags) %></div>
+    <div class="postpanel">
       <% if authorized_admin? %>
-        <%= link_to 'Edit', edit_admin_post_path(post), :remote => true %>,  |
-        <%= link_to 'Delete', admin_post_path(post), :confirm => 'Are you sure?', :method => :delete,
-                                                     :remote => true %> |
+        <div class="postadm">
+          <%= link_to_edit(post) +' | '+ link_to_delete(post) %>
+        </div>
       <% end %>
-      <% cc="Comments: #{post.comments_counter.to_i}" %>
-      <% if controller.action_name == "index" or controller.action_name == "create" %>
-        <%= link_to cc, expand_comments_post_path(post),
-             :remote => true,
-             :id => "showc#{post.pid}" %>
-      <% else %>
-        <%= link_to cc, collapse_comments_post_path(post),
-             :remote => true,
-             :id => "showc#{post.pid}" %>
-      <% end %>
+      <div class="postcomm">
+        <% cc=post.comments_counter.to_i %>
+        <% if controller.action_name!="show" %>
+          <%= link_to_expand_comments(post,cc) %>
+        <% else %>
+          <%= link_to_collapse_comments(post,cc) %>
+        <% end %>
+      </div>
     </div>
   </div>

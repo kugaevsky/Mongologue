@@ -3,7 +3,6 @@
 class Post
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Attributes
   include ActionView::Helpers
   include ApplicationHelper
 
@@ -19,23 +18,27 @@ class Post
   validates_presence_of :title
   validates_presence_of :content
   validates_length_of :title, :maximum => 60
-  validates_length_of :content, :maximum => 100000
+  validates_length_of :content, :maximum => 20000
+  validates_length_of :tags_as_string, :maximum => 200
 
   embeds_many :comments, :inverse_of => :post, index: true
   index :pid
   index "comments.pid"
+
   index :tags
+  index :keywords
+
   index :created_at
   index :updated_at
   index "comments.created_at"
   index "comments.updated_at"
-  index :keywords
   before_save :process_tags_and_keywords
   before_save :render_content
   after_save :rebuild_tags
   after_destroy :rebuild_tags
   before_create :assign_pid
 
+  # Old method, now I have Tag model
   def self.all_tags(limit = nil)
     tagcloud = Mongoid.master.collection('tagcloud')
     opts = { :sort => ["value", :desc] }
@@ -53,7 +56,7 @@ class Post
   end
 
   def tags_as_string
-    tags.join(",") unless tags.nil?
+    tags.join(", ") unless tags.nil?
   end
 
   def tags_as_string=(arg)
@@ -70,8 +73,11 @@ class Post
     sanitize(self.content,:tags =>%w()).downcase.scan(/[0-9a-zа-я]{3,}/).uniq
   end
 
-  def remove_autotags
-    self.tags = self.tags.to_set.subtract(autotags.values.flatten.to_set).to_a
+  def remove_autotags!
+    autotags_flat = autotags.values.flatten.to_set
+    post_autotags = autotags_flat&(self.tags.to_set)
+    self.tags = self.tags.to_set.subtract(autotags_flat).to_a
+    return post_autotags
   end
 
   def process_tags_and_keywords
@@ -86,7 +92,7 @@ class Post
 
     # Add autotags
     # Delete any autotags, in case user entered any
-    self.remove_autotags
+    self.remove_autotags!
 
     # Add tagless first
     if self.tags.empty?
@@ -128,13 +134,13 @@ class Post
   def self.my_search(s)
     if !s.blank?
      terms = s.gsub(/ *, */,',').gsub(/[^!*0-9a-zа-яё ,]+/,'').strip.downcase.split(',')
-     my_tags = Tag.without(:value).all.map(&:id).to_set
+     my_tags = Tag.only(:id).map(&:id).to_set
 
-     crit = Post.without(:comments)
-     keywords_and = []
-     keywords_not = []
-     tags_and = []
-     tags_not = []
+     crit = Post.all
+     keywords_and = Array.new
+     keywords_not = Array.new
+     tags_and = Array.new
+     tags_not = Array.new
 
      terms.each do |t|
        is_keyword = false
