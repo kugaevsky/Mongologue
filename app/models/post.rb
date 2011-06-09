@@ -132,6 +132,7 @@ class Post
 
   # One crappy piece of code. Refactor.
   def self.my_search(s)
+    any_flag = false
     if !s.blank?
      terms = s.gsub(/ *, */,',').gsub(/[^!*0-9a-zа-яё ,]+/,'').strip.downcase.split(',')
      my_tags = Tag.only(:id).map(&:id).to_set
@@ -178,8 +179,15 @@ class Post
          end
        end
      end
-     crit=crit.all_in(:tags => tags_and) unless tags_and.empty?
-     crit=crit.all_in(:keywords => keywords_and) unless keywords_and.empty?
+
+     if !any_flag
+       crit=crit.all_in(:tags => tags_and) unless tags_and.empty?
+       crit=crit.all_in(:keywords => keywords_and) unless keywords_and.empty?
+     else
+       crit=crit.any_in(:tags => tags_and) unless tags_and.empty?
+       crit=crit.any_in(:keywords => keywords_and) unless keywords_and.empty?
+     end
+
      crit=crit.not_in(:tags => tags_not) unless tags_not.empty?
      crit=crit.not_in(:keywords => keywords_not) unless keywords_not.empty?
      return crit

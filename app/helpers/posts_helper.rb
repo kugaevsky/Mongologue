@@ -28,8 +28,6 @@ module PostsHelper
     return @pstmplt.gsub(/\d+/,post.pid.to_s).gsub(/>.+</,">#{post.title}<")
   end
 
-
-
   def tags_list(tags_array)
     tlist = String.new
     tags_array.each do |t|

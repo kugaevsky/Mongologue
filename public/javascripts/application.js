@@ -187,7 +187,7 @@
     .click(function() {
     $("#tagscloud").toggle({ effect: "blind"},(function(){
       var tcvisible=$('#tagscloud').css("display");
-      $.cookie("tagscloud", tcvisible);
+      $.cookie("tagscloud", tcvisible, { expires: 30 } );
       }));
   });
 
@@ -195,7 +195,7 @@
     .click(function() {
     $("#abouttext").toggle({ effect: "blind"},(function(){
       var atvisible=$('#abouttext').css("display");
-      $.cookie("abouttext", atvisible);
+      $.cookie("abouttext", atvisible, { expires: 30 } );
       }));
   });
 
@@ -203,7 +203,7 @@
     .click(function() {
     $("#siteinfo").toggle({ effect: "blind"},(function(){
       var sivisible=$('#siteinfo').css("display");
-      $.cookie("siteinfo", sivisible);
+      $.cookie("siteinfo", sivisible, { expires: 30 } );
       }));
   });
 

@@ -11,6 +11,6 @@ if (changebutton == 1) {
 	$('<%= "#showc#{@post.pid}" %>').replaceWith("<%= escape_javascript(link_to "Comments: #{@post.comments_counter.to_i}", expand_comments_post_path(@post), :remote => true, :id => "showc#{@post.pid}") %>")
 }
 <% if controller.action_name == "update" %>
-  $("#tagscloud").html("<%= escape_javascript(tags_cloud.html_safe) %>")
+  $("#tagscloud p").html("<%= escape_javascript(tags_cloud.html_safe) %>")
 <% end %>
 }));

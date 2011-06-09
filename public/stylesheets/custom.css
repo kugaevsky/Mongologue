@@ -242,6 +242,7 @@ h1:first-letter  { font-size: 145%;}
   width: 225px;
   margin-left: 10px;
   margin-right: 0px;
+  margin-top: 10px;
 }
 
 #content {
@@ -407,8 +408,7 @@ a:hover { background-color:orange; }
 
 
 
-#tagscloud, #abouttext, #siteinfo {
-  font-size: 0.9em;
+#tagscloud, #abouttext, #siteinfo, #topposts {
   border: 1px dotted #666;
   background: #FFFFFF;
   padding: 7px;
@@ -416,7 +416,6 @@ a:hover { background-color:orange; }
 
 #tagscloud p {
   text-align: justify;
-  margin: 0;
 }
 
 #tagscloud a {
@@ -424,8 +423,10 @@ a:hover { background-color:orange; }
   color: gray;
 }
 
-#abouttext p, #siteinfo p {
+#abouttext p, #siteinfo p, #topposts p, #tagscloud p {
   margin: 0;
+  font-size: 13px;
+  line-height: 17px;
 }
 
 .favtag {
@@ -434,6 +435,7 @@ a:hover { background-color:orange; }
 }
 
 .autotag {
+  color: #222222;
 
 }
 

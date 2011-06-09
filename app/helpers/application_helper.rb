@@ -75,7 +75,7 @@ module ApplicationHelper
 
   # List of "best" tags
   def fav_tags
-    Set.new ["consequatur", "voluptas", "assumenda", "modi"]
+    Set.new %w(consequatur voluptas assumenda modi)
   end
 
   # Note to self: link_to speed sucks balls
@@ -84,7 +84,8 @@ module ApplicationHelper
     ao,ac = '<span class=autotag>','</span>'
     tlist=String.new
     Tag.order_by(:value => "desc").each do |t|
-      tid=autotags_flat.include?(t.id) ? "#{ao}#{t.id}#{ac}" : fav_tags.include?(t.id) ? "#{bo}#{t.id}#{bc}" : t.id
+      tid=autotags_flat.include?(t.id) ? "#{ao}#{t.id}#{ac}" :\
+               fav_tags.include?(t.id) ? "#{bo}#{t.id}#{bc}" : t.id
       tlink="<a href='/?s=#{t.id}' title=#{t.value.to_i}>#{tid}</a>"
       tlist="#{tlist}, #{tlink}"
     end
@@ -99,7 +100,7 @@ module ApplicationHelper
      "dash"      => true,    # короткое тире (150)
      "emdash"    => true,    # длинное тире двумя минусами (151)
      "initials"  => false,   # тонкие шпации в инициалах
-     "copypaste" => false,   # замена непечатных и "специальных" юникодных символов на entities
+     "copypaste" => true,   # замена непечатных и "специальных" юникодных символов на entities
      "(c)"       => true,    # обрабатывать знак копирайта
      "(r)"       => true,
      "(tm)"      => true,
@@ -109,7 +110,7 @@ module ApplicationHelper
      "degrees"   => false,    # знак градуса
      "dashglue"  => false, "wordglue" => false, # приклеивание предлогов и дефисов
      "spacing"   => true,    # запятые и пробелы, перестановка
-     "phones"    => false,    # обработка телефонов
+     "phones"    => false,   # обработка телефонов
      "html"      => true,    # разрешение использования тагов html
      "de_nobr"   => false,   # при true все <nobr/> заменяются на <span class="nobr"/>
      "raw_output" => true,   # выводить UTF-8 вместо entities
@@ -187,5 +188,18 @@ module ApplicationHelper
       end
     end
   end
+
+  def top_commented_posts
+    @top_posts = Post.only(:pid, :title, :comments_counter).\
+                      where(:created_at.gt => 1.month.ago).\
+                      order_by([:comments_counter, :desc]).limit(10).to_ary
+    outstr=String.new
+    @top_posts.each do |post|
+      outstr = outstr + link_to("#{post.title}" , post) + " (#{post.comments_counter})" "<br />"
+    end
+    outstr.html_safe
+  end
+
+
 
 end
