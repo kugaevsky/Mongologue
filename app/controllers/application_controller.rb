@@ -6,6 +6,30 @@ class ApplicationController < ActionController::Base
   include CommentsHelper
   protect_from_forgery
 
+  def expire_post_with_comments(post)
+    expire_post(post)
+    expire_comments(post)
+  end
+
+  def expire_post(post)
+    expire_fragment("p#{post.pid}@true")
+    expire_fragment("p#{post.pid}@false")
+  end
+
+  def expire_comments(post)
+    expire_fragment("pc#{post.pid}@true")
+    expire_fragment("pc#{post.pid}@false")
+  end
+
+  def expire_cloud
+    expire_fragment('tagscloud')
+    expire_fragment('sitemap')
+  end
+
+  def expire_sitemap
+    expire_fragment('sitemap')
+  end
+
   def not_found
     raise ActionController::RoutingError.new('Not Found')
   end

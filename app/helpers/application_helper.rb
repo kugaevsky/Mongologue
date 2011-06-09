@@ -23,6 +23,13 @@ module ApplicationHelper
     return false
   end
 
+  def showpostpage?
+    if controller_name == "posts" and controller.action_name == "show"
+      return true
+    end
+    return false
+  end
+
   def cache_unless_admin *args
     unless authorized_admin?
       cache args do
@@ -35,11 +42,6 @@ module ApplicationHelper
 
   def time_info(created,updated)
     "#{time_ago_in_words(created)} ago."
-  end
-
-  # List of "best" tags
-  def fav_tags
-    Set.new ["consequatur", "voluptas", "assumenda", "modi"]
   end
 
   # Autotags:
@@ -67,30 +69,27 @@ module ApplicationHelper
   end
 
   def autotags_flat
-    @@autotags_flat ||= autotags.flatten.to_set
+    @@autotags_flat ||= autotags.values.flatten.to_set
   end
 
+
+  # List of "best" tags
+  def fav_tags
+    Set.new ["consequatur", "voluptas", "assumenda", "modi"]
+  end
 
   # Note to self: link_to speed sucks balls
   def tags_cloud
     bo,bc = '<span class=favtag>','</span>'
+    ao,ac = '<span class=autotag>','</span>'
     tlist=String.new
     Tag.order_by(:value => "desc").each do |t|
-      tid=fav_tags.include?(t.id) ? "#{bo}#{t.id}#{bc}" : t.id
+      tid=autotags_flat.include?(t.id) ? "#{ao}#{t.id}#{ac}" : fav_tags.include?(t.id) ? "#{bo}#{t.id}#{bc}" : t.id
       tlink="<a href='/?s=#{t.id}' title=#{t.value.to_i}>#{tid}</a>"
       tlist="#{tlist}, #{tlink}"
     end
     tlist.sub(', ','').html_safe # remove things at start
   end
-
-  def tags_list(tags_array)
-    tlist = String.new
-    tags_array.each do |t|
-      tlist="#{tlist}, <a href='/?s=#{t}'>#{t}</a>"
-    end
-    tlist.sub(', ','').html_safe
-  end
-
 
   def gilenconf
     @@gilenconf ||= {
@@ -127,14 +126,14 @@ module ApplicationHelper
           /\(c\)/i => '©',
           # короткие слова привязываем неразрывным пробелом;
           # прогоняем два раза, чтобы обработать расставленные в первом прогоне &nbsp;
-          /(^|\s)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/ => '\1\2 ',
-          /( |&nbsp;|&\#160;)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/ => '\1\2 ',
+#         /(^|\s)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/ => '\1\2 ',
+#         /( |&nbsp;|&\#160;)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/ => '\1\2 ',
           # длинное тире
           /-(\s)/ => '—\1',
           /\r\n/ => "\n",
           /\n\n+/ => "\n\n",
           /[ \t]+/ => ' ',
-          /(\S+(?:-\S+)+)/ => '<nobr>\1</nobr>',
+#          /(\S+(?:-\S+)+)/ => '<nobr>\1</nobr>',
           /[ ]$/m => "",
           /^[ ]/m => ""
       }

@@ -129,3 +129,83 @@
 		}
 	};
 })(jQuery);
+
+////////////////////////////////////////////////////
+// Moved from main page
+////////////////////////////////////////////////////
+
+  var direction=0;
+  var history = window.history;
+  var loaded = false;
+
+  $(document).ready(function() {
+
+  var tcvisible=$.cookie("tagscloud");
+  var atvisible=$.cookie("abouttext");
+  var sivisible=$.cookie("siteinfo");
+
+  $('#tagscloud').css("display",tcvisible);
+  $('#abouttext').css("display",atvisible);
+  $('#siteinfo').css("display",sivisible);
+
+  $.address.externalChange(function(event) {
+    if (!loaded) {
+      loaded = true;
+      return;
+    }
+    $.getScript(event.value);
+  });
+
+  $.address.internalChange(function(event) {
+
+  });
+
+
+  $.address.init(function(event) {
+
+  });
+
+
+  $.ajax({ type: "GET", url: "/tags.txt", success: function(data) {
+    var tags = data.split("|");
+    var obj = new autosuggest("search",tags);
+  }});
+
+  // var obj = new autosuggest("search","","/tags.xml?term=");
+
+  $.fn.disableSelection = function() {
+      $(this).attr('unselectable', 'on')
+             .css('-moz-user-select', 'none')
+             .each(function() {
+                 this.onselectstart = function() { return false; };
+              });
+  };
+
+  $(".button").disableSelection();
+
+  $("#tagsbutton")
+    .click(function() {
+    $("#tagscloud").toggle({ effect: "blind"},(function(){
+      var tcvisible=$('#tagscloud').css("display");
+      $.cookie("tagscloud", tcvisible);
+      }));
+  });
+
+  $("#aboutbutton")
+    .click(function() {
+    $("#abouttext").toggle({ effect: "blind"},(function(){
+      var atvisible=$('#abouttext').css("display");
+      $.cookie("abouttext", atvisible);
+      }));
+  });
+
+  $("#siteinfobutton")
+    .click(function() {
+    $("#siteinfo").toggle({ effect: "blind"},(function(){
+      var sivisible=$('#siteinfo').css("display");
+      $.cookie("siteinfo", sivisible);
+      }));
+  });
+
+
+ });

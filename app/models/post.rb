@@ -74,7 +74,6 @@ class Post
   end
 
   def remove_autotags!
-    autotags_flat = autotags.values.flatten.to_set
     post_autotags = autotags_flat&(self.tags.to_set)
     self.tags = self.tags.to_set.subtract(autotags_flat).to_a
     return post_autotags
@@ -127,7 +126,8 @@ class Post
   end
 
   def render_content
-    self.html_content = prepare_text(self.content)
+    self.html_content = "#{self.content}"
+    self.html_content = prepare_text(self.html_content)
   end
 
   # One crappy piece of code. Refactor.
@@ -216,7 +216,6 @@ class Post
 
       tmpcloud=Post.collection.map_reduce(map,reduce, :raw => true, :out => 'tagcloud' )
       Mongoid.master.collection('tagcloud').create_index([["value", Mongo::DESCENDING]])
-      # Tag.all.each {|t| t.update_attribute(:link,"<a href='/?s=#{t.id}' title=#{t.value.to_i}>#{t.id}</a>" )}
     end
 
 end

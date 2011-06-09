@@ -9,89 +9,7 @@
                              'jquery.address', 'rails', 'application' %>
 
   <%= csrf_meta_tag %>
-<script type="text/javascript">
-  var direction=0;
-  var history = window.history;
-  var loaded = false;
 
-  $(document).ready(function() {
-
-  $.address.externalChange(function(event) {
-//    console.log("External",event);
-
-    if (!loaded) {
-      loaded = true;
-      return;
-    }
-    $.getScript(event.value);
-  });
-
-  $.address.internalChange(function(event) {
-//    console.log("Internal",event);
-  });
-
-
-  $.address.init(function(event) {
-
-  });
-
-
-
-
-    // window.onpopstate = function(event) {
-    //    if (!loaded) {
-    //        loaded = true;
-    //        return;
-    //    }
-    //   if (event.state = null) {
-    //     $.getScript(document.location.href);
-
-    //     // initial page load OR return to initial URL via e.g. back button.
-    //     // t.b.d.: how best to identify whether we need to re-render page or not?
-    //   } else {
-    //     $.getScript(document.location.href);
-    //     console.log(document.location.href)
-    //   };
-    // };
-
-    $.ajax({ type: "GET", url: "/tags.txt", success: function(data) {
-      var tags = data.split("|");
-      var obj = new autosuggest("search",tags);
-    }});
-
-    // var obj = new autosuggest("search","","/tags.xml?term=");
-
-    $.fn.disableSelection = function() {
-        $(this).attr('unselectable', 'on')
-               .css('-moz-user-select', 'none')
-               .each(function() {
-                   this.onselectstart = function() { return false; };
-                });
-    };
-
-    $(".button").disableSelection();
-
-    $("#tagsbutton")
-      .click(function() {
-      $("#tagscloud").toggle({ effect: "blind"});
-    });
-
-    $("#aboutbutton")
-      .click(function() {
-      $("#abouttext").toggle({ effect: "blind"});
-    });
-
-    $("#siteinfobutton")
-      .click(function() {
-      $("#siteinfo").toggle({ effect: "blind"});
-    });
-
-
- });
-
-</script>
-
-</script>
 </head>
 <body>
 <div id="wrapper">
@@ -99,19 +17,19 @@
     <div id="logo">
       <a href="/" title="Powered by MongoDB"><img src="/images/rad-30px-white.png" id='logopic'/>
       <h1>Mongologue</h1></a>
-    <p>Powered by MongoDB</p></a>
+    <p>Powered by MongoDB</p>
     </div>
-      <form id="searchbox" accept-charset="UTF-8" action="/" method="get" autocomplete="off">
-     <input id="search" name="s" type="text" value='<%=
-      "#{mainpage? ? params[:s] : ""}" %>'
-       title="Enter comma-separated words and press Enter." />
+    <form id="searchbox" accept-charset="UTF-8" action="/" method="get" autocomplete="off">
+      <input id="search" name="s" type="text" value='<%= "#{mainpage? ? params[:s] : ''}" %>'
+             title="Enter comma-separated words and press Enter." />
 
-        <div id="fakesearch"></div>
-        <div id="rss">
+      <div id="fakesearch"></div>
+      <div id="rss">
         <a href="/feed.rss<% "?s=#{params[:s]}" if params[:s] %>" title="RSS feed.">
         <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
-        <%= "#{mainpage? ? @posts_count : Post.count}" %></span></p></a></div>
-      </form>
+        <%= "#{mainpage? ? @posts_count : Post.count}" %></span></p></a>
+      </div>
+    </form>
     <div id="clientinfo">
       <div id="greeting">
       <% if signed_in? %>
@@ -139,18 +57,21 @@
     </div>
     <div id="side-b">
       <div id="edituser"></div>
-      <div id="toppostsbutton" class="button rightbutton">Top commented</div>
-      <div id="topposts"></div>
 
-      <div id="youareherebutton" class="button rightbutton">You are here</div>
-      <div id="youarehere"></div>
+      <% if !showpostpage? %>
+        <div id="toppostsbutton" class="button rightbutton">Top commented</div>
+        <div id="topposts"></div>
+      <% else %>
+        <div id="youareherebutton" class="button rightbutton">You are here</div>
+        <div id="youarehere"></div>
+      <% end %>
 
       <div id="tagsbutton" class="button rightbutton">All tags</div>
       <% cache('tagscloud') do %>
-        <%= render :file => '_tagscloud.html.erb' %>
+        <%= render :partial => '/tagscloud' %>
       <% end %>
       <div id="aboutbutton" class="button rightbutton">Author info</div>
-      <div id="abouttext" style="display: none;" >
+      <div id="abouttext">
         <p><a href="#">About author</a><br>
            Facebook</br>
            Livejournal</br>
@@ -162,7 +83,7 @@
            <a href="mailto:example@example.com">author@example.com</a></p>
       </div>
       <div id="siteinfobutton" class="button rightbutton">Site info</div>
-      <div id="siteinfo" style="display: none;">
+      <div id="siteinfo">
         <p><a href="#">About this site</a>.</p>
         <p>Created with:<br><a href="http://rubyonrails.org/">Ruby on Rails 3</a>,
            <a href="http://mongoid.org">Mongoid</a>,

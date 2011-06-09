@@ -23,7 +23,7 @@ class Admin::PostsController < ApplicationController
 
   def edit
 
-    @post_autotags=@post.remove_autotags!
+    @post.remove_autotags!
     respond_to do |format|
       format.html
       format.js
@@ -61,11 +61,11 @@ class Admin::PostsController < ApplicationController
         expire_cloud
         expire_post(@post)
         # format.html { redirect_back_or root_path }
-        format.xml  { head :ok }
+        # format.xml  { head :ok }
         format.js   { render 'posts/show.js.erb' }
       else
         # format.html { render :action => "edit" }
-        format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
+        # format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
         format.js   { render 'shared/error_messages.js.erb', :locals => { :object => @post } }
       end
     end

@@ -1,5 +1,5 @@
   <div class="post">
-    <h2><%= link_to post.title, post %></h2>
+    <h2><%= link_to_post(post) %></h2>
     <%= (post.html_content.nil? ? prepare_text(post.content)+('<br><b>realtime render</b><br>') : post.html_content).html_safe %>
     <div class="postinfo"><%= time_info(post.created_at, post.updated_at) %><br>
       Tags: <%= tags_list(post.tags) %></div>

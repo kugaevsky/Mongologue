@@ -421,6 +421,7 @@ a:hover { background-color:orange; }
 
 #tagscloud a {
   text-decoration: none;
+  color: gray;
 }
 
 #abouttext p, #siteinfo p {
@@ -428,8 +429,12 @@ a:hover { background-color:orange; }
 }
 
 .favtag {
-  font-size: 1.3em;
-  font-style: bold;
+  color: black;
+  font-weight: bold;
+}
+
+.autotag {
+
 }
 
 blockquote {
@@ -448,7 +453,7 @@ pre {
   margin: 1em 0;
   overflow: scroll;
   font-family: Consolas, 'Courier New', monospace;
-  font-size: 1em;
+  font-size: 0.8em;
   line-height: 1.2em;
 }
 

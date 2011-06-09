@@ -23,28 +23,19 @@ module PostsHelper
     return @cotmplt.gsub(/\/\d+/,"/#{post.pid}").gsub(/c\d+/,"c#{post.pid}").gsub(/: \d+/,": #{counter}")
   end
 
-  def expire_post_with_comments(post)
-    expire_post(post)
-    expire_comments(post)
+  def link_to_post(post)
+    @pstmplt ||= link_to(post.title, post)
+    return @pstmplt.gsub(/\d+/,post.pid.to_s).gsub(/>.+</,">#{post.title}<")
   end
 
-  def expire_post(post)
-    expire_fragment("p#{post.pid}@true")
-    expire_fragment("p#{post.pid}@false")
-  end
 
-  def expire_comments(post)
-    expire_fragment("pc#{post.pid}@true")
-    expire_fragment("pc#{post.pid}@false")
-  end
 
-  def expire_cloud
-    expire_fragment('tagscloud')
-    expire_fragment('sitemap')
-  end
-
-  def expire_sitemap
-    expire_fragment('sitemap')
+  def tags_list(tags_array)
+    tlist = String.new
+    tags_array.each do |t|
+      tlist="#{tlist}, <a href='/?s=#{t}'>#{t}</a>"
+    end
+    tlist.sub(', ','').html_safe
   end
 
 end
