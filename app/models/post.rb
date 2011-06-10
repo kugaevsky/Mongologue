@@ -23,6 +23,7 @@ class Post
 
   embeds_many :comments, :inverse_of => :post, index: true
   index :pid
+  index :title
   index "comments.pid"
 
   index :tags

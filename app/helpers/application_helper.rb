@@ -192,14 +192,50 @@ module ApplicationHelper
   def top_commented_posts
     @top_posts = Post.only(:pid, :title, :comments_counter).\
                       where(:created_at.gt => 1.month.ago).\
-                      order_by([:comments_counter, :desc]).limit(10).to_ary
+                      order_by([:comments_counter, :desc]).limit(11).to_ary
     outstr=String.new
     @top_posts.each do |post|
-      outstr = outstr + link_to("#{post.title}" , post) + " (#{post.comments_counter})" "<br />"
+      outstr = outstr + link_to("#{post.title}" , post) + " (#{post.comments_counter})" + "<br />"
     end
     outstr.html_safe
   end
 
+  def you_are_here(post)
+    @mystr=String.new
+
+    before_posts = Post.only(:pid, :title, :created_at).\
+                      where(:created_at.lte => post.created_at ).\
+                      order_by([:created_at, :desc]).limit(11).to_ary
+    after_posts = Post.only(:pid, :title, :created_at).\
+                      where(:created_at.gt => post.created_at ).\
+                      order_by([:created_at, :asc]).limit(10).to_ary
+    @all_posts = after_posts.reverse.concat(before_posts)
+
+
+    a1 = after_posts.size
+    a2 = before_posts.size
+
+    a = @all_posts.size
+
+    if (a2>10)
+      d1 = a1>5 ? (a1-5) : 0
+      d2 = a1>5 ?  10+d1 : 10
+    else
+      d2 = a2<6 ? (10+a2-1) : 15
+      d1 = a2<6 ? (a2-1) : 5
+    end
+
+    for i in d1..d2 do
+      m = @all_posts[i]
+      if m.pid == post.pid
+        @mystr=@mystr+"<b>#{m.title}</b><br />"
+      else
+        @mystr=@mystr+"#{link_to(m.title,m)}<br />"
+      end
+    end
+    @mystr.html_safe
+
+  end
 
 
 end

@@ -408,7 +408,7 @@ a:hover { background-color:orange; }
 
 
 
-#tagscloud, #abouttext, #siteinfo, #topposts {
+#tagscloud, #abouttext, #siteinfo, #topposts, #youarehere {
   border: 1px dotted #666;
   background: #FFFFFF;
   padding: 7px;
@@ -423,7 +423,7 @@ a:hover { background-color:orange; }
   color: gray;
 }
 
-#abouttext p, #siteinfo p, #topposts p, #tagscloud p {
+#abouttext p, #siteinfo p, #topposts p, #youarehere p, #tagscloud p {
   margin: 0;
   font-size: 13px;
   line-height: 17px;

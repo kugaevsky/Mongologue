@@ -22,12 +22,15 @@ class PostsController < ApplicationController
 
     # We have new post form embedded into index
     @post=Post.new
+    start_post = Post.where(:pid => params[:p]).first || not_found if params[:p]
 
     # Ok, fulltext search goes here
     @posts = Post.without(:comments)
     @posts = @posts.my_search(params[:s]) if params[:s]
     @posts = @posts.order_by([:created_at, :desc])
-    @posts = @posts.where(:pid.lt => params[:p].to_i+1) if params[:p]
+    # @posts = @posts.where(:pid.lt => params[:p].to_i+1) if params[:p]
+    @posts = @posts.where(:created_at.lte => start_post.created_at) if params[:p]
+
     @posts = @posts.limit(items_per_page+1).cache
 
     @posts_count = @posts.only(:id).count
