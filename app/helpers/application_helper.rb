@@ -195,7 +195,7 @@ module ApplicationHelper
                       order_by([:comments_counter, :desc]).limit(11).to_ary
     outstr=String.new
     @top_posts.each do |post|
-      outstr = outstr + link_to("#{post.title}" , post) + " (#{post.comments_counter})" + "<br />"
+      outstr = outstr + link_to_post(post) + " (#{post.comments_counter})" + "<br />"
     end
     outstr.html_safe
   end
@@ -230,7 +230,7 @@ module ApplicationHelper
       if m.pid == post.pid
         @mystr=@mystr+"<b>#{m.title}</b><br />"
       else
-        @mystr=@mystr+"#{link_to(m.title,m)}<br />"
+        @mystr=@mystr+"#{link_to_post(m)}<br />"
       end
     end
     @mystr.html_safe

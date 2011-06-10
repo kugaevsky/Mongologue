@@ -5,12 +5,14 @@ Planned things:
 (done) Add posts auto-tagging
 (done) Remember the sidebar settings (cookies now/user settings later, perhaps both)
 (done) Allow to remove a password (not just make it blank)
-Ask for an old password when setting a new password
-Add an ability to reset a password with an email link
 (done) Make the password dialogs more pretty (also the Loginza dialog into transparent div?)
 (done) Add an RSS feed with search results
 (done) Add the sitemap
+(done)Add the "you are here" block to the sidebar
+(done)Add the "top rated/commented posts" block to the sidebar
 Add email subscriptions (new posts, new comments, new replies, other notifications)
+Ask for an old password when setting a new password
+Add an ability to reset a password with an email link
 Add the "user settings" panel, make it Ajax (slideDown/slideUp top level div)
 Add the "global application settings" panel for the admins
 Add the "user administration" panel for the admins
@@ -18,8 +20,6 @@ Add the "author" field to the posts
 Add the "author" role to allow partial posting/moderation access
 Add the "private" field to the comments (only user and author/admin will be able to see the comment and its reply)
 Add security log (track actions from the Admin controller)
-Add the "surrounding posts" block to the sidebar
-(done)Add the "top rated/commented posts" block to the sidebar
 Add the "draft" flag for posts (not published). New action (draftindex) in the Admin controller?
 Allow to change the "created_at" field for the posts (or better add the "published_at" field)
 Allow to future-publish posts setting their date to some point in future (will be visible after that time)

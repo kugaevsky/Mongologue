@@ -22,7 +22,6 @@ class PostsController < ApplicationController
 
     # We have new post form embedded into index
     @post=Post.new
-    start_post = Post.where(:pid => params[:p]).first || not_found if params[:p]
 
     # Ok, fulltext search goes here
     @posts = Post.without(:comments)
