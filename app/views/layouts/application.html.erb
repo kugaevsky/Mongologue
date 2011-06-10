@@ -25,7 +25,7 @@
 
       <div id="fakesearch"></div>
       <div id="rss">
-        <a href="/feed.rss<% "?s=#{params[:s]}" if params[:s] %>" title="RSS feed.">
+        <a href="/feed.rss<%= "?s=#{params[:s]}" if params[:s] %>" title="RSS feed.">
         <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
         <%= "#{mainpage? ? @posts_count : Post.count}" %></span></p></a>
       </div>

@@ -444,10 +444,10 @@ a:hover { background-color:orange; }
 }
 
 blockquote {
-  background-color: #EEEEEE;
+  font-size: 14px;
+  font-style: italic;
   padding: 10px;
-  margin: 0 0 0 30px;
-  border: 1px dotted #666;
+  margin: 0 0 0 50px;
 }
 
 pre {

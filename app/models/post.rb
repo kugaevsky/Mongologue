@@ -127,8 +127,7 @@ class Post
   end
 
   def render_content
-    self.html_content = "#{self.content}"
-    self.html_content = prepare_text(self.html_content)
+    self.html_content = prepare_text(self.content)
   end
 
   # One crappy piece of code. Refactor.
