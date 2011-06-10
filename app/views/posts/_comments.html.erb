@@ -25,6 +25,12 @@
     $(document).ready(function(){
     $("<%= "#fc#{@post.pid}" %> textarea").maxChar(500, {indicator: "<%= "cnt#{@post.pid}" %>"});
 
+   $('textarea').keypress("enter",function(e){
+     if (e.ctrlKey == true && ((e.keyCode == 13) || (e.keyCode == 10))) {
+       $(this).closest('form').submit();
+      }
+     });
+
     setInterval(function () {
       if($("<%= "#fc#{@post.pid}" %> textarea").val().length <= 500) {
         $("<%= "#fc#{@post.pid}" %> input").removeAttr("disabled");

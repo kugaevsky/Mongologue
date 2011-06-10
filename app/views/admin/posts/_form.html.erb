@@ -4,7 +4,7 @@
    else
      path_to_action = admin_post_path(@post)
    end %>
-<%= form_for(@post, :url => path_to_action, :remote => true) do |f| %>
+<%= form_for(@post, :url => path_to_action, :remote => true ) do |f| %>
   <div class="field">
     <%= f.label :title %><br />
     <%= f.text_field :title %>

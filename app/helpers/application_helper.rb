@@ -200,6 +200,8 @@ module ApplicationHelper
     outstr.html_safe
   end
 
+  # Don't ask me what's going on here and how it works, I had no idea when I wrote it
+  # and so I have no idea now
   def you_are_here(post)
     @mystr=String.new
 
@@ -214,8 +216,6 @@ module ApplicationHelper
 
     a1 = after_posts.size
     a2 = before_posts.size
-
-    a = @all_posts.size
 
     if (a2>10)
       d1 = a1>5 ? (a1-5) : 0
