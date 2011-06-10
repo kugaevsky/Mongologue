@@ -8,10 +8,10 @@ gem 'rails', '3.0.7'
 gem 'sqlite3'
 gem 'mongoid', '>= 2.0.2'
 gem 'bson_ext', '>= 1.3.0'
-gem 'kaminari'
+# gem 'kaminari'
 gem 'unicode'
-gem 'fast_xs'
-gem 'gilenson'
+# gem 'fast_xs'
+# gem 'gilenson' :git => "git://github.com/daekrist/gilenson.git"
 
 # Use unicorn as the web server
 # gem 'unicorn'

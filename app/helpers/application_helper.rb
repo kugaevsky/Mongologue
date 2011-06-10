@@ -129,7 +129,9 @@ SYMBOLS = [
 #   line — текст, который нужно оттипографить
 #   replacement — опция замены (:symbols — готовые символы, :names — буквенные
 #        коды, :codes — числовые коды)
-def typo(line, replacement = :names)
+def typo(text, replacement = :names)
+    line="#{text}"
+
     symbols = case replacement
         when :symbols
             SYMBOLS.map{|regex, *replacements| [regex, replacements[0]]}
@@ -164,8 +166,13 @@ def typo(line, replacement = :names)
     line
   end
 
+
   def prepare_text(text)
-    return simple_format(typo(text))
+    line = "#{text}"
+    line = simple_format(line)
+    line.gsub!("\n","")
+    line.gsub!("\r","")
+    return line.gilensize
   end
 
   def unprepare_text(text)
@@ -209,13 +216,13 @@ def typo(line, replacement = :names)
     end
   end
 
-  def top_commented_posts
+  def top_commented_posts(maxsize=11)
     @top_posts = Post.only(:pid, :title, :comments_counter).\
                       where(:created_at.gt => 1.month.ago).\
-                      order_by([:comments_counter, :desc]).limit(11).to_ary
+                      order_by([:comments_counter, :desc]).limit(maxsize).to_ary
     outstr=String.new
     @top_posts.each do |post|
-      outstr = outstr + link_to_post(post) + " (#{post.comments_counter})" + "<br />"
+      outstr = outstr + link_to_post(post) + " (#{post.comments_counter.to_i})" + "<br />"
     end
     outstr.html_safe
   end
@@ -223,37 +230,50 @@ def typo(line, replacement = :names)
   # Don't ask me what's going on here and how it works, I had no idea when I wrote it
   # and so I have no idea now
   def you_are_here(post, winsize=11)
-    @mystr=String.new
+    mystr=String.new
 
-    before_posts = Post.only(:pid, :title, :created_at).\
-                      where(:created_at.lte => post.created_at ).\
-                      order_by([:created_at, :desc]).limit(winsize).to_ary
-    after_posts = Post.only(:pid, :title, :created_at).\
-                      where(:created_at.gt => post.created_at ).\
-                      order_by([:created_at, :asc]).limit(winsize-1).to_ary
-    @all_posts = after_posts.reverse.concat(before_posts)
+    posts = Post.only(:pid, :title, :created_at).\
+                where(:pid.lte => post.pid+(winsize/2).ceil ).\
+                order_by(:created_at, :desc).limit(winsize).to_ary
 
-
-    a1 = after_posts.size
-    a2 = before_posts.size
-
-    if (a2>winsize-1)
-      d1 = a1>(winsize/2).ceil ? (a1-(winsize/2).ceil) : 0
-      d2 = a1>(winsize/2).ceil ?  winsize-1+d1 : winsize-1
-    else
-      d2 = a2<(winsize/2).floor ? (winsize-1+a2-1) : winsize+(winsize/2).ceil
-      d1 = a2<(winsize/2).floor ? (a2-1) : (winsize/2).ceil
-    end
-
-    for i in d1..d2 do
-      m = @all_posts[i]
+    posts.each do |m|
       if m.pid == post.pid
-        @mystr=@mystr+"<b>#{m.title}</b><br />"
+        mystr=mystr+"<b>#{m.title}</b><br />"
       else
-        @mystr=@mystr+"#{link_to_post(m)}<br />"
+        mystr=mystr+"#{link_to_post(m)}<br />"
       end
     end
-    @mystr.html_safe
+    mystr.html_safe
+
+    # before_posts = Post.only(:pid, :title, :created_at).\
+    #                   where(:created_at.lte => post.created_at ).\
+    #                   order_by([:created_at, :desc]).limit(winsize).to_ary
+    # after_posts = Post.only(:pid, :title, :created_at).\
+    #                   where(:created_at.gt => post.created_at ).\
+    #                   order_by([:created_at, :asc]).limit(winsize-1).to_ary
+    # @all_posts = after_posts.reverse.concat(before_posts)
+
+
+    # a1 = after_posts.size
+    # a2 = before_posts.size
+
+    # if (a2>winsize-1)
+    #   d1 = a1>(winsize/2).ceil ? (a1-(winsize/2).ceil) : 0
+    #   d2 = a1>(winsize/2).ceil ?  winsize-1+d1 : winsize-1
+    # else
+    #   d2 = a2<(winsize/2).floor ? (winsize-1+a2-1) : winsize+(winsize/2).ceil
+    #   d1 = a2<(winsize/2).floor ? (a2-1) : (winsize/2).ceil
+    # end
+
+    # for i in d1..d2 do
+    #   m = @all_posts[i]
+    #   if m.pid == post.pid
+    #     @mystr=@mystr+"<b>#{m.title}</b><br />"
+    #   else
+    #     @mystr=@mystr+"#{link_to_post(m)}<br />"
+    #   end
+    # end
+    # @mystr.html_safe
 
   end
 
