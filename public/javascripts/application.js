@@ -143,10 +143,16 @@
   var tcvisible=$.cookie("tagscloud");
   var atvisible=$.cookie("abouttext");
   var sivisible=$.cookie("siteinfo");
+  var tpvisible=$.cookie("topposts");
+  var yhvisible=$.cookie("youarehere");
+
 
   $('#tagscloud').css("display",tcvisible);
   $('#abouttext').css("display",atvisible);
   $('#siteinfo').css("display",sivisible);
+  $('#topposts').css("display",tpvisible);
+  $('#youarehere').css("display",yhvisible);
+
 
   $.address.externalChange(function(event) {
     if (!loaded) {
@@ -204,6 +210,22 @@
     $("#siteinfo").toggle({ effect: "blind"},(function(){
       var sivisible=$('#siteinfo').css("display");
       $.cookie("siteinfo", sivisible, { expires: 30 } );
+      }));
+  });
+
+  $("#toppostsbutton")
+    .click(function() {
+    $("#topposts").toggle({ effect: "blind"},(function(){
+      var tpvisible=$('#topposts').css("display");
+      $.cookie("topposts", tpvisible, { expires: 30 } );
+      }));
+  });
+
+  $("#youareherebutton")
+    .click(function() {
+    $("#youarehere").toggle({ effect: "blind"},(function(){
+      var yhvisible=$('#youarehere').css("display");
+      $.cookie("youarehere", yhvisible, { expires: 30 } );
       }));
   });
 

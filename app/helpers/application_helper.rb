@@ -202,27 +202,27 @@ module ApplicationHelper
 
   # Don't ask me what's going on here and how it works, I had no idea when I wrote it
   # and so I have no idea now
-  def you_are_here(post)
+  def you_are_here(post, winsize=11)
     @mystr=String.new
 
     before_posts = Post.only(:pid, :title, :created_at).\
                       where(:created_at.lte => post.created_at ).\
-                      order_by([:created_at, :desc]).limit(11).to_ary
+                      order_by([:created_at, :desc]).limit(winsize).to_ary
     after_posts = Post.only(:pid, :title, :created_at).\
                       where(:created_at.gt => post.created_at ).\
-                      order_by([:created_at, :asc]).limit(10).to_ary
+                      order_by([:created_at, :asc]).limit(winsize-1).to_ary
     @all_posts = after_posts.reverse.concat(before_posts)
 
 
     a1 = after_posts.size
     a2 = before_posts.size
 
-    if (a2>10)
-      d1 = a1>5 ? (a1-5) : 0
-      d2 = a1>5 ?  10+d1 : 10
+    if (a2>winsize-1)
+      d1 = a1>(winsize/2).ceil ? (a1-(winsize/2).ceil) : 0
+      d2 = a1>(winsize/2).ceil ?  winsize-1+d1 : winsize-1
     else
-      d2 = a2<6 ? (10+a2-1) : 15
-      d1 = a2<6 ? (a2-1) : 5
+      d2 = a2<(winsize/2).floor ? (winsize-1+a2-1) : winsize+(winsize/2).ceil
+      d1 = a2<(winsize/2).floor ? (a2-1) : (winsize/2).ceil
     end
 
     for i in d1..d2 do
