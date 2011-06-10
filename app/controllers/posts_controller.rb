@@ -20,6 +20,8 @@ class PostsController < ApplicationController
   # GET /posts.xml
   def index
 
+    start_post = Post.where(:pid => params[:p]).first || not_found if params[:p]
+
     # We have new post form embedded into index
     @post=Post.new
 
