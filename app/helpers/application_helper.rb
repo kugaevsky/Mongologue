@@ -167,12 +167,14 @@ module ApplicationHelper
     outstr.html_safe
   end
 
-  def you_are_here(post, winsize=11)
+  def you_are_here(post, winsize=10)
     mystr=String.new
 
+    pidmod = post.pid < (winsize/2).round ? ((winsize/2+1).round-post.pid) : 0
+
     posts = Post.only(:pid, :title, :created_at).\
-                where(:pid.lte => post.pid+(winsize/2).ceil ).\
-                order_by(:created_at, :desc).limit(winsize).to_ary
+                where(:pid.lte => post.pid+(winsize/2).round+pidmod ).\
+                order_by([:created_at, :desc]).limit(winsize).to_ary
 
     posts.each do |m|
       if m.pid == post.pid

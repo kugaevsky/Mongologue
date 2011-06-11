@@ -431,7 +431,28 @@ a:hover { background-color:orange; }
   margin: 0;
   font-size: 13px;
   line-height: 17px;
+  display: inline-block;
 }
+
+#youarehere {
+  height: 260px;
+
+
+}
+
+#youarehereslider {
+  display: inline-block;
+  height: 200px;
+  margin: 5px 5px 0 0px;
+  vertical-alignment: center;
+}
+
+#youarehere p {
+  width: 190px;
+  float: right;
+
+}
+
 
 .favtag {
   color: black;

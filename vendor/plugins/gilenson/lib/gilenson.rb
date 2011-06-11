@@ -499,8 +499,11 @@ class Gilenson
        text.gsub!( /(#{@laquo}([#{all_c}#{punct}#{@mark_tag}\_]*).*[#{all_c}][\#{@mark_tag}\?\.\!\,\\]*)\"/ui, '\1'+ @raquo)
      end
 
-     text.gsub!(/(#{@laquo})(.*?)#{@laquo}([^#{@laquo}#{@raquo}]*?)#{@raquo}(.*?)(#{@raquo})/,'\1\2'+@bdquo+'\3'+@ldquo+'\4\5')
-
+     _text = '""'
+     until _text == text do
+       _text = text.dup
+       text.gsub!(/(#{@laquo})(.*?)#{@laquo}([^#{@laquo}#{@raquo}]*?)#{@raquo}(.*?)(#{@raquo})/,'\1\2'+@bdquo+'\3'+@ldquo+'\4\5')
+     end
    end
 
    def process_quotes(text)
