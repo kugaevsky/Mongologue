@@ -92,81 +92,6 @@ module ApplicationHelper
     tlist.sub(', ','').html_safe # remove things at start
   end
 
-
-SYMBOLS = [
-    # экранирование спецсимволов
-    # [/&/        , '&'  , '&amp;'    ,  '&#38;'],
-    # [/</        , '<'  , '&lt'      ,  '&#60;'],
-    # [/>/        , '>'  , '&gt'      ,  '&#62;'],
-
-    # простые замены
-    [/\(c\)/i   , '©'  , '&copy;'   , '&#169;'],
-    [/\(tm\)/i  , '™'  , '&trade;'  , '&#153;'],
-    [/\'/       , '’'  , '&rsquo;'  , '&#146;'],
-
-    # кавычковая магия: обычные кавычки — ёлочки
-    [/(^|\s)\"/ , '\1«', '\1&laquo;', '\1&#171;'],
-    [/\"/ , '»', '&raquo;', '&#187;'],
-
-    # кавычковая магия: вложенные кавычки заменяем на лапки
-    [/(«|&laquo;)(.+)(?:«|&laquo;)(.+)(?:»|&raquo;)(.+)(»|&raquo;)/,
-        '\1\2„\3“\4\5',
-        '\1\2&bdquo;\3&ldquo;\4\5',
-        '\1\2&#8222;\3&#147;\4\5',
-    ],
-
-    # тире
-    [/-(\s)/    , '—\1', '&mdash;\1', '&#151;\1'],
-
-    # короткие слова привязываем неразрывным пробелом;
-    # прогоняем два раза, чтобы обработать расставленные в первом прогоне &nbsp;
-    [/(^|\s)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/, '\1\2 ', '\1\2&nbsp;', '\1\2&#160;'],
-    [/( |&nbsp;|&\#160;)((?:\S|&[a-zA-Z#0-9]+;){1,2})(\s)/, '\1\2 ', '\1\2&nbsp;', '\1\2&#160;']
-]
-
-# русская типографика
-# аргументы:
-#   line — текст, который нужно оттипографить
-#   replacement — опция замены (:symbols — готовые символы, :names — буквенные
-#        коды, :codes — числовые коды)
-def typo(text, replacement = :names)
-    line="#{text}"
-
-    symbols = case replacement
-        when :symbols
-            SYMBOLS.map{|regex, *replacements| [regex, replacements[0]]}
-        when :names
-            SYMBOLS.map{|regex, *replacements| [regex, replacements[1]]}
-        when :codes
-            SYMBOLS.map{|regex, *replacements| [regex, replacements[2]]}
-        else
-            raise(ArgumentError, "Expecting one of :symbols, :names, :codes, #{replacement.inspect} obtained")
-    end
-
-    cleanups = {
-        /[\t ]+/ => ' ',
-        /(\S+(?:-\S+)+)/ => '<nobr>\1</nobr>'
-    }
-
-    # заменяем спецсимволы
-    symbols[0..2].each do |regexp, replacement|
-        line.gsub!(regexp, replacement)
-    end
-
-    # прогоняем очистку пробельных символов
-    cleanups.each do |regexp, replacement|
-        line.gsub!(regexp, replacement)
-    end
-
-    # заменяем всё остальное
-    symbols[3..-1].each do |regexp, replacement|
-        line.gsub!(regexp, replacement)
-    end
-
-    line
-  end
-
-
   def prepare_text(text)
     line = "#{text}"
     line = simple_format(line)
@@ -227,8 +152,6 @@ def typo(text, replacement = :names)
     outstr.html_safe
   end
 
-  # Don't ask me what's going on here and how it works, I had no idea when I wrote it
-  # and so I have no idea now
   def you_are_here(post, winsize=11)
     mystr=String.new
 
@@ -238,42 +161,12 @@ def typo(text, replacement = :names)
 
     posts.each do |m|
       if m.pid == post.pid
-        mystr=mystr+"<b>#{m.title}</b><br />"
+        mystr=mystr+"&rarr; <b>#{m.title}</b><br />"
       else
         mystr=mystr+"#{link_to_post(m)}<br />"
       end
     end
     mystr.html_safe
-
-    # before_posts = Post.only(:pid, :title, :created_at).\
-    #                   where(:created_at.lte => post.created_at ).\
-    #                   order_by([:created_at, :desc]).limit(winsize).to_ary
-    # after_posts = Post.only(:pid, :title, :created_at).\
-    #                   where(:created_at.gt => post.created_at ).\
-    #                   order_by([:created_at, :asc]).limit(winsize-1).to_ary
-    # @all_posts = after_posts.reverse.concat(before_posts)
-
-
-    # a1 = after_posts.size
-    # a2 = before_posts.size
-
-    # if (a2>winsize-1)
-    #   d1 = a1>(winsize/2).ceil ? (a1-(winsize/2).ceil) : 0
-    #   d2 = a1>(winsize/2).ceil ?  winsize-1+d1 : winsize-1
-    # else
-    #   d2 = a2<(winsize/2).floor ? (winsize-1+a2-1) : winsize+(winsize/2).ceil
-    #   d1 = a2<(winsize/2).floor ? (a2-1) : (winsize/2).ceil
-    # end
-
-    # for i in d1..d2 do
-    #   m = @all_posts[i]
-    #   if m.pid == post.pid
-    #     @mystr=@mystr+"<b>#{m.title}</b><br />"
-    #   else
-    #     @mystr=@mystr+"#{link_to_post(m)}<br />"
-    #   end
-    # end
-    # @mystr.html_safe
 
   end
 

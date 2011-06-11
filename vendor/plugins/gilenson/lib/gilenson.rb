@@ -19,6 +19,7 @@ class Gilenson
      "inches"    => true,    # преобразовывать дюймы в знак дюйма;
      "laquo"     => true,    # кавычки-ёлочки
      "quotes"    => true,    # кавычки-английские лапки
+     "squotes"   => true,    # одиночные кавычки-английские лапки
      "dash"      => false,   # короткое тире (150)
      "emdash"    => true,    # длинное тире двумя минусами (151)
      "longdash"  => true,    # длинное тире одним минусом
@@ -46,6 +47,7 @@ class Gilenson
   # Глифы, использующиеся в подстановках по-умолчанию
   GLYPHS = {
     :quot       => "&#34;",     # quotation mark
+    :squot      => "&#39;",     # single quotation mark (apostrophe)
     :amp        => "&#38;",     # ampersand
     :apos       => "&#39;",     # apos
     :gt         => "&#62;",     # greater-than sign
@@ -219,6 +221,9 @@ class Gilenson
 
      # 1. лапки
      process_quotes(text) if @settings["quotes"]
+
+     # 1a. одиночные лапки
+     process_squotes(text) if @settings["squotes"]
 
      # 2. ёлочки
      process_laquo(text) if @settings["laquo"]
@@ -478,12 +483,23 @@ class Gilenson
    end
 
    # modified by daekrist
+   # allows nested quotes
    def process_laquo(text)
 
-     text.gsub!(/(^|\s|#{@mark_tag})\"/, '\1'+@laquo)
-     text.gsub!(/\"/, @raquo)
+     text.gsub!( /\"\"/ui, @quot*2)
+     text.gsub!( /\"\.\"/ui, @quot+"."+@quot)
+     _text = '""';
 
-     text.gsub!(/(#{@laquo})(.+)(?:#{@laquo})(.+)(?:#{@raquo})(.+)(#{@raquo})/, '\1\2'+@bdquo+'\3'+@ldquo+'\4\5')
+     all_c = '0-9A-Za-zА-Яа-яЁё'
+     punct = /\'\!\s\.\?\,\-\&\;\:\\/
+
+     until _text == text do
+       _text = text.dup
+       text.gsub!( /(^|\s|#{@mark_tag}|>)\"([#{all_c}#{punct}\_\#{@mark_tag}]+(\"|#{@raquo}))/ui, '\1'+ @laquo +'\2')
+       text.gsub!( /(#{@laquo}([#{all_c}#{punct}#{@mark_tag}\_]*).*[#{all_c}][\#{@mark_tag}\?\.\!\,\\]*)\"/ui, '\1'+ @raquo)
+     end
+
+     text.gsub!(/(#{@laquo})([#{all_c}#{punct}\_\#{@mark_tag}]+)(?:#{@laquo})([#{all_c}#{punct}\_\#{@mark_tag}]+)(?:#{@raquo})([#{all_c}#{punct}\_\#{@mark_tag}]+)(#{@raquo})/, '\1\2'+@bdquo+'\3'+@ldquo+'\4\5')
 
    end
 
@@ -501,8 +517,23 @@ class Gilenson
      end
    end
 
+   def process_squotes(text)
+     text.gsub!( /\'\'/ui, @squot*2)
+     text.gsub!( /\'\.\'/ui, @squot+"."+@squot)
+     _text = "''";
+     lat_c = '0-9A-Za-z'
+     punct = /\'\!\s\.\?\,\-\&\;\:\\/
+
+     until _text == text do
+       _text = text.dup
+       text.gsub!( /(^|\s|#{@mark_tag}|>)\'([#{lat_c}#{punct}\_\#{@mark_tag}]+(\'|#{@rsquo}))/ui, '\1'+ @lsquo +'\2')
+       text.gsub!( /(#{@lsquo}([#{lat_c}#{punct}#{@mark_tag}\_]*).*[#{lat_c}][\#{@mark_tag}\?\.\!\,\\]*)\'/ui, '\1'+ @rsquo)
+     end
+   end
+
+
    def process_compound_quotes(text)
-     text.gsub!(/(#{@ldquo}(([0-9ёЁA-Za-zА-Яа-я'!\.?,\-&;:]|\s|#{@mark_tag})*)#{@laquo}(.*)#{@raquo})#{@raquo}/ui, '\1' + @rdquo);
+     text.gsub!(/(#{@ldquo}(([A-Za-z0-9'!\.?,\-&;:]|\s|#{@mark_tag})*)#{@laquo}(.*)#{@raquo})#{@raquo}/ui, '\1' + @rdquo);
    end
 
    def process_degrees(text)
