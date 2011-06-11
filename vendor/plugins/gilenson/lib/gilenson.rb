@@ -499,7 +499,7 @@ class Gilenson
        text.gsub!( /(#{@laquo}([#{all_c}#{punct}#{@mark_tag}\_]*).*[#{all_c}][\#{@mark_tag}\?\.\!\,\\]*)\"/ui, '\1'+ @raquo)
      end
 
-     text.gsub!(/(#{@laquo})([#{all_c}#{punct}\_\#{@mark_tag}]+)(?:#{@laquo})([#{all_c}#{punct}\_\#{@mark_tag}]+)(?:#{@raquo})([#{all_c}#{punct}\_\#{@mark_tag}]+)(#{@raquo})/, '\1\2'+@bdquo+'\3'+@ldquo+'\4\5')
+     text.gsub!(/(#{@laquo})([#{all_c}#{punct}\_\#{@mark_tag}]+?)(?:#{@laquo})([#{all_c}#{punct}\_\#{@mark_tag}]+?)(?:#{@raquo})([#{all_c}#{punct}\_\#{@mark_tag}]+?)(#{@raquo})/, '\1\2'+@bdquo+'\3'+@ldquo+'\4\5')
 
    end
 
