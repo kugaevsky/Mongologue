@@ -93,11 +93,26 @@ module ApplicationHelper
   end
 
   def prepare_text(text)
+
     line = "#{text}"
+
+    line=line.gilensize
+
+    # Escape everything within <code> tag
+    sub = line.scan(/(<code>)(.+?)(<\/code>)/um)
+    if (!sub.nil?)
+      sub.each do |s|
+        line.gsub!(s[1],s[1].gsub(/</,'&lt;').gsub(/>/,'&gt;'))
+      end
+    end
+
     line = simple_format(line)
+
     line.gsub!("\n","")
     line.gsub!("\r","")
-    return line.gilensize
+
+    line
+
   end
 
   def unprepare_text(text)
