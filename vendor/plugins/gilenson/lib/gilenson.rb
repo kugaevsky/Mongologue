@@ -19,7 +19,7 @@ class Gilenson
      "inches"    => true,    # преобразовывать дюймы в знак дюйма;
      "laquo"     => true,    # кавычки-ёлочки
      "quotes"    => true,    # кавычки-английские лапки
-     "squotes"   => true,    # одиночные кавычки-английские лапки
+     "squotes"   => false,    # одиночные кавычки-английские лапки
      "dash"      => false,   # короткое тире (150)
      "emdash"    => true,    # длинное тире двумя минусами (151)
      "longdash"  => true,    # длинное тире одним минусом
@@ -499,7 +499,7 @@ class Gilenson
        text.gsub!( /(#{@laquo}([#{all_c}#{punct}#{@mark_tag}\_]*).*[#{all_c}][\#{@mark_tag}\?\.\!\,\\]*)\"/ui, '\1'+ @raquo)
      end
 
-     text.gsub!(/(#{@laquo})([#{all_c}#{punct}\_\#{@mark_tag}]+?)(?:#{@laquo})([#{all_c}#{punct}\_\#{@mark_tag}]+?)(?:#{@raquo})([#{all_c}#{punct}\_\#{@mark_tag}]+?)(#{@raquo})/, '\1\2'+@bdquo+'\3'+@ldquo+'\4\5')
+     text.gsub!(/(#{@laquo})(.*?)#{@laquo}([^#{@laquo}#{@raquo}]*?)#{@raquo}(.*?)(#{@raquo})/,'\1\2'+@bdquo+'\3'+@ldquo+'\4\5')
 
    end
 
@@ -533,7 +533,7 @@ class Gilenson
 
 
    def process_compound_quotes(text)
-     text.gsub!(/(#{@ldquo}(([A-Za-z0-9'!\.?,\-&;:]|\s|#{@mark_tag})*)#{@laquo}(.*)#{@raquo})#{@raquo}/ui, '\1' + @rdquo);
+     # text.gsub!(/(#{@ldquo}(([A-Za-z0-9'!\.?,\-&;:]|\s|#{@mark_tag})*)#{@laquo}(.*)#{@raquo})#{@raquo}/ui, '\1' + @rdquo);
    end
 
    def process_degrees(text)
