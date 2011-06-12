@@ -471,17 +471,14 @@ blockquote {
   margin: 0 0 0 50px;
 }
 
-pre {
-  background-color: #222222;
-  width: 600px;
-  color: #FFFFFF;
-  border: solid 1px;
-  padding: 8px;
-  margin: 1em 0;
-  overflow: scroll;
+code {
   font-family: Consolas, 'Courier New', monospace;
-  font-size: 0.8em;
-  line-height: 1.2em;
+  font-size: 14px;
+}
+
+pre {
+  padding: 10px;
+  margin: 0 0 0 50px;
 }
 
 input[type=text], textarea {

@@ -37,7 +37,7 @@ class Gilenson
      "phones"    => false,   # обработка телефонов
      "html"      => true,    # разрешение использования тагов html
      "de_nobr"   => false,   # при true все <nobr/> заменяются на <span class="nobr"/>
-     "raw_output" => true,   # выводить UTF-8 вместо entities
+     "raw_output" => false,   # выводить UTF-8 вместо entities
      "skip_attr" => false,   # при true не отрабатывать типографику в атрибутах тегов
      "skip_code" => true,    # при true не отрабатывать типографику внутри <code/>, <tt/>, CDATA
      "enforce_en_quotes" => false, # только латинские кавычки
@@ -232,7 +232,7 @@ class Gilenson
      process_inches(text) if @settings["inches"]
 
      # 2b. одновременно ёлочки и лапки
-     process_compound_quotes(text) if (@settings["quotes"] && @settings["laquo"])
+     # process_compound_quotes(text) if (@settings["quotes"] && @settings["laquo"])
 
      # 3. тире
      process_dash(text) if @settings["dash"]
@@ -484,31 +484,29 @@ class Gilenson
 
    # modified by daekrist
    # allows nested quotes
+   # Fuck regular expressions
    def process_laquo(text)
-
-     text.gsub!( /\"\"/ui, @quot*2)
-     text.gsub!( /\"\.\"/ui, @quot+"."+@quot)
-     _text = '""';
-
-     all_c = '0-9A-Za-zА-Яа-яЁё'
-     punct = /\'\!\s\.\?\,\-\&\;\:\\/
-
-     until _text == text do
-       _text = text.dup
-       text.gsub!( /(^|\s|#{@mark_tag}|>)\"([#{all_c}#{punct}\_\#{@mark_tag}]+(\"|#{@raquo}))/ui, '\1'+ @laquo +'\2')
-       text.gsub!( /(#{@laquo}([#{all_c}#{punct}#{@mark_tag}\_]*).*[#{all_c}][\#{@mark_tag}\?\.\!\,\\]*)\"/ui, '\1'+ @raquo)
+     text.gsub!(/\"([^\"]*)([^\s\"])\"/ui, '«'+'\1\2'+'»');
+     nested=false
+     for a in 0..(text.length-1) do
+       if text[a] == '«' and nested
+         text[a] = '„'
+       elsif text[a] == '»' and nested
+         text[a] = '“'
+       elsif text[a] == '"' and nested
+         text[a] = '»'
+         nested=false
+       elsif text[a] == '"' and !nested
+         nested=true
+         text[a] = '«'
+       end
      end
-
-     _text = '""'
-     until _text == text do
-       _text = text.dup
-       text.gsub!(/(#{@laquo})(.*?)#{@laquo}([^#{@laquo}#{@raquo}]*?)#{@raquo}(.*?)(#{@raquo})/,'\1\2'+@bdquo+'\3'+@ldquo+'\4\5')
-     end
+     text.gsub!("«",@laquo).gsub!('»',@raquo).gsub!('„',@bdquo).gsub!('“',@ldquo)
    end
 
    def process_quotes(text)
-     text.gsub!( /\"\"/ui, @quot*2)
-     text.gsub!( /\"\.\"/ui, @quot+"."+@quot)
+     # text.gsub!( /\"\"/ui, @quot*2)
+     # text.gsub!( /\"\.\"/ui, @quot+"."+@quot)
      _text = '""';
      lat_c = '0-9A-Za-z'
      punct = /\'\!\s\.\?\,\-\&\;\:\\/
@@ -521,8 +519,8 @@ class Gilenson
    end
 
    def process_squotes(text)
-     text.gsub!( /\'\'/ui, @squot*2)
-     text.gsub!( /\'\.\'/ui, @squot+"."+@squot)
+     # text.gsub!( /\'\'/ui, @squot*2)
+     # text.gsub!( /\'\.\'/ui, @squot+"."+@squot)
      _text = "''";
      lat_c = '0-9A-Za-z'
      punct = /\'\!\s\.\?\,\-\&\;\:\\/
@@ -535,9 +533,9 @@ class Gilenson
    end
 
 
-   def process_compound_quotes(text)
+   #def process_compound_quotes(text)
      # text.gsub!(/(#{@ldquo}(([A-Za-z0-9'!\.?,\-&;:]|\s|#{@mark_tag})*)#{@laquo}(.*)#{@raquo})#{@raquo}/ui, '\1' + @rdquo);
-   end
+   #end
 
    def process_degrees(text)
      text.gsub!( /-([0-9])+\^([FCС])/, @ndash+'\1'+ @deg +'\2') #deg
