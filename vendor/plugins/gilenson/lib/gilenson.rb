@@ -486,7 +486,7 @@ class Gilenson
    # allows nested quotes
    # Fuck regular expressions
    def process_laquo(text)
-     text.gsub!(/\"([^\"]*)([^\s\"])\"/ui, '«'+'\1\2'+'»');
+     text.gsub!(/\"([^\"]*)([^\s\"])\"/ui, '«'+'\1\2'+'»')
      nested=false
      for a in 0..(text.length-1) do
        if text[a] == '«' and nested
@@ -501,7 +501,7 @@ class Gilenson
          text[a] = '«'
        end
      end
-     text.gsub!("«",@laquo).gsub!('»',@raquo).gsub!('„',@bdquo).gsub!('“',@ldquo)
+     text=text.gsub("«",@laquo).gsub('»',@raquo).gsub('„',@bdquo).gsub('“',@ldquo)
    end
 
    def process_quotes(text)
