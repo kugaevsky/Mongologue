@@ -486,21 +486,55 @@ class Gilenson
    # allows nested quotes
    # Fuck regular expressions
    def process_laquo(text)
-     text.gsub!(/\"([^\"]*)([^\s\"])\"/ui, '«'+'\1\2'+'»')
-     nested=false
+     # text.gsub!(/\"([^\"]*)([^\s\"])\"/ui, '«'+'\1\2'+'»')
+     # nested=false
+     # for a in 0..(text.length-1) do
+     #   if text[a] == '«' and nested
+     #     text[a] = '„'
+     #   elsif text[a] == '»' and nested
+     #     text[a] = '“'
+     #   elsif text[a] == '"' and nested
+     #     text[a] = '»'
+     #     nested=false
+     #   elsif text[a] == '"' and !nested
+     #     nested=true
+     #     text[a] = '«'
+     #   end
+     # end
+
+     quote=false
+     quote2=false
+     space=false
+     char=false
      for a in 0..(text.length-1) do
-       if text[a] == '«' and nested
-         text[a] = '„'
-       elsif text[a] == '»' and nested
-         text[a] = '“'
-       elsif text[a] == '"' and nested
-         text[a] = '»'
-         nested=false
-       elsif text[a] == '"' and !nested
-         nested=true
+       next_c = a<text.length-1 ? text[a+1] : true
+       next_c = next_c.match(/[ ,.#{@mark_tag}\n\r$]/) unless (next_c.nil?) or (next_c == true)
+       if text[a] == '"' and !quote and
          text[a] = '«'
+         quote = true
+         char = false
+       elsif text[a].match(/[ ,.#{@mark_tag}]/)
+         space = true
+       elsif text[a] != '"'
+         space = false
+         char = true
+       elsif text[a] == '"' and quote and !quote2 and (!char or space or !next_c)
+         text[a] = '„'
+         quote2 = true
+         space = false
+       elsif text[a] == '"' and quote and !quote2 and char
+         text[a] = '»'
+         quote = false
+         char = false
+       elsif text[a] == '"' and quote and quote2
+         quote2 = false
+         text[a] = '“'
        end
      end
+
+
+
+
      text=text.gsub("«",@laquo).gsub('»',@raquo).gsub('„',@bdquo).gsub('“',@ldquo)
    end
 
