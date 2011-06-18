@@ -4,11 +4,10 @@
 <head>
   <title><%= page_title %></title>
   <%= stylesheet_link_tag 'custom', :media => 'screen' %>
-  <%= stylesheet_link_tag 'jquery.cleditor' %>
 
   <%=  stylesheet_link_tag 'orange/jquery-ui-1.8.13.custom.css', :media => 'screen' %>
   <%=  javascript_include_tag 'jquery-1.6.min', 'jquery.cookie', "jquery-ui-1.8.13.custom.min", "autosuggest",
-                              'jquery.cleditor', 'jquery.address', 'rails', 'application' %>
+                              'jquery.address', 'rails', 'application' %>
 
   <%= csrf_meta_tag %>
 
@@ -31,13 +30,13 @@
     </div>
     <form id="searchbox" accept-charset="UTF-8" action="/" method="get" autocomplete="off">
       <input id="search" name="s" type="text" value='<%= "#{mainpage? ? params[:s] : ''}" %>'
-             title="Enter comma-separated words and press Enter." />
+             placeholder="Enter comma-separated words and press Enter." />
 
       <div id="fakesearch"></div>
       <div id="rss">
         <a href="/feed.rss<%= "?s=#{params[:s]}" if params[:s] %>" title="RSS feed.">
         <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
-        <%= "#{mainpage? ? @posts_count : Post.count}" %></span></p></a>
+        <%= mainpage? ? @posts_count : Post.count %></span></p></a>
       </div>
     </form>
     <div id="clientinfo">

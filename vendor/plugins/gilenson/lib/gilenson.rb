@@ -1,8 +1,12 @@
-# -*- encoding: utf-8 -*-
+#encoding: utf-8
+require '/home/mike/rails/fasttypo/fasttypo'
+
 $KCODE = 'u' if RUBY_VERSION < '1.9.0'
 
 class Gilenson
-  VERSION = '1.1.2'
+  include FastTypo
+
+  VERSION = '1.2.0'
   autoload :BlueClothExtra, File.dirname(__FILE__) + '/extras/bluecloth_extra'
   autoload :RedClothExtra, File.dirname(__FILE__) + '/extras/redcloth_extra'
   autoload :RDiscountExtra, File.dirname(__FILE__) + '/extras/rdiscount_extra'
@@ -19,35 +23,38 @@ class Gilenson
      "inches"    => true,    # преобразовывать дюймы в знак дюйма;
      "laquo"     => true,    # кавычки-ёлочки
      "quotes"    => true,    # кавычки-английские лапки
-     "squotes"   => true,    # одиночные кавычки-английские лапки
-     "dash"      => false,   # короткое тире (150)
-     "emdash"    => true,    # длинное тире двумя минусами (151)
+     "dash"      => false,    # короткое тире (150)
      "longdash"  => true,    # длинное тире одним минусом
+     "emdash"    => true,    # длинное тире двумя минусами (151)
      "initials"  => true,    # тонкие шпации в инициалах
      "copypaste" => false,   # замена непечатных и "специальных" юникодных символов на entities
-     "(c)"       => true,    # обрабатывать знак копирайта
-     "(r)"       => true,
-     "(tm)"      => true,
-     "(p)"       => true,
-     "acronyms"  => false,   # Акронимы с пояснениями - ЖЗЛ(Жизнь Замечатльных Людей)
+     "(c)"       => true,    # обрабатывать знаки копирайтов и трейдмарков
+     "acronyms"  => true,    # Акронимы с пояснениями - ЖЗЛ(Жизнь Замечатльных Людей)
      "+-"        => true,    # спецсимволы, какие - понятно
      "degrees"   => true,    # знак градуса
      "dashglue"  => true, "wordglue" => true, # приклеивание предлогов и дефисов
      "spacing"   => true,    # запятые и пробелы, перестановка
-     "phones"    => false,   # обработка телефонов
+     "phones"    => false,    # обработка телефонов
      "html"      => true,    # разрешение использования тагов html
      "de_nobr"   => false,   # при true все <nobr/> заменяются на <span class="nobr"/>
-     "raw_output" => false,   # выводить UTF-8 вместо entities
-     "skip_attr" => false,   # при true не отрабатывать типографику в атрибутах тегов
+     "raw_output" => true,  # выводить UTF-8 вместо entities
+     "skip_attr" => true,   # при true не отрабатывать типографику в атрибутах тегов
      "skip_code" => true,    # при true не отрабатывать типографику внутри <code/>, <tt/>, CDATA
      "enforce_en_quotes" => false, # только латинские кавычки
-     "enforce_ru_quotes" => false  # только русские кавычки (enforce_en_quotes при этом игнорируется)
+     "enforce_ru_quotes" => false, # только русские кавычки (enforce_en_quotes при этом игнорируется)
+     "(r)"       => false, # DEPRECATED
+     "(tm)"      => false, # DEPRECATED
+     "(p)"       => false, # DEPRECATED
   }.freeze
+
+  #:stopdoc:
+  # Старые настройки которые больше не нужны - уйдут в следующей большой версии
+  # Нужны потому иначе будет брошена ошибка
+  #:startdoc:
 
   # Глифы, использующиеся в подстановках по-умолчанию
   GLYPHS = {
     :quot       => "&#34;",     # quotation mark
-    :squot      => "&#39;",     # single quotation mark (apostrophe)
     :amp        => "&#38;",     # ampersand
     :apos       => "&#39;",     # apos
     :gt         => "&#62;",     # greater-than sign
@@ -76,8 +83,8 @@ class Gilenson
     :minus      => "&#8722;",   # minus sign
     :inch       => "&#8243;",   # inch/second sign (u0x2033) (не путать с кавычками!)
     :thinsp     => "&#8201;",   # полукруглая шпация (тонкий пробел)
-    :nob_open   => '<nobr>',    # открывающий блок без переноса слов (modified, daekrist)
-    :nob_close  => '</nobr>',   # закрывающий блок без переноса слов (modified, daekrist)
+    :nob_open   => '<nobr>',    # открывающий блок без переноса слов
+    :nob_close  => '</nobr>',    # закрывающий блок без переноса слов
   }.freeze
 
   # Нормальные "типографские" символы в UTF-виде. Браузерами обрабатываются плохонько, поэтому
@@ -219,17 +226,14 @@ class Gilenson
      # 1. Запятые и пробелы
      process_spacing(text) if @settings["spacing"]
 
+     # 3. Инчи
+     process_inches(text) if @settings["inches"]
+
      # 1. лапки
      process_quotes(text) if @settings["quotes"]
 
-     # 1a. одиночные лапки
-     process_squotes(text) if @settings["squotes"]
-
      # 2. ёлочки
      process_laquo(text) if @settings["laquo"]
-
-     # 3. Инчи
-     process_inches(text) if @settings["inches"]
 
      # 2b. одновременно ёлочки и лапки
      # process_compound_quotes(text) if (@settings["quotes"] && @settings["laquo"])
@@ -240,8 +244,11 @@ class Gilenson
      # 3a. тире длинное
      process_emdash(text) if @settings["emdash"]
 
-     # 3b. тире длинное (daekrist)
+     # 3b. тире длинное одним дефисом (daekrist)
      process_longdash(text) if @settings["longdash"]
+
+     # 4. копимарки и трейдрайты
+     process_copymarks(text) if @settings["(c)"]
 
      # 5. +/-
      process_plusmin(text) if @settings["+-"]
@@ -460,116 +467,46 @@ class Gilenson
      text.gsub!( /(\s|;)\-(\s)/ui, '\1'+@ndash+'\2')
    end
 
+   def process_emdash(text)
+     text.gsub!( /(\s|;)\-\-(\s)/ui, '\1'+@mdash+'\2')
+   end
+
    def process_longdash(text)
      text.gsub!( /(\s|;)\-(\s)/ui, '\1'+@mdash+'\2')
    end
 
+   def process_copymarks(text)
+     # 4. (с)
+     # Можно конечно может быть и так
+     # https://github.com/daekrist/gilenson/commit/c3a96151239281dcef6140616133deb56a099d0f#L1R466
+     # но без тестов это позорище.
+     text.gsub!(/\([сСcC]\)[^\.,;:]/u) { |m| [@copy, m[-1..-1]].join }
 
-   def process_emdash(text)
-     text.gsub!( /(\s|;)\-\-(\s)/ui, '\1'+@mdash+'\2')
-     # 4. (с) - fixed, daekrist
-     text.gsub!(/\(c\)/ui, @copy) if @settings["(c)"]
      # 4a. (r)
-     text.gsub!( /\(r\)/ui, '<sup>'+@reg+'</sup>') if @settings["(r)"]
+     text.gsub!( /\(r\)/ui, '<sup>'+@reg+'</sup>')
 
      # 4b. (tm)
-     text.gsub!( /\(tm\)|\(тм\)/ui, @trade) if @settings["(tm)"]
+     text.gsub!( /\(tm\)|\(тм\)/ui, @trade)
+
      # 4c. (p)
-     text.gsub!( /\(p\)/ui, @sect) if @settings["(p)"]
+     text.gsub!( /\(p\)/ui, @sect)
    end
 
    def process_ellipsises(text)
      text.gsub!( '...', @hellip)
    end
 
-   # modified by daekrist
-   # allows nested quotes
-   # Fuck regular expressions
    def process_laquo(text)
-     # text.gsub!(/\"([^\"]*)([^\s\"])\"/ui, '«'+'\1\2'+'»')
-     # nested=false
-     # for a in 0..(text.length-1) do
-     #   if text[a] == '«' and nested
-     #     text[a] = '„'
-     #   elsif text[a] == '»' and nested
-     #     text[a] = '“'
-     #   elsif text[a] == '"' and nested
-     #     text[a] = '»'
-     #     nested=false
-     #   elsif text[a] == '"' and !nested
-     #     nested=true
-     #     text[a] = '«'
-     #   end
-     # end
-
-     quote=false
-     quote2=false
-     space=false
-     char=false
-     for a in 0..(text.length-1) do
-       next_c = a<text.length-1 ? text[a+1] : true
-       next_c = next_c.match(/[ ,.#{@mark_tag}\n\r$]/) unless (next_c.nil?) or (next_c == true)
-       if text[a] == '"' and !quote and
-         text[a] = '«'
-         quote = true
-         char = false
-       elsif text[a].match(/[ ,.#{@mark_tag}]/)
-         space = true
-       elsif text[a] != '"'
-         space = false
-         char = true
-       elsif text[a] == '"' and quote and !quote2 and (!char or space or !next_c)
-         text[a] = '„'
-         quote2 = true
-         space = false
-       elsif text[a] == '"' and quote and !quote2 and char
-         text[a] = '»'
-         quote = false
-         char = false
-       elsif text[a] == '"' and quote and quote2
-         quote2 = false
-         text[a] = '“'
-       end
-     end
-
-
-
-
-     text=text.gsub("«",@laquo).gsub('»',@raquo).gsub('„',@bdquo).gsub('“',@ldquo)
+     text.replace(fast_cyrquotes(text))
    end
 
    def process_quotes(text)
-     # text.gsub!( /\"\"/ui, @quot*2)
-     # text.gsub!( /\"\.\"/ui, @quot+"."+@quot)
-     _text = '""';
-     lat_c = '0-9A-Za-z'
-     punct = /\'\!\s\.\?\,\-\&\;\:\\/
-
-     until _text == text do
-       _text = text.dup
-       text.gsub!( /(^|\s|#{@mark_tag}|>)\"([#{lat_c}#{punct}\_\#{@mark_tag}]+(\"|#{@rdquo}))/ui, '\1'+ @ldquo +'\2')
-       text.gsub!( /(#{@ldquo}([#{lat_c}#{punct}#{@mark_tag}\_]*).*[#{lat_c}][\#{@mark_tag}\?\.\!\,\\]*)\"/ui, '\1'+ @rdquo)
-     end
+     text.replace(fast_latquotes(text))
    end
 
-   def process_squotes(text)
-     # text.gsub!( /\'\'/ui, @squot*2)
-     # text.gsub!( /\'\.\'/ui, @squot+"."+@squot)
-     _text = "''";
-     lat_c = '0-9A-Za-z'
-     punct = /\'\!\s\.\?\,\-\&\;\:\\/
-
-     until _text == text do
-       _text = text.dup
-       text.gsub!( /(^|\s|#{@mark_tag}|>)\'([#{lat_c}#{punct}\_\#{@mark_tag}]+(\'|#{@rsquo}))/ui, '\1'+ @lsquo +'\2')
-       text.gsub!( /(#{@lsquo}([#{lat_c}#{punct}#{@mark_tag}\_]*).*[#{lat_c}][\#{@mark_tag}\?\.\!\,\\]*)\'/ui, '\1'+ @rsquo)
-     end
+   def process_compound_quotes(text)
+#     text.gsub!(/(#{@ldquo}(([A-Za-z0-9'!\.?,\-&;:]|\s|#{@mark_tag})*)#{@laquo}(.*)#{@raquo})#{@raquo}/ui, '\1' + @rdquo);
    end
-
-
-   #def process_compound_quotes(text)
-     # text.gsub!(/(#{@ldquo}(([A-Za-z0-9'!\.?,\-&;:]|\s|#{@mark_tag})*)#{@laquo}(.*)#{@raquo})#{@raquo}/ui, '\1' + @rdquo);
-   #end
 
    def process_degrees(text)
      text.gsub!( /-([0-9])+\^([FCС])/, @ndash+'\1'+ @deg +'\2') #deg
@@ -622,7 +559,8 @@ class Gilenson
 
    # Обработка знака дюйма, кроме случаев когда он внутри кавычек
    def process_inches(text)
-     text.gsub!(/\s([0-9]{1,2}([\.,][0-9]{1,2})?)(\"){1,1}/ui, ' \1' + @inch)
+     #text.gsub!(/\s([0-9]{1,2}([\.,][0-9]{1,2})?)(\"){1,1}/ui, ' \1' + @inch)
+     text.replace(fast_primes(text))
    end
 
    def process_plusmin(text)
@@ -653,3 +591,4 @@ class Gilenson
 end
 
 Object::String.send(:include, Gilenson::StringFormatting)
+

@@ -1,6 +1,9 @@
 #encoding: utf-8
 
+require '/home/mike/rails/fasttypo/fasttypo'
+
 module ApplicationHelper
+  include FastTypo
 
   # Return a title on a per-page basis.
   def page_title
@@ -92,11 +95,28 @@ module ApplicationHelper
     tlist.sub(', ','').html_safe # remove things at start
   end
 
-  def prepare_text(text)
+  # we don't need any simple format
+  def complex_format(text, html_options={}, options={})
+    text = text ? text.to_str : ''
+    text = text.dup if text.frozen?
+    start_tag = tag('p', html_options, true)
+    text.gsub!(/\r\n?/, "\n")
+    text.gsub!(/\n\n+/, "\n\n")
+    text.gsub!(/\n\n+/, "</p><br \>#{start_tag}")  # 2+ newline  -> paragraph + newline
+    text.gsub!(/\n/, "</p>#{start_tag}") # 1 newline   -> paragraph
+    text.insert 0, start_tag
+    text.concat("</p>")
+    text = sanitize(text) unless options[:sanitize] == false
+    text
+  end
 
-    line = "#{text}"
+  def prepare_text(text,options={:sanitize => false})
+
+    line = text.dup # "#{text}"
 
     line=line.gilensize
+    #line=fast_quotes(line)
+    #line=fast_laquo(line)
 
     # Escape everything within <code> tag
     sub = line.scan(/(<code>)(.+?)(<\/code>)/um)
@@ -106,10 +126,14 @@ module ApplicationHelper
       end
     end
 
-    line = simple_format(line)
+    line = complex_format(line)
 
     line.gsub!("\n","")
     line.gsub!("\r","")
+
+    #line.gsub!("<br />","<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+    #line.gsub!("<p>",      "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
 
     line
 
@@ -118,6 +142,7 @@ module ApplicationHelper
   def unprepare_text(text)
     rules = {
         /&laquo;|&bdquo;|&ldquo;|&raquo;/ => '"',
+        /&npsp;/ => '',
         /&mdash;/ => '-',
         /&nbsp;/ => ' ',
         /<br \/>/ => '',

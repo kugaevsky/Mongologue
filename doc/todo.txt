@@ -10,7 +10,9 @@ Planned things:
 (done) Add the sitemap
 (done)Add the "you are here" block to the sidebar
 (done)Add the "top rated/commented posts" block to the sidebar
-Add email subscriptions (new posts, new comments, new replies, other notifications)
+Highlight keywords in search results (not tags)
+Add two rss feeds to every post (comments+replies, replied comments only)
+Add email subscriptions (new posts, new comments, new replies, other notifications, "my replies only")
 Ask for an old password when setting a new password
 Add an ability to reset a password with an email link
 Add the "user settings" panel, make it Ajax (slideDown/slideUp top level div)
@@ -23,3 +25,10 @@ Add security log (track actions from the Admin controller)
 Add the "draft" flag for posts (not published). New action (draftindex) in the Admin controller?
 Allow to change the "created_at" field for the posts (or better add the "published_at" field)
 Allow to future-publish posts setting their date to some point in future (will be visible after that time)
+Author/reader defined tag groups
+Add "or" search mode (useful for reading an rss feed filtered by the tag groups and the search in general)
+Replace Glenson with fast C-powered typography gem
+Add fast jscript scroller to the 'You are here' widget, show %/number of the posts before and after the current one
+Add an ability to disable anonymous comments and ban users (IP+cookies)
+Add mobile version of the blog
+Add text statistics module and mark "text difficulty" or "text style" with autotags

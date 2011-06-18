@@ -10,9 +10,9 @@ class PostsController < ApplicationController
 
   def items_per_page
     if request.format.html? or request.format.js?
-      return 20
+      return 15
     else
-      return 50
+      return 20
     end
   end
 

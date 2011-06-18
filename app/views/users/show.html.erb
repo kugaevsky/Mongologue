@@ -1,7 +1,7 @@
 <div id="userbox">
   <h2><%= link_to identity_or_name(@user), @user.identity %> <%= "(admin)" if @user.admin  %></h2>
   <div id="userdetails">
-    <%= image_tag @user.photo %>
+    <%= image_tag @user.photo unless @user.photo.nil? %>
     <p>Nickname: <%= @user.nickname %></p>
     <p>E-mail: <%= @user.email %></p>
     <p>Provider: <%= @user.provider %></p>

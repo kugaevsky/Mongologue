@@ -1,0 +1,278 @@
+Controls (HTML5, IE doesn't support this):
+http://www.w3.org/TR/html5/number-state.html
+
+
+
+
+Tags:
+<nav>navigations (li?) links</nav>
+<article>blog post</article>
+
+The article element represents a self-contained composition in a document, page, application, or site and that is, in principle, independently distributable or reusable, e.g. in syndication. This could be a forum post, a magazine or newspaper article, a blog entry, a user-submitted comment, an interactive widget or gadget, or any other independent item of content.
+
+When article elements are nested, the inner article elements represent articles that are in principle related to the contents of the outer article. For instance, a blog entry on a site that accepts user-submitted comments could represent the comments as article elements nested within the article element for the blog entry.
+
+Author information associated with an article element (q.v. the address element) does not apply to nested article elements.
+
+<article>
+ <header>
+  <h1>The Very First Rule of Life</h1>
+  <p><time pubdate datetime="2009-10-09T14:28-08:00"></time></p>
+ </header>
+ <p>If there's a microphone anywhere near you, assume it's hot and
+ sending whatever you're saying to the world. Seriously.</p>
+ <p>...</p>
+ <footer>
+  <a href="?comments=1">Show comments...</a>
+ </footer>
+</article>
+
+<aside>....</aside> - sidebar element in typography (врезка, сайдбар с линками) don't use p, its paragraph
+
+The aside element represents a section of a page that consists of content that is tangentially related to the content around the aside element, and which could be considered separate from that content. Such sections are often represented as sidebars in printed typography.
+
+The element can be used for typographical effects like pull quotes or sidebars, for advertising, for groups of nav elements, and for other content that is considered separate from the main content of the page.
+
+<address>author's address</adress>
+<blockquote cite="url">text</blockquote>
+<q cite="url">quotation</q> - meant to be automatically enclosed into quotes, check
+<del>deleted content</del>
+<ins>inserted content</ins> - should not cross paragraph boundaries
+The cite IDL attribute must reflect the element's cite content attribute. The dateTime IDL attribute must reflect the element's datetime content attribute.
+
+<abbr title="abbreviation">abbr.</abbr>
+<acronym title="Hyper-Text Markup Language">HTML</acronym>
+<dfn>inline definition of term</dfn>
+<em>Emphasis</em>
+<strong>strong em</strong>
+<code>code of program</code>
+<samp>sample of code output</samp>
+<kbd>keyboard text entered by user</kbd>
+<var>variable</var> - ???
+<mark>text</mark> - highlight text (search?)
+<time></time>
+
+<article>
+ <h1>Small tasks</h1>
+ <footer>Published <time pubdate>2009-08-30</time>.</footer>
+ <p>I put a bike bell on his bike.</p>
+</article>
+
+<article>
+ <h1>Small tasks</h1>
+ <footer>Published <time pubdate datetime="2009-08-30T07:13Z"></time>.</footer>
+ <p>I put a bike bell on his bike.</p>
+</article>
+
+<p>Many people get up at <time>08:00</time>.</p>
+
+<b>,<i>,<small>,<big>
+<wbr>
+The wbr element represents a line break opportunity.
+<p>So then he pointed at the tiger and screamed
+"there<wbr>is<wbr>no<wbr>way<wbr>you<wbr>are<wbr>ever<wbr>going<wbr>to<wbr>catch<wbr>me"!</p>
+
+<strike>strike</strike> - deprecated since html 4, use <del>
+<u>underlines text</u>
+<cite>citation</cite>
+<sub>subscript</sub>, <sup>superscript</sup>
+<img alt=''>
+<legend>legend</legend> - legend block in fieldset (form)
+<textarea maxlength=100></textarea>
+autofocus
+cols
+dirname
+disabled
+form
+maxlength
+name
+placeholder
+readonly
+required
+rows
+wrap
+
+<keygen>
+The keygen element represents a key pair generator control. When the control's form is submitted, the private key is stored in the local keystore, and the public key is packaged and sent to the server.
+
+The challenge attribute may be specified. Its value will be packaged with the submitted key.
+
+The keytype attribute is an enumerated attribute. The following table lists the keywords and states for the attribute — the keywords in the left column map to the states listed in the cell in the second column on the same row as the keyword. User agents are not required to support these values, and must only recognize values whose corresponding algorithms they support.
+
+Global attributes
+autofocus
+challenge
+disabled
+form
+keytype = rsa
+name
+
+To generate a key pair, add the private key to the user's key store, and submit the public key to the server, markup such as the following can be used:
+
+<form action="processkey.cgi" method="post" enctype="multipart/form-data">
+ <p><keygen name="key"></p>
+ <p><input type=submit value="Submit key..."></p>
+</form>
+The server will then receive a form submission with a packaged RSA public key as the value of "key". This can then be used for various purposes, such as generating a client certificate, as mentioned above.
+
+<progress>
+Here is a snippet of a Web application that shows the progress of some automated task:
+
+<section>
+ <h2>Task Progress</h2>
+ <p>Progress: <progress id="p" max=100><span>0</span>%</progress></p>
+ <script>
+  var progressBar = document.getElementById('p');
+  function updateProgress(newValue) {
+    progressBar.value = newValue;
+    progressBar.getElementsByTagName('span')[0].textContent = newValue;
+  }
+ </script>
+</section>
+
+<meter>
+Global attributes
+value
+min
+max
+low
+high
+optimum
+form
+
+The meter element represents a scalar measurement within a known range, or a fractional value; for example disk usage, the relevance of a query result, or the fraction of a voting population to have selected a particular candidate.
+
+<dl>
+ <dt>Radius: <dd> <meter min=0 max=20 value=12 title="centimeters">12cm</meter>
+ <dt>Height: <dd> <meter min=0 max=10 value=2 title="centimeters">2cm</meter>
+</dl>
+
+
+
+<details>:
+The details element represents a disclosure widget from which the user can obtain additional information or controls.
+
+<section class="progress window">
+ <h1>Copying "Really Achieving Your Childhood Dreams"</h1>
+ <details>
+  <summary>Copying... <progress max="375505392" value="97543282"></progress> 25%</summary>
+  <dl>
+   <dt>Transfer rate:</dt> <dd>452KB/s</dd>
+   <dt>Local filename:</dt> <dd>/home/rpausch/raycd.m4v</dd>
+   <dt>Remote filename:</dt> <dd>/var/www/lectures/raycd.m4v</dd>
+   <dt>Duration:</dt> <dd>01:16:27</dd>
+   <dt>Color profile:</dt> <dd>SD (6-1-6)</dd>
+   <dt>Dimensions:</dt> <dd>320×240</dd>
+  </dl>
+ </details>
+</section>
+
+
+
+
+
+<section> </section> - marks logical sections of article
+<input placeholder="Hint what write here"></input>
+
+<section>
+ <!-- ... -->
+ <footer>Last modified: 2001-04-23</footer>
+ <address>Author: fred@example.com</address>
+</section>
+
+<hr> - paragraph-level thematic break
+<figure>...</figure>
+<figcaption>...</figcaption>
+
+<header>,<footer> - can be applied to body, article
+The header element represents a group of introductory or navigational aids.
+
+<header>
+ <p>Welcome to...</p>
+ <h1>Voidwars!</h1>
+</header>
+
+article forum reply to example
+<article>
+ <h1><a href="http://bacon.example.com/?blog=109431">Bacon on a crowbar</a></h1>
+ <article>
+  <header><strong>t3yw</strong> 12 points 1 hour ago</header>
+  <p>I bet a narwhal would love that.</p>
+  <footer><a href="?pid=29578">permalink</a></footer>
+  <article>
+   <header><strong>greg</strong> 8 points 1 hour ago</header>
+   <blockquote><p>I bet a narwhal would love that.</p></blockquote>
+   <p>Dude narwhals don't eat bacon.</p>
+   <footer><a href="?pid=29579">permalink</a></footer>
+   <article>
+    <header><strong>t3yw</strong> 15 points 1 hour ago</header>
+    <blockquote>
+     <blockquote><p>I bet a narwhal would love that.</p></blockquote>
+     <p>Dude narwhals don't eat bacon.</p>
+    </blockquote>
+    <p>Next thing you'll be saying they don't get capes and wizard
+    hats either!</p>
+    <footer><a href="?pid=29580">permalink</a></footer>
+    <article>
+     <article>
+      <header><strong>boing</strong> -5 points 1 hour ago</header>
+      <p>narwhals are worse than ceiling cat</p>
+      <footer><a href="?pid=29581">permalink</a></footer>
+     </article>
+    </article>
+   </article>
+  </article>
+  <article>
+   <header><strong>fred</strong> 1 points 23 minutes ago</header>
+   <blockquote><p>I bet a narwhal would love that.</p></blockquote>
+   <p>I bet they'd love to peel a banana too.</p>
+   <footer><a href="?pid=29582">permalink</a></footer>
+  </article>
+ </article>
+</article>
+
+Here we see a figure element to mark up a photo.
+
+<figure>
+ <img src="bubbles-work.jpeg"
+      alt="Bubbles, sitting in his office chair, works on his
+           latest project intently.">
+ <figcaption>Bubbles at work</figcaption>
+</figure>
+
+code example:
+
+<p>In <a href="#l4">listing 4</a> we see the primary core interface
+API declaration.</p>
+<figure id="l4">
+ <figcaption>Listing 4. The primary core interface API declaration.</figcaption>
+ <pre><code>interface PrimaryCore {
+ boolean verifyDataLine();
+ void sendData(in sequence&lt;byte> data);
+ void initSelfDestruct();
+}</code></pre>
+</figure>
+<p>The API is designed to use UTF-8.</p>
+
+Link/a etc:
+
+
+Link type Effect on...  Brief description
+link  a and area
+alternate Hyperlink Hyperlink Gives alternate representations of the current document.
+author  Hyperlink Hyperlink Gives a link to the current document's author.
+bookmark  not allowed Hyperlink Gives the permalink for the nearest ancestor section.
+external  not allowed Hyperlink Indicates that the referenced document is not part of the same site as the current document.
+help  Hyperlink Hyperlink Provides a link to context-sensitive help.
+icon  External Resource not allowed Imports an icon to represent the current document.
+license Hyperlink Hyperlink Indicates that the main content of the current document is covered by the copyright license described by the referenced document.
+next  Hyperlink Hyperlink Indicates that the current document is a part of a series, and that the next document in the series is the referenced document.
+nofollow  not allowed Annotation  Indicates that the current document's original author or publisher does not endorse the referenced document.
+noreferrer  not allowed Annotation  Requires that the user agent not send an HTTP Referer (sic) header if the user follows the hyperlink.
+pingback  External Resource not allowed Gives the address of the pingback server that handles pingbacks to the current document.
+prefetch  External Resource External Resource Specifies that the target resource should be preemptively cached.
+prev  Hyperlink Hyperlink Indicates that the current document is a part of a series, and that the previous document in the series is the referenced document.
+search  Hyperlink Hyperlink Gives a link to a resource that can be used to search through the current document and its related pages.
+sidebar Hyperlink Hyperlink Specifies that the referenced document, if retrieved, is intended to be shown in the browser's sidebar (if it has one).
+stylesheet  External Resource not allowed Imports a stylesheet.
+tag Hyperlink Hyperlink Gives a tag (identified by the given address) that applies to the current document.

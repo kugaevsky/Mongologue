@@ -8,6 +8,8 @@ class User
   field :email
   field :photo
   field :nickname
+  field :uid
+  field :photo
   field :remember_token
   field :notes
   field :encrypted_password
