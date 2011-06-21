@@ -17,6 +17,9 @@ gem 'mongoid'
 gem 'bson_ext'
 gem 'therubyracer'
 
+gem 'memcache'
+gem 'memcache-client'
+
 gem 'loginza', :git => 'git://github.com/galetahub/loginza.git'
 
 # Use unicorn as the web server

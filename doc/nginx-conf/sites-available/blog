@@ -1,0 +1,30 @@
+server {
+        listen   8080;
+        server_name  blindsight;
+
+        root   /home/mike/rails/blog/public;
+        rails_env production;
+
+        #location ~* ^/assets {
+        #  expires max;
+        #  add_header Cache-Control public;
+        #  break;
+        #}
+
+        # serve static content directly
+        location ~* \.(ico|jpg|gif|png|swf|html)$ {
+          if (-f $request_filename) {
+            expires max;
+            break;
+          }
+        }
+
+        passenger_enabled on;
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        location ~ /\.ht {
+          deny  all;
+        }
+}

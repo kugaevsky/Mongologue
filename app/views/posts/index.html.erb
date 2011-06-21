@@ -23,8 +23,7 @@
 </div>
 <div id="paginator" class="button contentbutton" >
 <% unless @next_page_pid.nil? %>
-  <%= link_to 'NEXT PAGE &rarr;'.html_safe,
-              root_url({:p => @next_page_pid, :s => params[:s] }) %>
+  <%= "<a href='?p=#{@next_page_pid}'#{'&s='+params[:s] if params[:s]}'>NEXT PAGE &rarr;</a>".html_safe %>
 <% else %>
   <%= link_to_function "&uarr; UP &uarr;".html_safe, "$( 'html, body' ).animate( { scrollTop: 0 }, 0 );" %>
 <% end %>

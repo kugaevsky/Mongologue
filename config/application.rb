@@ -46,11 +46,13 @@ module Mongologue
 
     config.assets.enabled = true
     config.assets.prefix = "/assets"
-#    config.middleware.use "ResponseTimer", "Load Time"
 
     Mongoid.configure do |config|
       config.logger = nil
     end
+
+    ActionController::Base.cache_store = :mem_cache_store, "localhost"
+
 
     # add unicode support for strings everywhere
      String.class_eval  'def downcase

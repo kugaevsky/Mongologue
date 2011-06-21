@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
   def expire_post(post)
     expire_fragment("p#{post.pid}@true")
     expire_fragment("p#{post.pid}@false")
+    expire_fragment("youarehere@p#{post.pid}")
+    expire_fragment("header@#{page_name}")
+    expire_action(:controller => 'posts', :action => 'show')
+    expire_action(:controller => 'posts', :action => 'index')
+    expire_sitemap
   end
 
   def expire_comments(post)
@@ -24,6 +29,8 @@ class ApplicationController < ActionController::Base
   def expire_cloud
     expire_fragment('tagscloud')
     expire_fragment('sitemap')
+    expire_fragment('topposts')
+    expire_action(:controller => 'tags', :action => 'index')
   end
 
   def expire_sitemap

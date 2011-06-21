@@ -15,6 +15,16 @@ module ApplicationHelper
     end
   end
 
+  # for caching
+  def page_name
+    if showpostpage?
+    return "p#{@post.pid}"
+    elsif mainpage? and @posts.size!=0
+       return "p#{@posts.first.pid}"
+    end
+    return "none"
+  end
+
   def site_info
     "Roses are red<br>Diamonds are blue<br>".html_safe
   end

@@ -26,6 +26,8 @@
         else
           session[:data]=data
           respond_to do |format|
+            expires_in 0.seconds, :public => false;
+
             format.js { render 'authorize', :locals => {:user => user} }
             format.html
           end
@@ -48,6 +50,7 @@
       user.update_attributes(session[:data])
       sign_in user
       session[:data]=''
+      expires_in 0.seconds, :public => false;
       format.js  { redirect_back_or root_path }
       format.html { redirect_back_or root_path }
     end

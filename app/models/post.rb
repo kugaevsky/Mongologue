@@ -39,6 +39,10 @@ class Post
   after_destroy :rebuild_tags
   before_create :assign_pid
 
+#  def cache_key
+#    "#{self.class.name}:#{id}:#{updated_at.to_i}:#{comments_counter}"
+#  end
+
   # Old method, now I have Tag model
   def self.all_tags(limit = nil)
     tagcloud = Mongoid.master.collection('tagcloud')

@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+  caches_action :index
 
   def index
     if !params[:term]
@@ -7,7 +8,7 @@ class TagsController < ApplicationController
       # Twice faster
       # @tags = Mongoid.master.collection('tagcloud').find({})
     else
-      @tags = Tag.where(:_id => /^#{params[:term].strip}/).only(:_id).all
+      @tags = Tag.where(:_id => /^#{params[:term].strip}/).only(:_id).all.to_ary
     end
 
     respond_to do |format|

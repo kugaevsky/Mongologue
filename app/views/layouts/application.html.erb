@@ -1,12 +1,12 @@
-<% store_location unless controller.controller_name == "sessions" %>
+<% cache("header@#{page_name}") do %>
 <!DOCTYPE html>
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
   <title><%= page_title %></title>
   <%= stylesheet_link_tag 'application', :media => 'screen' %>
   <%=  javascript_include_tag 'application' %>
   <%= csrf_meta_tag %>
-
 </head>
 <body>
 <div id="wrapper">
@@ -17,56 +17,62 @@
     <p>Powered by MongoDB</p></a>
     </div>
     <form id="searchbox" accept-charset="UTF-8" action="/" method="get" autocomplete="off">
-      <input id="search" name="s" type="text" value='<%= "#{mainpage? ? params[:s] : ''}" %>'
-             placeholder="Enter comma-separated words and press Enter." />
-
-      <div id="fakesearch"></div>
-      <div id="rss">
-        <a href="/feed.rss<%= "?s=#{params[:s]}" if params[:s] %>" title="RSS feed.">
-        <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
-        <%= mainpage? ? @posts_count : Post.count %></span></p></a>
-      </div>
-    </form>
+<% end %>
+<input id="search" name="s" type="text" value='<%= "#{mainpage? ? params[:s] : ''}" %>'
+       placeholder="Enter comma-separated words and press Enter." />
+<div id="fakesearch"></div>
+<div id="rss">
+  <a href="/feed.rss<%= "?s=#{params[:s]}" if params[:s] %>" title="RSS feed.">
+  <img src="/images/rss-20px.png"><p>Posts: <span id="postscounter">
+  <%= mainpage? ? @posts_count : Post.count %></span></p></a>
+</div>
+</form>
+<% if !signed_in? %>
+<div id="clientinfo">
+<div id="greeting">
+     <%= "<a href='/signin?rt=#{session[:return_to]}'>Sign in</a>".html_safe %>
+</div>
+</div>
+<% else %>
+  <% cache("clientinfo@#{current_user}") do %>
     <div id="clientinfo">
-      <div id="greeting">
-      <% if signed_in? %>
-           <%= "(A)" if current_user.admin? %>
-           <%= link_to identity_or_name(current_user), current_user.identity %><br>
-           <%= link_to "Sign out", signout_path %>
-      <% else %>
-           <%= link_to "Sign in", signin_path(:rt => session[:return_to]) %>
-      <% end %>
-      </div>
-      <% if signed_in? %>
-      <div id="passwordinfo">
-        <%= password_status_text(current_user) %>
-      </div>
-      <% end %>
+    <div id="greeting">
+         <%= "(A)" if current_user.admin? %>
+         <%= "<a href='#{current_user.identity}'>#{identity_or_name(current_user)}</a>".html_safe %><br>
+         <%= "<a href='/signout'>Sign out</a>".html_safe %>
     </div>
-  </div>
-  <div id="container">
-    <div id="jsflash"></div>
-    <% flash.each do |key, value| %>
-      <div class="flash <%= key %>"><%= value %></div>
+    <div id="passwordinfo">
+         <%= password_status_text(current_user) %>
+    </div>
+    </div>
+  <% end %>
+<% end %>
+</div>
+<div id="container">
+<div id="jsflash"></div>
+<div id="content">
+  <%= yield %>
+</div>
+<div id="side-b">
+  <div id="edituser"></div>
+
+  <% if !showpostpage? %>
+    <% cache("topposts") do %>
+      <div id="toppostsbutton" class="button rightbutton">Fresh &amp; commented</div>
+      <div id="topposts"><p><%= top_commented_posts %></p></div>
     <% end %>
-    <div id="content">
-      <%= yield %>
-    </div>
-    <div id="side-b">
-      <div id="edituser"></div>
+  <% else %>
+    <% cache("youarehere@p#{@post.pid}") do %>
+      <div id="youareherebutton" class="button rightbutton">You are here</div>
+      <div id="youarehere"><div id="youarehereslider"></div><p><%= you_are_here(@post,10) %></p></div>
+    <% end %>
+  <% end %>
 
-      <% if !showpostpage? %>
-        <div id="toppostsbutton" class="button rightbutton">Fresh &amp; commented</div>
-        <div id="topposts"><p><%= top_commented_posts %></p></div>
-      <% else %>
-        <div id="youareherebutton" class="button rightbutton">You are here</div>
-        <div id="youarehere"><div id="youarehereslider"></div><p><%= you_are_here(@post,10) %></p></div>
-      <% end %>
-
-      <div id="tagsbutton" class="button rightbutton">All tags</div>
-      <% cache('tagscloud') do %>
-        <%= render :partial => '/tagscloud' %>
-      <% end %>
+  <div id="tagsbutton" class="button rightbutton">All tags</div>
+  <% cache('tagscloud') do %>
+    <%= render :partial => '/tagscloud' %>
+  <% end %>
+<% cache("footer") do %>
       <div id="aboutbutton" class="button rightbutton">Author info</div>
       <div id="abouttext">
         <p><a href="#">About author</a><br>
@@ -99,4 +105,4 @@
 
 </body>
 </html>
-
+<% end %>
