@@ -40,12 +40,12 @@ class Admin::PostsController < ApplicationController
       if @post.save
         expire_cloud
         # expire_post(@post)
-        # format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
-        format.xml  { render :xml => @post, :status => :created, :location => @post }
+        format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
+        # format.xml  { render :xml => @post, :status => :created, :location => @post }
         format.js { render 'create.js.erb' }
       else
-        # format.html { render :action => "new" }
-        format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
+        format.html { render :action => "new" }
+        # format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
         format.js { render 'shared/error_messages.js.erb', :locals => { :object => @post } }
       end
     end
@@ -60,11 +60,11 @@ class Admin::PostsController < ApplicationController
       if @post.update_attributes(params[:post])
         expire_cloud
         expire_post(@post)
-        # format.html { redirect_back_or root_path }
+        format.html { redirect_back_or root_path }
         # format.xml  { head :ok }
         format.js   { render 'posts/show.js.erb' }
       else
-        # format.html { render :action => "edit" }
+        format.html { render :action => "edit" }
         # format.xml  { render :xml => @post.errors, :status => :unprocessable_entity }
         format.js   { render 'shared/error_messages.js.erb', :locals => { :object => @post } }
       end

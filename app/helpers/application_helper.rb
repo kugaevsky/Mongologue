@@ -112,7 +112,7 @@ module ApplicationHelper
 
   def prepare_text(text,options={:sanitize => false})
 
-    line = text.dup # "#{text}"
+    line = "#{text}"
 
     #line=line.gilensize
     line=fast_typo(line)
@@ -126,7 +126,7 @@ module ApplicationHelper
       end
     end
 
-    line = complex_format(line)
+    line.replace(complex_format(line))
 
     line.gsub!("\n","")
     line.gsub!("\r","")

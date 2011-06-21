@@ -44,7 +44,13 @@ module Mongologue
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
+    config.assets.enabled = true
+    config.assets.prefix = "/assets"
 #    config.middleware.use "ResponseTimer", "Load Time"
+
+    Mongoid.configure do |config|
+      config.logger = nil
+    end
 
     # add unicode support for strings everywhere
      String.class_eval  'def downcase
@@ -71,7 +77,6 @@ module Mongologue
        def strip_tags
          ActionController::Base.helpers.strip_tags(self)
        end'
-
 
 
   end

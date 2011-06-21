@@ -26,7 +26,7 @@ class Comment
   embedded_in :post, :inverse_of => :comments, :index => true
 
   def render_text
-     self.content=auto_link(sanitize(content,:tags =>%w(i b)))
+     self.content=sanitize(content,:tags =>%w(i b)) # add auto_link later
      self.content=prepare_text(self.content)
      self.reply=prepare_text(self.reply) unless self.reply.nil?
      return true

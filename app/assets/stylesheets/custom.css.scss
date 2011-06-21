@@ -1,22 +1,38 @@
+$pgcolor: #F4F3EB;
+$bgcolor: #FFFFFF;
+$hlcolor: orange;
+$fmcolor: #eeeeee;
+$atcolor: #222222;
+$ftcolor: #000000;
+$brcolor: #000000;
+$fontcolor: #000000;
+
+$totalwidth: 960px;
+$contentwidth: 700px;
+
+$searchheight: 26px;
+$rssheight: 20px;
+
+
 body {
-  color: black;
-  font-family: Cambria, Georgia, Times New Roman, serif;
+  color: $fontcolor;
+  font-family: Cambria, Georgia, "Times New Roman", serif;
   font-size-adjust: 0.467;
   font-size: 100%;
   padding: 0;
   margin: 0;
-  background: #F4F3EB;
+  background: $pgcolor;
 
 }
 
-p, h1, h2, h3, a, img, input, textarea {
+p, h1, h2, h3, a, img, input, textarea, div {
      padding: 0;
      margin: 0;
  }
 
 
 a:link, a:active, a:visited {
-  color:black;
+  color: $fontcolor;
   background-color: inherit;
   text-decoration: underline;
 }
@@ -43,13 +59,13 @@ h1:first-letter  { font-size: 145%;}
   text-align: left;
   margin: 0 auto 0 auto;
   border:0;
-  width: 960px;
+  width: $totalwidth;
 }
 
 #header {
   width: 100%;
   height: 60px;
-  border-bottom: 2px dotted #000000;
+  border-bottom: 2px dotted $brcolor;
   padding: 5px 0 5px 0;
 }
 
@@ -74,7 +90,7 @@ h1:first-letter  { font-size: 145%;}
   width: 205px;
   text-align: left;
   background: orange;
-  border: 1px solid #000000;
+  border: 1px solid $brcolor;
 
 }
 
@@ -117,7 +133,7 @@ h1:first-letter  { font-size: 145%;}
 }
 
 #searchbox {
-  height: 26px;
+  height: $searchheight;
   width: 510px;
   padding: 15px 0px 15px 5px;
   display: inline-block;
@@ -129,11 +145,11 @@ h1:first-letter  { font-size: 145%;}
   float:left;
   text-align: left;
   font-size: 1.1em;
-  height: 26px;
+  height: $searchheight;
   width: 380px;
-  border-top: 1px solid #000000;
-  border-bottom: 1px solid #000000;
-  border-left: 1px solid #000000;
+  border-top: 1px solid $brcolor;
+  border-bottom: 1px solid $brcolor;
+  border-left: 1px solid $brcolor;
   border-right: 0;
 }
 
@@ -144,12 +160,12 @@ h1:first-letter  { font-size: 145%;}
 #fakesearch {
   display: inline-block;
   float:left;
-  height: 26px;
+  height: $searchheight;
   width: 127px;
   background-color: #EEE;
-  border-top: 1px solid #000000;
-  border-bottom: 1px solid #000000;
-  border-right: 1px solid #000000;
+  border-top: 1px solid $brcolor;
+  border-bottom: 1px solid $brcolor;
+  border-right: 1px solid $brcolor;
   border-left: 0;
 }
 
@@ -157,9 +173,9 @@ h1:first-letter  { font-size: 145%;}
   float: left;
 
   width: 119px;
-  height: 20px;
+  height: $rssheight;
   display:inline-block;
-  border: 1px solid #000000;
+  border: 1px solid $brcolor;
   position: relative;
   bottom: 25px;
   left: 385px;
@@ -170,7 +186,7 @@ h1:first-letter  { font-size: 145%;}
 #rss img {
   display: inline-block;
   position: relative;
-  height: 20px;
+  height: $rssheight;
   border: 0;
 }
 
@@ -179,7 +195,7 @@ h1:first-letter  { font-size: 145%;}
   position: relative;
   top: -5px;
   margin: 0px 0px 0px 2px;
-  height: 20px;
+  height: $rssheight;
 }
 
 #rss a{
@@ -188,7 +204,7 @@ h1:first-letter  { font-size: 145%;}
   position: relative;
   margin: 0px;
   width: 100%;
-  height: 20px;
+  height: $rssheight;
 }
 
 
@@ -207,7 +223,7 @@ h1:first-letter  { font-size: 145%;}
 }
 
 #container {
-  width: 960px;
+  width: $totalwidth;
   display: inline-block;
 }
 
@@ -223,11 +239,11 @@ h1:first-letter  { font-size: 145%;}
 #content {
   display: inline-block;
   float: left;
-  width: 696px;
+  width: $contentwidth - 4;
   padding: 10px 10px 0px 10px;
   text-align: left;
   margin: 10px 2px 10px 2px;
-  background: #FFFFFF;
+  background: $bgcolor;
 }
 
 #posts {
@@ -240,10 +256,10 @@ h1:first-letter  { font-size: 145%;}
 #footer {
   clear: left;
   display: block;
-  width:960px;
+  width: $totalwidth;
   height: 60px;
   padding: 5px;
-  border-top: 2px dotted #000000;
+  border-top: 2px dotted $brcolor;
   text-align: right;
   font-size: 0.9em;
 }
@@ -269,7 +285,7 @@ font-size: 1em;
 
 .postbox {
   margin-bottom: 15px;
-  background: #FFFFFF;
+  background: $bgcolor;
   border: 1px dotted #666;
 }
 
@@ -309,7 +325,7 @@ font-size: 1em;
 
 .commentbox {
   margin: 0px 0px 20px 40px;
-  background: #FFFFFF;
+  background: $bgcolor;
   border: 1px dotted #666;
   padding: 5px;
 
@@ -354,10 +370,10 @@ h1 a:link, h1 a:active, h1 a:visited, h1 a:hover, h1 a:focus  {
   text-decoration: none;
 }
 
-a:hover { background-color:orange; }
+a:hover { background-color:$hlcolor; }
 
 .rightbutton {
-  background-color: orange;
+  background-color: $hlcolor;
   width: 225px;
   height: 25px;
   margin: 10px 0 0 0;
@@ -365,15 +381,15 @@ a:hover { background-color:orange; }
 }
 
 .contentbutton {
-  background-color: orange;
-  width: 700px;
+  background-color: $hlcolor;
+  width: $contentwidth;
   text-align: center;
   margin: 0 0 15px 0;
 }
 
 
 .rightbutton:hover, #newpostbutton:hover {
-  background: #FFFFFF;
+  background: $bgcolor;
   cursor: pointer;
 }
 
@@ -381,7 +397,7 @@ a:hover { background-color:orange; }
 
 #tagscloud, #abouttext, #siteinfo, #topposts, #youarehere {
   border: 1px dotted #666;
-  background: #FFFFFF;
+  background: $bgcolor;
   padding: 7px;
 }
 
@@ -420,12 +436,12 @@ a:hover { background-color:orange; }
 
 
 .favtag {
-  color: black;
+  color: $ftcolor;
   font-weight: bold;
 }
 
 .autotag {
-  color: #222222;
+  color: $atcolor;
 
 }
 
@@ -454,8 +470,8 @@ pre {
 input[type=text], textarea {
   font-family: Cambria, Georgia, "Times New Roman", serif;
   font-size: 100%;
-  background-color: #eeeeee;
-  border: 1px solid #000000;
+  background-color: $fmcolor;
+  border: 1px solid $brcolor;
   width: 100%;
   line-height: 1.3em;
 }
@@ -471,7 +487,7 @@ input[type=submit] {
   height: 300px;
   margin: 0px 180px 0px 180px;
   padding: 15px;
-  border: 1px dotted #000000;
-  background: #F4F3EB;
+  border: 1px dotted $brcolor;
+  background: $pgcolor;
   text-align: center;
 }

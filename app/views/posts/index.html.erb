@@ -1,9 +1,11 @@
 <% if authorized_admin? %>
-  <div class="contentbutton button" id="newpostbutton" onclick='$("#newpostbox").toggle({ effect: "blind"});'>
-  NEW POST</div>
-  <div id="newpostbox" class="postbox" style="display:none;">
-    <%= render :partial => 'admin/posts/form' %>
-  </div>
+  <% cache("newpostform") do %>
+    <div class="contentbutton button" id="newpostbutton" onclick='$("#newpostbox").toggle({ effect: "blind"});'>
+    NEW POST</div>
+    <div id="newpostbox" class="postbox" style="display:none;">
+      <%= render :partial => 'admin/posts/form' %>
+    </div>
+  <% end %>
 <% end %>
 <div id="posts">
   <div id="firstpost"></div>
@@ -22,7 +24,7 @@
 <div id="paginator" class="button contentbutton" >
 <% unless @next_page_pid.nil? %>
   <%= link_to 'NEXT PAGE &rarr;'.html_safe,
-              root_url({:p => @next_page_pid, :s => params[:s] }), :remote => true %>
+              root_url({:p => @next_page_pid, :s => params[:s] }) %>
 <% else %>
   <%= link_to_function "&uarr; UP &uarr;".html_safe, "$( 'html, body' ).animate( { scrollTop: 0 }, 0 );" %>
 <% end %>
