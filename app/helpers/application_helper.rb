@@ -114,8 +114,8 @@ module ApplicationHelper
 
     line = text.dup # "#{text}"
 
-    line=line.gilensize
-    #line=fast_quotes(line)
+    #line=line.gilensize
+    line=fast_typo(line)
     #line=fast_laquo(line)
 
     # Escape everything within <code> tag
@@ -130,10 +130,6 @@ module ApplicationHelper
 
     line.gsub!("\n","")
     line.gsub!("\r","")
-
-    #line.gsub!("<br />","<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-    #line.gsub!("<p>",      "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-
 
     line
 

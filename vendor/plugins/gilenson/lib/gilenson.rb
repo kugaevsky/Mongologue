@@ -226,14 +226,15 @@ class Gilenson
      # 1. Запятые и пробелы
      process_spacing(text) if @settings["spacing"]
 
-     # 3. Инчи
-     process_inches(text) if @settings["inches"]
-
      # 1. лапки
      process_quotes(text) if @settings["quotes"]
 
      # 2. ёлочки
      process_laquo(text) if @settings["laquo"]
+
+     # 3. Инчи
+     process_inches(text) if @settings["inches"]
+
 
      # 2b. одновременно ёлочки и лапки
      # process_compound_quotes(text) if (@settings["quotes"] && @settings["laquo"])
@@ -463,16 +464,16 @@ class Gilenson
      text.gsub!(/<\/nobr>/, '</span>')
    end
 
+   def process_longdash(text)
+     text.gsub!( /(^|\s|;)\-(\s)/ui, '\1'+@mdash+'\2')
+   end
+
    def process_dash(text)
      text.gsub!( /(\s|;)\-(\s)/ui, '\1'+@ndash+'\2')
    end
 
    def process_emdash(text)
      text.gsub!( /(\s|;)\-\-(\s)/ui, '\1'+@mdash+'\2')
-   end
-
-   def process_longdash(text)
-     text.gsub!( /(\s|;)\-(\s)/ui, '\1'+@mdash+'\2')
    end
 
    def process_copymarks(text)

@@ -108,7 +108,7 @@ h1:first-letter  { font-size: 145%;}
 
 #logo p {
   position: relative;
-  top: -20px;
+  top: -5px;
   right: 5px;
   font-size: 80%;
   float: right;
@@ -444,6 +444,11 @@ code {
 pre {
   padding: 10px;
   margin: 0 0 0 50px;
+}
+
+.post code p {
+  text-indent: 0;
+  margin: 0;
 }
 
 input[type=text], textarea {
