@@ -17,12 +17,15 @@ module ApplicationHelper
 
   # for caching
   def page_name
-    if showpostpage?
-    return "p#{@post.pid}"
-    elsif mainpage? and @posts.size!=0
-       return "p#{@posts.first.pid}"
+    if @posts.nil?
+      if @post.nil?
+        return "none"
+      else
+        return "p#{@post.pid}"
+      end
+    else
+      return "p#{@posts.first.pid}"
     end
-    return "none"
   end
 
   def site_info
@@ -30,14 +33,14 @@ module ApplicationHelper
   end
 
   def mainpage?
-    if controller_name == "posts" and controller.action_name == "index"
+    if controller.controller_name == "posts" and controller.action_name == "index"
       return true
     end
     return false
   end
 
   def showpostpage?
-    if controller_name == "posts" and controller.action_name == "show"
+    if controller.controller_name == "posts" and controller.action_name == "show"
       return true
     end
     return false

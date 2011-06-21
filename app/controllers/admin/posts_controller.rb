@@ -39,8 +39,6 @@ class Admin::PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         expire_cloud
-        expire_action :action => :index
-        # expire_post(@post)
         format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
         # format.xml  { render :xml => @post, :status => :created, :location => @post }
         format.js { render 'create.js.erb' }
@@ -61,7 +59,6 @@ class Admin::PostsController < ApplicationController
       if @post.update_attributes(params[:post])
         expire_cloud
         expire_post(@post)
-        expire_action :action => :show
         format.html { redirect_back_or root_path }
         # format.xml  { head :ok }
         format.js   { render 'posts/show.js.erb' }

@@ -1,0 +1,18 @@
+<% if !signed_in? %>
+<div id="greeting">
+     <%= "<a href='/signin?rt=#{session[:return_to]}'>Sign in</a>".html_safe %>
+</div>
+</div>
+<% else %>
+  <% cache("clientinfo@#{current_user}") do %>
+    <div id="clientinfo">
+    <div id="greeting">
+         <%= "(A)" if current_user.admin? %>
+         <%= "<a href='#{current_user.identity}'>#{identity_or_name(current_user)}</a>".html_safe %><br>
+         <%= "<a href='/signout'>Sign out</a>".html_safe %>
+    </div>
+    <div id="passwordinfo">
+         <%= password_status_text(current_user) %>
+    </div>
+  <% end %>
+<% end %>

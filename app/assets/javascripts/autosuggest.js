@@ -25,7 +25,7 @@
  *    misrepresented as being the original software.
  *
  * 3. This notice may not be removed or altered from any source distribution.
- */
+ */ 
 
 var autosuggest_url = ""; // Global link to the server-side script, that gives you the suggestion list.
 			  // Used for controls that do not define their own server script urls.
@@ -60,10 +60,10 @@ function autosuggest(id, array, url, onSelect)
 	this.bg_color    = "#FFFFF0";	// background color for the suggestion list
 	this.ar_color    = "#656291";	// background color for the "arrow" rows (used if use_scroll is false)
 	this.text_color  = "#000";		// text color for the non-selected suggestions
-	this.htext_color = "#000";		// text color for the selected suggestion
-	this.hcolor      =  "orange";	// background color for the selected suggestion
-	this.font        = "Cambria, Georgia, Times New Roman, serif;";	// font(s) of suggestion items
-	this.font_size   = "100%";		// font size of suggestion items
+	this.htext_color = "#F00";		// text color for the selected suggestion
+	this.hcolor      = "#D6D7E7";	// background color for the selected suggestion
+	this.font        = "verdana,arial,helvetica";	// font(s) of suggestion items
+	this.font_size   = "10px";		// font size of suggestion items
 
 	// "Private" variables:
 
@@ -275,7 +275,7 @@ autosuggest.prototype = {
 			var helper = document.getElementById("suggest_helper_" + this.field_id);
 			if(helper)
 				document.body.removeChild(helper);
-		}
+		}		
 
 		var bb = document.createElement("div");
 		bb.id  = "suggest_table_" + this.field_id;
@@ -409,7 +409,7 @@ autosuggest.prototype = {
 
 			cell.innerHTML = that.parse(that.keywords[index], plen, re);
 			cell.setAttribute("pos", j++);
-			cell.autosuggest = that;
+			cell.autosuggest = that; 
 
 			if(that.use_mouse)
 			{
@@ -784,13 +784,13 @@ autosuggest.prototype = {
 		if(row && row.style)
 		{
 			row.style.backgroundColor = obj.hcolor;
-			row.firstChild.style.color = obj.htext_color;
+			row.firstChild.style.color = obj.htext_color; 
 		}
 
 		obj.stopTimer();
 		obj.startTimer(0);
 	},
-
+ 
  	choose: function()
 	{
 		if(!this.displayed) return;
@@ -949,7 +949,7 @@ autosuggest.prototype = {
 		}
 
 		if(obj.caret_moved) obj.stopEvent(event);
-		return !obj.caret_moved;
+		return !obj.caret_moved; 
 	},
 
 	checkKey: function(event)
@@ -959,7 +959,7 @@ autosuggest.prototype = {
 		var code = event.keyCode;
 		var obj = event.srcElement || event.target;
 
-		obj = obj.autosuggest;
+		obj = obj.autosuggest; 
 		obj.caret_moved = 0;
 
 		var term = "";
@@ -1153,7 +1153,7 @@ autosuggest.prototype = {
 				l += this.delim_words[i].length + 1;
 			}
 
-			ot = this.trim(this.delim_words[this.current_word]);
+			ot = this.trim(this.delim_words[this.current_word]); 
 			 t = this.trim(this.addSlashes(this.delim_words[this.current_word]));
 		}
 		else
@@ -1247,7 +1247,7 @@ autosuggest.prototype = {
 											}
 											else
 											{
-												that.values[i] = that.values_init[i] = "";
+												that.values[i] = that.values_init[i] = "";										
 											}
 										}
 									}
@@ -1398,7 +1398,7 @@ autosuggest.prototype = {
 
 			if(rb > obj.value.length)
 				return -1;
-
+		
 			return rb;
 		}
 

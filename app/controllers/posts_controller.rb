@@ -4,8 +4,8 @@ class PostsController < ApplicationController
 
   before_filter :store_location
   before_filter :find_post, :except => [:index, :sitemap]
-  caches_action :index, :unless => :authorized_admin?, :cache_path => Proc.new { |c| c.params }
-  caches_action :show, :unless => :authorized_admin?, :cache_path => Proc.new { |c| c.params }
+  #caches_action :index, :unless => :authorized_admin?, :cache_path => Proc.new { |c| c.params }
+  #caches_action :show, :unless => :authorized_admin?, :cache_path => Proc.new { |c| c.params }
 
   def find_post
     @post = Post.where(:pid => params[:id]).first || not_found
@@ -40,7 +40,7 @@ class PostsController < ApplicationController
     @title = @posts.first.title if @posts.size!=0
 
     respond_to do |format|
-      format.html { expires_in 1.hour, :public => true if !signed_in?;
+      format.html { expires_in 10.seconds, :public => true if !signed_in?;
                     expires_in 0.seconds, :public => false if signed_in?;
 
                    }
@@ -49,8 +49,7 @@ class PostsController < ApplicationController
                     response.headers["Content-Type"] = "application/xml; charset=utf-8";
                     render :rss => @posts }
 
-      format.json { expires_in 1.hour, :public => true;
-                    response.headers["Content-Type"] = "application/json; charset=utf-8";
+      format.json { response.headers["Content-Type"] = "application/json; charset=utf-8";
                     expires_in 1.hour, :public => true;
                     render :json => @posts }
     end
@@ -60,7 +59,7 @@ class PostsController < ApplicationController
   # GET /posts/1.xml
   def show
 
-    expires_in 1.hour, :public => true if !signed_in?;
+    expires_in 10.seconds, :public => true if !signed_in?;
     expires_in 0.seconds, :public => false if signed_in?;
 
     @title = @post.title

@@ -6,7 +6,7 @@
 
 
 ########### PATHS #############
-CACHE_DIR=/tmp/cache
+CACHE_DIR=/tmp/blog
 GREP=/bin/grep
 TMP_FILE=/tmp/cdnIvalidation
 ###############################

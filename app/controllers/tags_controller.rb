@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-  caches_action :index
+  # caches_action :index
 
   def index
     if !params[:term]
