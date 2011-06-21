@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
 
+  include ApplicationHelper
   include SessionsHelper
   include PostsHelper
   include CommentsHelper
