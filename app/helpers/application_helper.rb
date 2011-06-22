@@ -15,6 +15,30 @@ module ApplicationHelper
     end
   end
 
+  def memc_write(time = 3600)
+    CACHE.clone
+    @tstr="#{response.body}"
+    CACHE.set("blog"+request.fullpath,@tstr,time,false);
+    CACHE.quit
+  end
+
+  def memc_purge(post)
+    CACHE.clone
+    begin
+      CACHE.delete("blog/posts/#{post.pid}");
+    rescue
+    end
+    CACHE.quit
+  end
+
+  #todo: keep index of all search/page queries for the page and purge them all at once
+  def memc_purge_index
+    CACHE.clone
+    CACHE.delete("blog/");
+    CACHE.quit
+  end
+
+
   # for caching
   def page_name
     if @posts.nil?

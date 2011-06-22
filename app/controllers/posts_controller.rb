@@ -44,13 +44,7 @@ class PostsController < ApplicationController
       format.html { # expires_in 10.seconds, :public => true if !signed_in?;
                     # expires_in 0.seconds, :public => false if signed_in?;
                     render :html => @posts;
-                    #@tstr=response.body
-                    #myheader="Content-Type: text/html; charset=utf-8\n";
-                    #@tstr="#{@tstr}"
-                    CACHE.clone
-                    @tstr="#{response.body}"
-                    CACHE.set("blog"+request.fullpath,@tstr,3600,false);
-                    CACHE.quit
+                    memc_write(3600)
                    }
       format.js
       format.rss  { expires_in 1.hour, :public => true if !signed_in?
@@ -75,7 +69,10 @@ class PostsController < ApplicationController
     @new_comment = Comment.new
 
     respond_to do |format|
-      format.html
+      format.html { render :html => @post;
+                    memc_write(3600)
+                  }
+
       format.xml  { render :xml => @post }
       format.js
     end
@@ -101,7 +98,10 @@ class PostsController < ApplicationController
     @posts=Post.order_by([:created_at, :desc]).only(:pid).all
     @tags=Tag.order_by([:value, :desc]).all
     respond_to do |format|
-      format.xml  { response.headers["Content-Type"] = "application/xml; charset=utf-8"; }
+      format.xml  { response.headers["Content-Type"] = "application/xml; charset=utf-8";
+                    render :xml => @posts;
+                    memc_write(3600)
+                  }
     end
   end
 

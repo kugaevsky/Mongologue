@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   def expire_post_with_comments(post)
     expire_post(post)
     expire_comments(post)
+    memc_purge_index
   end
 
   def expire_post(post)
@@ -23,6 +24,7 @@ class ApplicationController < ActionController::Base
   def expire_comments(post)
     expire_fragment("pc#{post.pid}@true")
     expire_fragment("pc#{post.pid}@false")
+    memc_purge(post)
   end
 
   def expire_cloud

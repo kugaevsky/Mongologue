@@ -6,15 +6,15 @@ Mongologue::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = true # was false
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
   # cachiing
   ####################################################################
   # config.cache_store = :mem_cache_store
 
-  # make a CACHE global to use in your controllers instead of Rails.cache, this will use the new memcache-client 1.7.2
-  CACHE = Memcached.new("localhost:11211")
+  CACHE = Memcached.new("localhost:11211",{ :no_block => true, :buffer_requests => true,
+                                            :noreply => true, :binary_protocol => false })
 
   # connect to your server that you started earlier
 
