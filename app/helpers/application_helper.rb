@@ -107,7 +107,7 @@ module ApplicationHelper
     bo,bc = '<span class=favtag>','</span>'
     ao,ac = '<span class=autotag>','</span>'
     tlist=String.new
-    Tag.order_by(:value => "desc").each do |t|
+    Tag.order_by(:value => "desc").to_ary.each do |t|
       tid=autotags_flat.include?(t.id) ? "#{ao}#{t.id}#{ac}" :\
                fav_tags.include?(t.id) ? "#{bo}#{t.id}#{bc}" : t.id
       tlink="<a href='/?s=#{t.id}' title=#{t.value.to_i}>#{tid}</a>"

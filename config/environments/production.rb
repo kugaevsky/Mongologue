@@ -2,11 +2,34 @@ Mongologue::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
+
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = true # was false
   config.action_controller.perform_caching = true
+
+  # cachiing
+  ####################################################################
+  # config.cache_store = :mem_cache_store
+
+  # make a CACHE global to use in your controllers instead of Rails.cache, this will use the new memcache-client 1.7.2
+  CACHE = Memcached.new("localhost:11211")
+
+  # connect to your server that you started earlier
+
+  # this is where you deal with passenger's forking
+  begin
+     PhusionPassenger.on_event(:starting_worker_process) do |forked|
+       if forked
+         # We're in smart spawning mode, so...
+         # Close duplicated memcached connections - they will open themselves
+         CACHE.reset
+       end
+     end
+  # In case you're not running under Passenger (i.e. devmode with mongrel)
+  rescue NameError => error
+  end
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false

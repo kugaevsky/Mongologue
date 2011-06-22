@@ -1,3 +1,4 @@
+#encoding: utf-8
 class PostsController < ApplicationController
   include ApplicationHelper
   include SessionsHelper
@@ -40,16 +41,23 @@ class PostsController < ApplicationController
     @title = @posts.first.title if @posts.size!=0
 
     respond_to do |format|
-      format.html { expires_in 10.seconds, :public => true if !signed_in?;
-                    expires_in 0.seconds, :public => false if signed_in?;
-
+      format.html { # expires_in 10.seconds, :public => true if !signed_in?;
+                    # expires_in 0.seconds, :public => false if signed_in?;
+                    render :html => @posts;
+                    #@tstr=response.body
+                    #myheader="Content-Type: text/html; charset=utf-8\n";
+                    #@tstr="#{@tstr}"
+                    CACHE.clone
+                    @tstr="#{response.body}"
+                    CACHE.set("blog"+request.fullpath,@tstr,3600,false);
+                    CACHE.quit
                    }
       format.js
-      format.rss  { expires_in 1.hour, :public => true if !signed_in?;
-                    response.headers["Content-Type"] = "application/xml; charset=utf-8";
+      format.rss  { expires_in 1.hour, :public => true if !signed_in?
+                    response.headers["Content-Type"] = "application/xml; charset=utf-8"
                     render :rss => @posts }
 
-      format.json { response.headers["Content-Type"] = "application/json; charset=utf-8";
+      format.json { response.headers["Content-Type"] = "application/json; charset=utf-8"
                     expires_in 1.hour, :public => true;
                     render :json => @posts }
     end

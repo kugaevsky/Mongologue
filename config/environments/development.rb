@@ -11,7 +11,30 @@ Mongologue::Application.configure do
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
+
+  # cachiing
+  ####################################################################
+
+
+  # make a CACHE global to use in your controllers instead of Rails.cache, this will use the new memcache-client 1.7.2
+  CACHE = Memcached.new("localhost:11211")
+
+  # connect to your server that you started earlier
+
+  # this is where you deal with passenger's forking
+  begin
+     PhusionPassenger.on_event(:starting_worker_process) do |forked|
+       if forked
+         # We're in smart spawning mode, so...
+         # Close duplicated memcached connections - they will open themselves
+         CACHE.reset
+       end
+     end
+  # In case you're not running under Passenger (i.e. devmode with mongrel)
+  rescue NameError => error
+  end
+
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false

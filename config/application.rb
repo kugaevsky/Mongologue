@@ -51,10 +51,10 @@ module Mongologue
       config.logger = nil
     end
 
-    ActionController::Base.cache_store = :mem_cache_store, "localhost"
+    # config.cache_store = :dalli_store, 'localhost:11211', { compress: false }
+    ActionController::Base.cache_store = :mem_cache_store, "localhost", { :compress => false}
 
-
-    # add unicode support for strings everywhere
+     # add unicode support for strings everywhere
      String.class_eval  'def downcase
          Unicode::downcase(self)
        end
@@ -79,7 +79,6 @@ module Mongologue
        def strip_tags
          ActionController::Base.helpers.strip_tags(self)
        end'
-
 
   end
 end
