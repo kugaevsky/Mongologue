@@ -28,6 +28,14 @@ module ApplicationHelper
     end
   end
 
+  def prefix
+    "admin" if authorized_admin?
+  end
+
+  def admin_url?
+    params[:controller].index("admin") == 0
+  end
+
   def site_info
     "Roses are red<br>Diamonds are blue<br>".html_safe
   end

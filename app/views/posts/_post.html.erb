@@ -4,7 +4,7 @@
     <div class="postinfo" title="<%= post.created_at %>"><%= time_info(post.created_at, post.updated_at) %><br>
       Tags: <%= tags_list(post.tags) %></div>
     <div class="postpanel">
-      <% if authorized_admin? %>
+      <% if admin_url? %>
         <div class="postadm">
           <%= link_to_edit(post) +' | '+ link_to_delete(post) %>
         </div>

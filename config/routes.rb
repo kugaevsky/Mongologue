@@ -7,6 +7,7 @@ Mongologue::Application.routes.draw do
   match 'feed' => 'posts#index'
 
   match '/posts' => redirect('/')
+  match '/admin' => 'admin/posts#index'
 
   resources :posts do
     member do

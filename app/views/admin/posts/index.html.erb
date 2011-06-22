@@ -1,12 +1,19 @@
+  <% cache("newpostform") do %>
+    <div class="contentbutton button" id="newpostbutton" onclick='$("#newpostbox").toggle({ effect: "blind"});'>
+    NEW POST</div>
+    <div id="newpostbox" class="postbox" style="display:none;">
+      <%= render :partial => 'admin/posts/form' %>
+    </div>
+  <% end %>
 <div id="posts">
   <div id="firstpost"></div>
   <% @posts.each do |post| %>
     <% if post.pid == @next_page_pid %>
       <% break %>
     <% end %>
-    <% cache("p#{post.pid}@false") do %>
+    <% cache("p#{post.pid}@true}") do %>
       <div id=<%= "p#{post.pid}" %> class="postbox">
-        <%= render post %>
+        <%= render :partial => '/posts/post', :locals => { :post => post } %>
       </div>
     <% end %>
     <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
