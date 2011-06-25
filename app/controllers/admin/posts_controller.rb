@@ -99,8 +99,8 @@ class Admin::PostsController < ApplicationController
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        expire_cloud
         expire_post(@post)
+        expire_cloud
         format.html { redirect_back_or root_path }
         # format.xml  { head :ok }
         format.js   { render 'posts/show.js.erb' }

@@ -127,22 +127,22 @@
   $('#youarehere').css("display",yhvisible);
 
 
-  $.address.externalChange(function(event) {
-    if (!loaded) {
-      loaded = true;
-      return;
-    }
-    $.getScript(event.value);
-  });
+  // $.address.externalChange(function(event) {
+  //   if (!loaded) {
+  //     loaded = true;
+  //     return;
+  //   }
+  //   $.getScript(event.value);
+  // });
 
-  $.address.internalChange(function(event) {
+  // $.address.internalChange(function(event) {
 
-  });
+  // });
 
 
-  $.address.init(function(event) {
+  // $.address.init(function(event) {
 
-  });
+  // });
 
 
   $.ajax({ type: "GET", url: "/tags.txt", success: function(data) {
@@ -150,7 +150,7 @@
     var obj = new autosuggest("search",tags);
   }});
 
-  $.getScript('/clientinfo');
+  $.getScript('/clientinfo.js');
 
   $.fn.disableSelection = function() {
       $(this).attr('unselectable', 'on')

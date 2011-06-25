@@ -8,6 +8,7 @@ Mongologue::Application.routes.draw do
 
   match '/posts' => redirect('/')
   match '/admin' => 'admin/posts#index'
+  match '/clientinfo' => 'users#clientinfo'
 
   resources :posts do
     member do
@@ -34,7 +35,11 @@ Mongologue::Application.routes.draw do
     end
   end
 
-  resources :users
+  resources :users do
+    member do
+      get :clientinfo
+    end
+  end
 
   # admin actions go here
   namespace :admin do

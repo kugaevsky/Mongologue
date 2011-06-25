@@ -16,8 +16,8 @@
       <h1>Mongologue</h1>
     <p>Powered by MongoDB</p></a>
     </div>
-    <form id="searchbox" accept-charset="UTF-8" action="/" method="get" autocomplete="off">
 <% end %>
+<form id="searchbox" accept-charset="UTF-8" action="/" method="get" autocomplete="off">
 <input id="search" name="s" type="text" value='<%= "#{mainpage? ? params[:s] : ''}" %>'
        placeholder="Enter comma-separated words and press Enter." />
 <div id="fakesearch"></div>
@@ -51,7 +51,7 @@
 
   <div id="tagsbutton" class="button rightbutton">All tags</div>
   <% cache('tagscloud') do %>
-    <%= render :partial => '/tagscloud' %>
+    <%= render :partial => '/tags/tagscloud' %>
   <% end %>
 <% cache("footer") do %>
       <div id="aboutbutton" class="button rightbutton">Author info</div>
@@ -62,8 +62,8 @@
            Twitter</br>
            Github</br>
            </br>
-           Skype: author</br>
-           ICQ: 22233344</br>
+           Skype:</br>
+           ICQ:</br>
            <a href="mailto:example@example.com">author@example.com</a></p>
       </div>
       <div id="siteinfobutton" class="button rightbutton">Site info</div>

@@ -44,16 +44,18 @@ class PostsController < ApplicationController
       format.html { # expires_in 10.seconds, :public => true if !signed_in?;
                     # expires_in 0.seconds, :public => false if signed_in?;
                     render :html => @posts;
-                    memc_write(3600)
+                    memc_write
                    }
       format.js
-      format.rss  { expires_in 1.hour, :public => true if !signed_in?
+      format.rss  { # expires_in 1.hour, :public => true if !signed_in?
                     response.headers["Content-Type"] = "application/xml; charset=utf-8"
-                    render :rss => @posts }
+                    render :rss => @posts
+                    memc_write }
 
       format.json { response.headers["Content-Type"] = "application/json; charset=utf-8"
-                    expires_in 1.hour, :public => true;
-                    render :json => @posts }
+                    #expires_in 1.hour, :public => true;
+                    render :json => @posts
+                    memc_write }
     end
   end
 
@@ -70,10 +72,10 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html { render :html => @post;
-                    memc_write(3600)
+                    memc_write
                   }
 
-      format.xml  { render :xml => @post }
+      format.xml
       format.js
     end
   end

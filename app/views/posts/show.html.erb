@@ -1,8 +1,8 @@
 <% cache("p#{@post.pid}@#{authorized_admin?}") do %>
   <div id=<%= "p#{@post.pid}" %> class="postbox" >
-  <%= render @post %>
+    <%= render @post %>
   </div>
 <% end %>
-<div id=<%= "pc#{@post.pid}" %> >
-  <%= render 'posts/comments' %>
+<div id=<%= "pc#{@post.pid}" %>>
+  <%= render :partial => 'posts/comments' %>
 </div>

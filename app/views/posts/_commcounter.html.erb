@@ -1,0 +1,8 @@
+<div class="postcomm">
+  <% cc=post.comments_counter.to_i %>
+  <% if controller.action_name!="show" %>
+    <%= link_to_expand_comments(post,cc) %>
+  <% else %>
+    <%= link_to_collapse_comments(post,cc) %>
+  <% end %>
+</div>

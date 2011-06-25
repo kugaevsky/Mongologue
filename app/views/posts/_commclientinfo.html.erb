@@ -1,0 +1,9 @@
+<% cache("#{current_user}") do %>
+<% if signed_in? %>
+  <p>Signed in as <%= link_to identity_or_name(current_user), current_user.identity %> |
+                  <%= link_to "Sign out", signout_path %></p>
+<% else %>
+  <p>Not signed in (anonymous) |
+     <%= link_to "Sign in", signin_path(:rt => session[:return_to]) %></p>
+<% end %>
+<% end %>

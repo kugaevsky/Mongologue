@@ -1,0 +1,28 @@
+<% maxlength=500 %>
+<% cache("pf#{@post.pid}@#{signed_in?}") do %>
+<%= form_for [@post, @new_comment], :html => { :id => "fc#{@post.pid}", :class => "commentform" },
+                                    :remote => true do |f| %>
+  <%= render "shared/error_messages", :object => @new_comment %>
+  <p><%= f.text_area :content, :rows => 10, :maxlength => maxlength %></p>
+  <p><%= f.submit %> <span id="<%= "cnt#{@post.pid}" %>"></span></p>
+<% end %>
+<script type="text/javascript">
+    $(document).ready(function(){
+    $("<%= "#fc#{@post.pid}" %> textarea").maxChar(<%= maxlength %>, {indicator: "<%= "cnt#{@post.pid}" %>"});
+
+   $('textarea').keypress("enter",function(e){
+     if (e.ctrlKey == true && ((e.keyCode == 13) || (e.keyCode == 10))) {
+       $(this).closest('form').submit();
+      }
+     });
+
+    setInterval(function () {
+      if($("<%= "#fc#{@post.pid}" %> textarea").val().length <= <%= maxlength %>) {
+        $("<%= "#fc#{@post.pid}" %> input").removeAttr("disabled");
+      } else {
+        $("<%= "#fc#{@post.pid}" %> input").attr("disabled", "disabled");
+      }
+    }, 200);
+  });
+</script>
+<% end %>

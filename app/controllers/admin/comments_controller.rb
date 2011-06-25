@@ -27,7 +27,7 @@ class Admin::CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    expire_post_with_comments(@post)
+    expire_comments(@post)
     respond_to do |format|
       format.html { redirect_to @post }
       format.xml  { head :ok }

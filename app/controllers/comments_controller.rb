@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @new_comment.save
-        expire_post_with_comments(@post)
+        expire_comments(@post)
 
         format.html { redirect_to @post }
         format.js   { render 'create_comment.js.erb'   }

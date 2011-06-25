@@ -4,11 +4,9 @@
     <% if post.pid == @next_page_pid %>
       <% break %>
     <% end %>
-    <% cache("p#{post.pid}@false") do %>
-      <div id=<%= "p#{post.pid}" %> class="postbox">
-        <%= render post %>
-      </div>
-    <% end %>
+    <div id=<%= "p#{post.pid}" %> class="postbox">
+    <%= render :partial => '/posts/post', :locals => {:post => post } %>
+    </div>
     <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
   <% end %>
 </div>

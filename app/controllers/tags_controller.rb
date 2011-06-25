@@ -12,6 +12,7 @@ class TagsController < ApplicationController
     end
 
     respond_to do |format|
+      format.html { render :partial => 'tagscloud'; }
       format.json { response.headers['Content-Type'] = 'application/json; charset=utf-8';
                     render :inline => "#{@tags.map(&:id).to_json.html_safe}" }
       format.xml  { response.headers["Content-Type"] = "application/xml; charset=utf-8";

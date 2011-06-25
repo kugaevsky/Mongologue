@@ -17,22 +17,22 @@ Mongologue::Application.configure do
   ####################################################################
 
 
-  # CACHE = Memcached.new("localhost:11211")
+  CACHE = Memcached.new("localhost:11211", {:prefix_key => "dev", :prefix_delimiter => ':' })
 
-  # # connect to your server that you started earlier
+  # connect to your server that you started earlier
 
-  # # this is where you deal with passenger's forking
-  # begin
-  #    PhusionPassenger.on_event(:starting_worker_process) do |forked|
-  #      if forked
-  #        # We're in smart spawning mode, so...
-  #        # Close duplicated memcached connections - they will open themselves
-  #        CACHE.reset
-  #      end
-  #    end
-  # # In case you're not running under Passenger (i.e. devmode with mongrel)
-  # rescue NameError => error
-  # end
+  # this is where you deal with passenger's forking
+  begin
+     PhusionPassenger.on_event(:starting_worker_process) do |forked|
+       if forked
+         # We're in smart spawning mode, so...
+         # Close duplicated memcached connections - they will open themselves
+         CACHE.reset
+       end
+     end
+  # In case you're not running under Passenger (i.e. devmode with mongrel)
+  rescue NameError => error
+  end
 
 
   # Don't care if the mailer can't send

@@ -52,7 +52,7 @@ module Mongologue
     end
 
     # config.cache_store = :dalli_store, 'localhost:11211', { compress: false }
-    ActionController::Base.cache_store = :mem_cache_store, "localhost", { :compress => false}
+    ActionController::Base.cache_store = :mem_cache_store, "localhost"
 
      # add unicode support for strings everywhere
      String.class_eval  'def downcase

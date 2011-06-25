@@ -15,10 +15,26 @@ module ApplicationHelper
     end
   end
 
-  def memc_write(time = 3600)
+  def memc_write(time = 600)
     CACHE.clone
-    @tstr="#{response.body}"
-    CACHE.set("blog"+request.fullpath,@tstr,time,false);
+
+    begin
+      @tstr="#{response.body}"
+      CACHE.set("blog"+request.fullpath,@tstr,time,false);
+    rescue
+    end
+
+    if request.fullpath=="/" or request.fullpath.start_with?("/?")
+      begin
+        aindex=CACHE.get("blog::index")
+      rescue
+        aindex=Set.new
+      end
+        if !aindex.include?(request.fullpath)
+          aindex << "blog"+request.fullpath;
+          CACHE.set("blog::index",Marshal.dump(aindex));
+        end
+    end
     CACHE.quit
   end
 
@@ -31,10 +47,16 @@ module ApplicationHelper
     CACHE.quit
   end
 
-  #todo: keep index of all search/page queries for the page and purge them all at once
   def memc_purge_index
     CACHE.clone
-    CACHE.delete("blog/");
+      begin
+        aindex=CACHE.get("blog::index")
+        CACHE.delete("blog::index")
+        aindex.each do |item|
+          CACHE.delete(item);
+        end
+      rescue
+      end
     CACHE.quit
   end
 
