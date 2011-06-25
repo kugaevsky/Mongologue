@@ -9,7 +9,7 @@ $fontcolor: #000000;
 
 $bgfile: "/images/orange-stripe.png";
 
-$borderradius: 5px;
+$borderradius: 7px;
 
 $totalwidth: 960px;
 $contentwidth: 700px;
@@ -51,6 +51,7 @@ h1 {
 }
 
 h2 {
+  font-size: 140%;
   font-weight: normal;
   line-height: 1.6em;
   word-spacing: 1px;
@@ -78,21 +79,37 @@ h1:first-letter  { font-size: 145%;}
   vertical-align:middle;
   line-height: 25px;
   width: 100%;
-  border-radius: $borderradius;
   margin-bottom: 10px;
-  border: 1px solid $hlcolor;
-  border-radius: $borderradius;
-  background-image: url( $bgfile );
-  background-repeat: repeat;
 }
 
 .button a {
   display: block;
   width: 100%;
   text-decoration: none;
-  border-radius: $borderradius;
-  background-image: url( $bgfile );
-  background-repeat: repeat;
+
+  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: transparent;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
+  background-origin: padding-box;
+  border-bottom-color: #DA7C0C;
+  border-bottom-left-radius: $borderradius;
+  border-bottom-right-radius: $borderradius;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: #DA7C0C;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: #DA7C0C;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: #DA7C0C;
+  border-top-left-radius: $borderradius;
+  border-top-right-radius: $borderradius;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
 
 }
 
@@ -103,9 +120,6 @@ h1:first-letter  { font-size: 145%;}
   height: 55px;
   width: 205px;
   text-align: left;
-  background-color: orange;
-  border: 1px solid $hlcolor;
-  border-radius: $borderradius;
 }
 
 #logo a{
@@ -114,9 +128,32 @@ h1:first-letter  { font-size: 145%;}
   width: 100%;
   height: 55px;
   text-decoration: none;
-  border-radius: $borderradius;
-  background-image: url( $bgfile );
-  background-repeat: repeat;
+
+  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: transparent;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
+  background-origin: padding-box;
+  border-bottom-color: #DA7C0C;
+  border-bottom-left-radius: $borderradius;
+  border-bottom-right-radius: $borderradius;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: #DA7C0C;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: #DA7C0C;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: #DA7C0C;
+  border-top-left-radius: $borderradius;
+  border-top-right-radius: $borderradius;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+
+
 }
 
 #logopic {
@@ -161,13 +198,16 @@ h1:first-letter  { font-size: 145%;}
   display: inline-block;
   float:left;
   text-align: left;
-  font-size: 1.1em;
+  font-size: 1.0em;
   height: $searchheight;
   width: 360px;
-  border-top: 1px solid $brcolor;
-  border-bottom: 1px solid $brcolor;
-  border-left: 1px solid $brcolor;
+  border-top: 1px solid $hlcolor;
+  border-bottom: 1px solid $hlcolor;
+  border-left: 1px solid $hlcolor;
   border-right: 0;
+  border-top-left-radius: $borderradius;
+  border-bottom-left-radius: $borderradius;
+
 }
 
 #search:focus {
@@ -180,10 +220,14 @@ h1:first-letter  { font-size: 145%;}
   height: $searchheight;
   width: 127px;
   background-color: #EEE;
-  border-top: 1px solid $brcolor;
-  border-bottom: 1px solid $brcolor;
-  border-right: 1px solid $brcolor;
+  border-top: 1px solid $hlcolor;
+  border-bottom: 1px solid $hlcolor;
+  border-right: 1px solid $hlcolor;
   border-left: 0;
+
+  border-top-right-radius: $borderradius;
+  border-bottom-right-radius: $borderradius;
+
 }
 
 #rss {
@@ -201,7 +245,11 @@ h1:first-letter  { font-size: 145%;}
 #rss img {
   display: inline-block;
   position: relative;
-  height: $rssheight - 2;
+  left: 6px;
+  top: 2px;
+  height: $rssheight - 6;
+  width: $rssheight - 6;
+
   border: 1px solid white;
 
 }
@@ -209,7 +257,8 @@ h1:first-letter  { font-size: 145%;}
 #rss p {
   display: inline-block;
   position: relative;
-  top: -5px;
+  top: -1px;
+  left: 6px;
   margin: 0px 0px 0px 2px;
   height: $rssheight;
 }
@@ -225,6 +274,31 @@ h1:first-letter  { font-size: 145%;}
   background-image: url( $bgfile );
   background-repeat: repeat;
   border: 1px solid $hlcolor;
+
+  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: transparent;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
+  background-origin: padding-box;
+  border-bottom-color: #DA7C0C;
+  border-bottom-left-radius: $borderradius;
+  border-bottom-right-radius: $borderradius;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: #DA7C0C;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: #DA7C0C;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: #DA7C0C;
+  border-top-left-radius: $borderradius;
+  border-top-right-radius: $borderradius;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+
 
 }
 
@@ -406,6 +480,32 @@ a:hover { background-color:$hlcolor; }
   width: 225px;
   height: 25px;
   text-align: center;
+
+
+  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: transparent;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
+  background-origin: padding-box;
+  border-bottom-color: #DA7C0C;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: #DA7C0C;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: #DA7C0C;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: #DA7C0C;
+  border-top-left-radius: $borderradius;
+  border-top-right-radius: $borderradius;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+
 }
 
 .contentbutton {
@@ -418,6 +518,31 @@ a:hover { background-color:$hlcolor; }
   border-radius: $borderradius;
   border: 1px solid $hlcolor;
   height: 25px;
+
+  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: transparent;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
+  background-origin: padding-box;
+  border-bottom-color: #DA7C0C;
+  border-bottom-left-radius: $borderradius;
+  border-bottom-right-radius: $borderradius;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: #DA7C0C;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: #DA7C0C;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: #DA7C0C;
+  border-top-left-radius: $borderradius;
+  border-top-right-radius: $borderradius;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+
 
 }
 

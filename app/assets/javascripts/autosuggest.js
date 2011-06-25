@@ -63,7 +63,7 @@ function autosuggest(id, array, url, onSelect)
 	this.htext_color = "#F00";		// text color for the selected suggestion
 	this.hcolor      = "#D6D7E7";	// background color for the selected suggestion
 	this.font        = "Cambria, Georgia, 'Times New Roman',serif";	// font(s) of suggestion items
-	this.font_size   = "1.1em";		// font size of suggestion items
+	this.font_size   = "1.0em";		// font size of suggestion items
 
 	// "Private" variables:
 
