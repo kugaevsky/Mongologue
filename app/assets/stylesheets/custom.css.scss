@@ -15,7 +15,35 @@ $totalwidth: 960px;
 $contentwidth: 700px;
 
 $searchheight: 26px;
-$rssheight: 20px;
+$rssheight: 26px;
+
+
+@mixin rounded-button {
+    -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: transparent;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
+  background-origin: padding-box;
+  border-bottom-color: #DA7C0C;
+  border-bottom-left-radius: $borderradius;
+  border-bottom-right-radius: $borderradius;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: #DA7C0C;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: #DA7C0C;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: #DA7C0C;
+  border-top-left-radius: $borderradius;
+  border-top-right-radius: $borderradius;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+
+}
 
 
 body {
@@ -86,30 +114,9 @@ h1:first-letter  { font-size: 145%;}
   display: block;
   width: 100%;
   text-decoration: none;
+  text-align: center;
 
-  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
-  background-attachment: scroll;
-  background-clip: border-box;
-  background-color: transparent;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
-  background-origin: padding-box;
-  border-bottom-color: #DA7C0C;
-  border-bottom-left-radius: $borderradius;
-  border-bottom-right-radius: $borderradius;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-left-color: #DA7C0C;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-right-color: #DA7C0C;
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-top-color: #DA7C0C;
-  border-top-left-radius: $borderradius;
-  border-top-right-radius: $borderradius;
-  border-top-style: solid;
-  border-top-width: 1px;
-  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+  @include rounded-button;
 
 }
 
@@ -129,30 +136,7 @@ h1:first-letter  { font-size: 145%;}
   height: 55px;
   text-decoration: none;
 
-  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
-  background-attachment: scroll;
-  background-clip: border-box;
-  background-color: transparent;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
-  background-origin: padding-box;
-  border-bottom-color: #DA7C0C;
-  border-bottom-left-radius: $borderradius;
-  border-bottom-right-radius: $borderradius;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-left-color: #DA7C0C;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-right-color: #DA7C0C;
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-top-color: #DA7C0C;
-  border-top-left-radius: $borderradius;
-  border-top-right-radius: $borderradius;
-  border-top-style: solid;
-  border-top-width: 1px;
-  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
-
+  @include rounded-button;
 
 }
 
@@ -237,18 +221,18 @@ h1:first-letter  { font-size: 145%;}
   height: $rssheight;
   display:inline-block;
   position: relative;
-  bottom: 25px;
-  left: 365px;
+  bottom: 28px;
+  left: 368px;
 
 }
 
 #rss img {
   display: inline-block;
   position: relative;
-  left: 6px;
-  top: 2px;
-  height: $rssheight - 6;
-  width: $rssheight - 6;
+  left: 5px;
+  top: 4px;
+  height: 17px;
+  width: 17px;
 
   border: 1px solid white;
 
@@ -257,7 +241,7 @@ h1:first-letter  { font-size: 145%;}
 #rss p {
   display: inline-block;
   position: relative;
-  top: -1px;
+  top: 0px;
   left: 6px;
   margin: 0px 0px 0px 2px;
   height: $rssheight;
@@ -275,30 +259,7 @@ h1:first-letter  { font-size: 145%;}
   background-repeat: repeat;
   border: 1px solid $hlcolor;
 
-  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
-  background-attachment: scroll;
-  background-clip: border-box;
-  background-color: transparent;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
-  background-origin: padding-box;
-  border-bottom-color: #DA7C0C;
-  border-bottom-left-radius: $borderradius;
-  border-bottom-right-radius: $borderradius;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-left-color: #DA7C0C;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-right-color: #DA7C0C;
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-top-color: #DA7C0C;
-  border-top-left-radius: $borderradius;
-  border-top-right-radius: $borderradius;
-  border-top-style: solid;
-  border-top-width: 1px;
-  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
-
+  @include rounded-button;
 
 }
 
@@ -481,68 +442,17 @@ a:hover { background-color:$hlcolor; }
   height: 25px;
   text-align: center;
 
-
-  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
-  background-attachment: scroll;
-  background-clip: border-box;
-  background-color: transparent;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
-  background-origin: padding-box;
-  border-bottom-color: #DA7C0C;
-  border-bottom-left-radius: 7px;
-  border-bottom-right-radius: 7px;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-left-color: #DA7C0C;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-right-color: #DA7C0C;
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-top-color: #DA7C0C;
-  border-top-left-radius: $borderradius;
-  border-top-right-radius: $borderradius;
-  border-top-style: solid;
-  border-top-width: 1px;
-  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+  @include rounded-button;
 
 }
 
 .contentbutton {
-  background-color: $hlcolor;
-  background-image: url( $bgfile );
-  background-repeat: repeat;
   width: $contentwidth;
   text-align: center;
-  margin: 0 0 15px 0;
-  border-radius: $borderradius;
-  border: 1px solid $hlcolor;
+  margin: 0 0 10px 0;
   height: 25px;
 
-  -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
-  background-attachment: scroll;
-  background-clip: border-box;
-  background-color: transparent;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
-  background-origin: padding-box;
-  border-bottom-color: #DA7C0C;
-  border-bottom-left-radius: $borderradius;
-  border-bottom-right-radius: $borderradius;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-left-color: #DA7C0C;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-right-color: #DA7C0C;
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-top-color: #DA7C0C;
-  border-top-left-radius: $borderradius;
-  border-top-right-radius: $borderradius;
-  border-top-style: solid;
-  border-top-width: 1px;
-  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
-
+  @include rounded-button;
 
 }
 

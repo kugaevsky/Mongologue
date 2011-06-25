@@ -5,22 +5,4 @@
       <%= render :partial => 'admin/posts/form' %>
     </div>
   <% end %>
-<div id="posts">
-  <div id="firstpost"></div>
-  <% @posts.each do |post| %>
-    <% if post.pid == @next_page_pid %>
-      <% break %>
-    <% end %>
-    <div id=<%= "p#{post.pid}" %> class="postbox">
-      <%= render :partial => '/posts/post', :locals => {:post => post } %>
-    </div>
-    <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
-  <% end %>
-</div>
-<div id="paginator" class="button contentbutton" >
-<% unless @next_page_pid.nil? %>
-  <%= "<a href='?p=#{@next_page_pid}'#{'&s='+params[:s] if params[:s]}'>NEXT PAGE &rarr;</a>".html_safe %>
-<% else %>
-  <%= link_to_function "&uarr; UP &uarr;".html_safe, "$( 'html, body' ).animate( { scrollTop: 0 }, 0 );" %>
-<% end %>
-</div>
+  <%= render :file => '/posts/index.html.erb' %>
