@@ -7,7 +7,8 @@ $ftcolor: #000000;
 $brcolor: #000000;
 $fontcolor: #000000;
 
-$bgfile: "/images/orange-stripe.png";
+$bgfile: "/images/orange-stripe-grad.png";
+$hlfile: "/images/orange-stripe-grad-inv.png";
 
 $borderradius: 7px;
 
@@ -17,13 +18,13 @@ $contentwidth: 700px;
 $searchheight: 26px;
 $rssheight: 26px;
 
+$grad: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
 
 @mixin rounded-button {
     -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
   background-attachment: scroll;
   background-clip: border-box;
   background-color: transparent;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
   background-origin: padding-box;
   border-bottom-color: #DA7C0C;
   border-bottom-left-radius: $borderradius;
@@ -53,7 +54,7 @@ body {
   font-size: 100%;
   padding: 0;
   margin: 0;
-  background: $pgcolor;
+  background-color: $pgcolor;
 
 }
 
@@ -116,6 +117,10 @@ h1:first-letter  { font-size: 145%;}
   text-decoration: none;
   text-align: center;
 
+  background-color: $hlcolor;
+  background-image: url( $bgfile );
+  background-repeat: repeat;
+
   @include rounded-button;
 
 }
@@ -127,6 +132,7 @@ h1:first-letter  { font-size: 145%;}
   height: 55px;
   width: 205px;
   text-align: left;
+
 }
 
 #logo a{
@@ -136,7 +142,13 @@ h1:first-letter  { font-size: 145%;}
   height: 55px;
   text-decoration: none;
 
+  background-color: $hlcolor;
+  background-image: url( $bgfile );
+  background-repeat: repeat;
+
+
   @include rounded-button;
+
 
 }
 
@@ -452,15 +464,20 @@ a:hover { background-color:$hlcolor; }
   margin: 0 0 10px 0;
   height: 25px;
 
+  background-color: $hlcolor;
+  background-image: url( $bgfile );
+  background-repeat: repeat;
+
   @include rounded-button;
 
 }
 
 
 .rightbutton:hover, #newpostbutton:hover {
-  background: $bgcolor;
+  background: $hlcolor;
   cursor: pointer;
   border: 1px solid $hlcolor;
+  background-image: url( $hlfile );
 }
 
 
