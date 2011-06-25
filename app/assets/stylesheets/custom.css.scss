@@ -1,6 +1,6 @@
 $pgcolor: darkgray;
 $bgcolor: #FFFFFF;
-$hlcolor: orange;
+$hlcolor: #DA7C0C;
 $fmcolor: #eeeeee;
 $atcolor: #222222;
 $ftcolor: #000000;
@@ -26,28 +26,15 @@ $rssheight: 26px;
 $grad: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAA51A), to(#F47A20));
 
 @mixin rounded-button {
-    -webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
-  background-attachment: scroll;
+  background-color: $hlcolor;
+  background-image: url( $bgfile );
+  background-repeat: repeat;
+  border-radius: $borderradius;
+  border: 1px solid $hlcolor;
   background-clip: border-box;
-  background-color: transparent;
-  background-origin: padding-box;
-  border-bottom-color: #DA7C0C;
-  border-bottom-left-radius: $borderradius;
-  border-bottom-right-radius: $borderradius;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-left-color: #DA7C0C;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-right-color: #DA7C0C;
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-top-color: #DA7C0C;
-  border-top-left-radius: $borderradius;
-  border-top-right-radius: $borderradius;
-  border-top-style: solid;
-  border-top-width: 1px;
-  box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 2px 0px;
+  -moz-box-shadow: 2px 2px 2px #000;
+  -webkit-box-shadow: 2px 2px 2px #000;
+  box-shadow: 2px 2px 2px #000;
 
 }
 
@@ -123,10 +110,6 @@ h1:first-letter  { font-size: 145%;}
   text-decoration: none;
   text-align: center;
 
-  background-color: $hlcolor;
-  background-image: url( $bgfile );
-  background-repeat: repeat;
-
   @include rounded-button;
 
 }
@@ -149,14 +132,7 @@ h1:first-letter  { font-size: 145%;}
   height: 55px;
   text-decoration: none;
 
-  background-color: $hlcolor;
-  background-image: url( $bgfile );
-  background-repeat: repeat;
-
-
   @include rounded-button;
-
-
 }
 
 #logopic {
@@ -191,8 +167,9 @@ h1:first-letter  { font-size: 145%;}
 
 #searchbox {
   height: $searchheight;
-  width: 510px;
-  padding: 15px 0px 15px 5px;
+  width: 485px;
+  padding: 15px 0px 15px 0px;
+  margin-left: 10px;
   display: inline-block;
   float:left
 }
@@ -203,7 +180,7 @@ h1:first-letter  { font-size: 145%;}
   text-align: left;
   font-size: 1.0em;
   height: $searchheight;
-  width: 360px;
+  width: 365px;
   border-top: 1px solid $hlcolor;
   border-bottom: 1px solid $hlcolor;
   border-left: 1px solid $hlcolor;
@@ -221,7 +198,7 @@ h1:first-letter  { font-size: 145%;}
   display: inline-block;
   float:left;
   height: $searchheight;
-  width: 127px;
+  width: 100px;
   background-color: #EEE;
   border-top: 1px solid $hlcolor;
   border-bottom: 1px solid $hlcolor;
@@ -236,12 +213,12 @@ h1:first-letter  { font-size: 145%;}
 #rss {
   float: left;
 
-  width: 119px;
+  width: 115px;
   height: $rssheight;
   display:inline-block;
   position: relative;
   bottom: 28px;
-  left: 368px;
+  left: 370px;
 
 }
 
@@ -271,12 +248,8 @@ h1:first-letter  { font-size: 145%;}
   display: block;
   position: relative;
   margin: 0px;
-  width: 100%;
+  width: 113px;
   height: $rssheight;
-  background-color: $hlcolor;
-  background-image: url( $bgfile );
-  background-repeat: repeat;
-  border: 1px solid $hlcolor;
 
   @include rounded-button;
 
@@ -286,12 +259,17 @@ h1:first-letter  { font-size: 145%;}
 #clientinfo {
   font-family: Verdana, Arial;
   display: block;
-  margin: 2px 0px 0 10px;
-  text-align: left;
-  float: right;
-  width: 225px;
+  text-align: center;
+  float: left;
+  width: 230px;
+  height: 45px;
   font-size: 11px;
-  line-height: 16px;
+  line-height: 15px;
+  margin-left: 10px;
+  padding: 5px;
+
+  @include rounded-button;
+
 }
 
 #greeting, #passwordinfo {
@@ -588,7 +566,7 @@ input[type=submit] {
   height: 300px;
   margin: 0px 180px 0px 180px;
   padding: 15px;
-  border: 1px dotted $brcolor;
-  background: $pgcolor;
+  border: 1px solid $hlcolor;
+  background: $bgcolor;
   text-align: center;
 }
