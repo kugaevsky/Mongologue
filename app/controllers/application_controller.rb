@@ -51,7 +51,8 @@ class ApplicationController < ActionController::Base
   # fix to handle redirect_to from ajax requests
   def redirect_to(options = {}, response_status = {})
     if request.xhr?
-      render(:update) {|page| page.redirect_to(options)}
+      #render(:update) {|page| page.redirect_to(options)}
+      render :inline => "document.location.href = '#{options}'"
     else
       super(options, response_status)
     end
