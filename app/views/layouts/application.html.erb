@@ -45,7 +45,7 @@
   <% else %>
     <% cache("youarehere@p#{@post.pid}") do %>
       <div id="youareherebutton" class="button rightbutton">You are here</div>
-      <div id="youarehere"><div id="youarehereslider"></div><p><%= you_are_here(@post,10) %></p></div>
+      <div id="youarehere"><p><%= you_are_here(@post,10) %></p></div>
     <% end %>
   <% end %>
 

@@ -1,2 +1,3 @@
-$('#edituser').html("<%= escape_javascript(render :partial => 'admin/users/form') %>");
+<% @user = current_user %>
+$('#edituser').html('<%= escape_javascript(render :partial => "form") %>');
 

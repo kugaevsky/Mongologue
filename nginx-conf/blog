@@ -1,0 +1,16 @@
+server {
+        listen   8080;
+        server_name  blindsight;
+
+        root   /home/mike/rails/blog/public;
+        rails_env production;
+
+        passenger_enabled on;
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        location ~ /\.ht {
+          deny  all;
+        }
+}

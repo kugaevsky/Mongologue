@@ -1,0 +1,46 @@
+server {
+
+    listen   80;
+    server_name  blindsight;
+
+    root /home/mike/rails/blog/public;
+
+    # serve static content directly
+    location ~* \.(ico|jpg|gif|png|swf|html)$ {
+      if (-f $request_filename) {
+        expires max;
+        break;
+       }
+    }
+
+    location / {
+        default_type text/html; 
+        charset utf-8;
+            
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_redirect off;
+            
+        set $memcached_key "blog$uri$args";
+        memcached_pass localhost:11211;
+
+        proxy_intercept_errors  on;
+            
+        error_page 405 404 502 = /fallback$uri$args;
+    }
+
+    # This location would be called only if main location failed to serve request
+    location /fallback/ {
+        # Only internal redirect, no outside access
+        internal;
+            
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;            
+        proxy_redirect off;
+
+        proxy_pass http://127.0.0.1:8080;
+    }
+    
+}

@@ -101,7 +101,7 @@ class PostsController < ApplicationController
     @tags=Tag.order_by([:value, :desc]).all
     respond_to do |format|
       format.xml  { response.headers["Content-Type"] = "application/xml; charset=utf-8";
-                    render :xml => @posts;
+                    render 'sitemap';
                     memc_write(3600)
                   }
     end

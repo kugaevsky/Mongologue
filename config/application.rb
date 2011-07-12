@@ -51,6 +51,9 @@ module Mongologue
       config.logger = nil
     end
 
+    # config.mongoid.preload_models = false
+
+
     # config.cache_store = :dalli_store, 'localhost:11211', { compress: false }
     ActionController::Base.cache_store = :mem_cache_store, "localhost"
 
