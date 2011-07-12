@@ -63,7 +63,7 @@ module ApplicationHelper
 
   # for caching
   def page_name
-    if @posts.nil?
+    if @posts.nil? || @posts.first.nil?
       if @post.nil?
         return "none"
       else
