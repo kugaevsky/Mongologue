@@ -135,7 +135,6 @@ h1:first-letter  { font-size: 145%;}
   height: 50px;
   text-decoration: none;
   background: transparent;
-  // @include rounded-button;
 }
 
 #logopic {
@@ -185,13 +184,14 @@ h1:first-letter  { font-size: 145%;}
   text-align: left;
   font-size: 1.0em;
   height: $searchheight;
-  width: 365px;
+  width: 360px;
   border-top: 1px solid $hlcolor;
   border-bottom: 1px solid $hlcolor;
   border-left: 1px solid $hlcolor;
   border-right: 0;
   border-top-left-radius: $borderradius;
   border-bottom-left-radius: $borderradius;
+  padding-left: 5px;
 
 }
 
@@ -257,8 +257,6 @@ h1:first-letter  { font-size: 145%;}
   height: $rssheight;
   background: transparent;
 
-  // @include rounded-button;
-
 }
 
 
@@ -273,8 +271,6 @@ h1:first-letter  { font-size: 145%;}
   line-height: 15px;
   margin-left: 10px;
   padding: 5px;
-
-  // @include rounded-button;
 
 }
 
@@ -452,17 +448,11 @@ a:hover { background-color:$hlcolor; }
   text-align: center;
   margin: 0 0 10px 0;
   height: 25px;
-
-  background-color: $hlcolor;
-  background-image: url( $bgfile );
-  background-repeat: repeat;
-
   @include rounded-button;
-
 }
 
 
-.rightbutton:hover, #newpostbutton:hover {
+.button a:hover, .rightbutton:hover, #newpostbutton:hover {
   background: $hlcolor;
   cursor: pointer;
   border: 1px solid $hlcolor;
@@ -493,25 +483,6 @@ a:hover { background-color:$hlcolor; }
   line-height: 17px;
   display: inline-block;
 }
-
-#youarehere {
-  height: 220px;
-
-
-}
-
-#youarehereslider {
-  display: inline-block;
-  height: 200px;
-  margin: 5px 5px 0 0px;
-}
-
-#youarehere p {
-  float: right;
-  width: 100%;
-
-}
-
 
 .favtag {
   color: $ftcolor;

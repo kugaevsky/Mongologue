@@ -7,7 +7,7 @@
     <div id=<%= "p#{post.pid}" %> class="postbox">
     <%= render :partial => '/posts/post', :locals => {:post => post } %>
     </div>
-    <div id=<%= "pc#{post.pid}" %> style="display: none;" ></div>
+    <div id=<%= "pc#{post.pid}" %> style="display: none;" class="postcomments" ></div>
   <% end %>
 </div>
 <div id="paginator" class="button" >
