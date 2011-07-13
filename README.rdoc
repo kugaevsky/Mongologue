@@ -1,40 +1,38 @@
 == Welcome to Mongologue
 
 Ok, this is my first attempt to create something using Ruby on Rails after "Ruby on Rails Tutorial: Learn by example" book and I didn't came up with something better than Yet Another Blog Engine.
-Well, the problem is - this is NOT yet another blog engine. Its better :)
+Well, the problem is - this is NOT yet another blog engine.
 
-This blog uses fancy MongoDB+Mongoid combination to store all data.
-Authorization handled with Loginza using plugin (https://github.com/galetahub/loginza).
+It is way better.
+
+This blog uses MongoDB+Mongoid combination to store all its data.
+Authorization handled with Loginza gem (https://github.com/galetahub/loginza).
 Ajax magic and effects (there are lot of them) are sponsored by jQuery library.
 
 Main features:
-- Fast ajaxy interface offers inplace editing for almost everything.
-- Loginza (OpenID) authorization for all visitors, optional password protection if you feel paranoid.
+- Uses bleeding edge Ruby on Rails 3.1 engine (so you're getting all these new fancy things: asset pipelines, SCSS and CoffeeScript out of the box).
+- Extremely fast: Uses C-extension for automatic text typography (fasttypo) and supports memcached (sample nginx configuration included).
+- Everything is UTF-8.
+- Fast ajaxy interface with inplace editing.
+- Loginza (OpenID) authorization provider support with optional password protection if you feel paranoid.
 - Tags and autotags. Autotags automatically tag each post with year, month, days of week and month,
-  post size (tiny/small/big/huge). Posts with no user tags get "tagless".
-- Search engine performs fulltext search, distinguishes tags and keywords in a search query, allows
-  you to use "not includes" (!word) and "like" (word*) symbols.
+  post size (tiny/small/big/huge) and few other things. Posts with no user tags get "tagless".
+- Simple yet efficient built-in search engine to perform fulltext search. Distinguishes tags and keywords in your search query, allows to use "not includes" (!word) and "like" (word*) symbols.
 - Tags autosuggestion as you type them.
-- Automatic typography (russian rules :)). Long dashes, "right" quotes and so on.
-- RSS feeds for search queries.
+- RSS feeds for the whole blog or any custom search query.
 - Sitemap.
-- Fragment page caching.
 
 Planned features:
-- Administrative panel.
-- New class of users: authors. Authors can write their own posts and moderate them.
-- Private comments/replies.
-- Individual user settings panel for each identified visitor.
-- Favorites for each identified visitor.
 - E-mail subscriptions for new posts/comments.
-- Password reset feature.
-- Image hosting. You hotlink some picture in your post, Mongolgue downloads it, stores locally via GridFS and
-  rewrites your link.
-- Security log.
-- Recent top commented posts section.
-- "You are here" section. Displays links to N previous/next posts.
 - Draft flag for the posts.
 - Future-publishing for the posts, so they become visible only after specified time.
+- Image hosting. You hotlink some picture in your post, Mongolgue downloads it, stores locally via GridFS and rewrites your link.
+- Private comments/replies.
+- Administrative panel.
+- New class of users: authors. Authors can write their own posts and moderate them.
+- Individual user settings panel for each identified visitor.
+- Favorites for each identified visitor.
+- Security log.
 
 == Installation and Setup:
 
@@ -46,4 +44,4 @@ This should generate some "lorem ipsum" posts with comments.
 For development or production:
 
 Sign in with Loginza using something (Gmail or Facebook will be fine).
-First user to sign in becomes admin.
+At this moment (development phase) all registered users become admins (easy to fix).
