@@ -1,6 +1,6 @@
-<div id=<%= "p#{@post.pid}" %> class="postbox" >
+<div id=<%= "p#{@post.pid}" %> class="postbox">
   <%= render @post %>
 </div>
-<div id=<%= "pc#{@post.pid}" %>>
+<div id=<%= "pc#{@post.pid}" %> class="postcomments">
   <%= render :partial => 'posts/comments' %>
 </div>

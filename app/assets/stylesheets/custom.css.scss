@@ -341,7 +341,7 @@ font-size: 1em;
 }
 
 
-.postbox {
+.postbox, .commentbox, .commentform {
   display: block;
   margin-bottom: 10px;
   background-color: $bgcolor;
@@ -382,17 +382,12 @@ font-size: 1em;
 }
 
 
-
-#postform {
+#postform, .commentform {
   padding: 10px;
 }
 
-.commentbox {
-  margin: 0px 0px 20px 40px;
-  background: $bgcolor;
-  border: 1px dotted #666;
-  padding: 5px;
-
+.commentbox, .commentform {
+  margin: 0px 0px 10px 40px;
 }
 
 .commentbox h3 {
@@ -419,15 +414,19 @@ p.moderatecomment {
   text-indent: 0;
 }
 
+p.commclientinfo {
+  margin: 0 0 0 40px;
+  padding: 5px;
+  color: white;
+  a {
+    color: white;
+  }
+}
+
+
 #clientinfo p {
   font-size: 0.8em;
 }
-
-.commentform {
-  padding: 15px;
-
-}
-
 
 h2 a:link, h2 a:active, h2 a:visited, h2 a:hover, h2 a:focus,
 h1 a:link, h1 a:active, h1 a:visited, h1 a:hover, h1 a:focus  {
