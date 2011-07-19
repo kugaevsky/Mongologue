@@ -1,4 +1,4 @@
-<% cache("#{current_user}") do %>
+<% cache("#{current_user.identity}") do %>
 <% if signed_in? %>
   <p class="commclientinfo">Signed in as <%= link_to identity_or_name(current_user), current_user.identity %> |
                   <%= link_to "Sign out", signout_path %></p>
