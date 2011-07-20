@@ -55,7 +55,8 @@ module Mongologue
 
 
     # config.cache_store = :dalli_store, 'localhost:11211', { compress: false }
-    ActionController::Base.cache_store = :mem_cache_store, "localhost"
+    # ActionController::Base.cache_store = :mem_cache_store, "localhost"
+    config.cache_store = Memcached::Rails.new("localhost:11211")
 
      # add unicode support for strings everywhere
      String.class_eval  'def downcase

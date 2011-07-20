@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+before_filter :authenticate
+before_filter :admin_user
 
   def clientinfo
     respond_to do |format|

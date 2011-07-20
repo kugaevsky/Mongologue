@@ -17,12 +17,9 @@ gem 'mongoid'
 gem 'bson_ext'
 gem 'therubyracer'
 
-gem 'memcache'
-gem 'memcached', '1.2.6'
-gem 'memcache-client'
-# gem 'dalli', :git => 'git://github.com/mperham/dalli.git'
+gem 'memcached'
 
-gem 'loginza', :git => 'git://github.com/galetahub/loginza.git'
+gem 'loginza'
 
 # Use unicorn as the web server
 # gem 'unicorn'
