@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-before_filter :authenticate
-before_filter :admin_user
+before_filter :authenticate, :only => [:index, :show]
+before_filter :admin_user, :only => [:index,:show]
 
   def clientinfo
     respond_to do |format|
-      format.html { render :partial => 'clientinfo' }
+      format.html { render 'clientinfo', :layout => false }
       format.js
     end
   end
