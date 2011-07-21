@@ -18,6 +18,9 @@ gem 'bson_ext'
 gem 'therubyracer'
 
 gem 'memcached'
+gem 'memcache-client'
+# gem 'redis'
+# gem 'redis-store', '1.0.0.rc1'
 
 gem 'loginza'
 

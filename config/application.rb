@@ -56,7 +56,8 @@ module Mongologue
 
     # config.cache_store = :dalli_store, 'localhost:11211', { compress: false }
     # ActionController::Base.cache_store = :mem_cache_store, "localhost"
-    # config.cache_store = Memcached::Rails.new("localhost:11211")
+    # config.cache_store = :redis_store
+    config.cache_store = :mem_cache_store
 
 
      # add unicode support for strings everywhere
