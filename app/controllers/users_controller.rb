@@ -4,7 +4,7 @@ before_filter :admin_user, :only => [:index,:show]
 
   def clientinfo
     respond_to do |format|
-      format.html { render 'clientinfo', :layout => false }
+      format.html { render :partial => 'clientinfo' }
       format.js
     end
   end

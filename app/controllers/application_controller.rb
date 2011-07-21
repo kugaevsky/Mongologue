@@ -13,10 +13,10 @@ class ApplicationController < ActionController::Base
   end
 
   def expire_post(post)
-    expire_fragment("p#{post.pid}@true")
-    expire_fragment("p#{post.pid}@false")
-    expire_fragment("youarehere@p#{post.pid}")
+    expire_fragment("p#{post.pid}")
     expire_fragment("header@#{page_name}")
+    expire_cloud
+    expire_sitemap
     begin
       memc_purge(post)
     rescue
@@ -26,7 +26,6 @@ class ApplicationController < ActionController::Base
   def expire_comments(post)
     expire_fragment("pc#{post.pid}@true")
     expire_fragment("pc#{post.pid}@false")
-    expire_fragment("pcc#{post.pid}")
     begin
       memc_purge(post)
       memc_purge_index
@@ -37,7 +36,6 @@ class ApplicationController < ActionController::Base
   def expire_cloud
     expire_fragment('tagscloud')
     expire_fragment('sitemap')
-    expire_fragment('topposts')
   end
 
   def expire_sitemap

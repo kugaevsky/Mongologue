@@ -1,5 +1,6 @@
 <% if !signed_in? %>
 <div id="greeting">
+  Not signed in (anonymous)<br>
   <%= "<a href='/signin?rt=#{session[:return_to]}'>Sign in</a>".html_safe %>
 </div>
 </div>
@@ -11,7 +12,7 @@
     <%= "<a href='/signout'>Sign out</a>".html_safe %>
   </div>
   <div id="passwordinfo">
-    <%= password_status_text(current_user) %>
+    <%= password_status_text(current_user) if current_user.admin? %>
   </div>
   <% end %>
 <% end %>

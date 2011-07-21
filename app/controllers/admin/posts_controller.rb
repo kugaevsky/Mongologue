@@ -100,7 +100,6 @@ class Admin::PostsController < ApplicationController
     respond_to do |format|
       if @post.update_attributes(params[:post])
         expire_post(@post)
-        expire_cloud
         format.html { redirect_back_or root_path }
         # format.xml  { head :ok }
         format.js   { render 'posts/show.js.erb' }
@@ -116,7 +115,6 @@ class Admin::PostsController < ApplicationController
   # DELETE /admin/posts/1.xml
   def destroy
     @post.destroy
-    expire_cloud
     expire_post_with_comments(@post)
     expire_action :action => :index
     respond_to do |format|
