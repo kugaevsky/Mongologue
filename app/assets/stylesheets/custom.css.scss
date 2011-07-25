@@ -1,4 +1,4 @@
-$pgcolor: darkgray;
+$pgcolor: #FFFFFF;
 $bgcolor: #FFFFFF;
 $hlcolor: #BD3B08;
 $fmcolor: #eeeeee;
@@ -48,8 +48,8 @@ body {
   padding: 0;
   margin: 0;
   background-color: $pgcolor;
-  background-image: url( $bgfile4 );
-  background-repeat: repeat;
+//  background-image: url( $bgfile4 );
+//  background-repeat: repeat;
 
 }
 
@@ -366,8 +366,8 @@ h1:first-letter  { font-size: 145%;}
   background-color: $bgcolor;
   border: 1px solid $hlcolor;
   border-radius: $borderradius;
-  background-image: url( $bgfile3 );
-  background-repeat: repeat;
+  // background-image: url( $bgfile3 );
+  // background-repeat: repeat;
 
 
 }
