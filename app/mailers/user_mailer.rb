@@ -1,9 +1,9 @@
 class UserMailer < ActionMailer::Base
-  default to: "daekrist@gmail.com"
+  default from: "root@daekrist.net"
 
   def new_post_email(emails,post)
     @post = post
-    mail(:bcc => emails.split(","),
+    mail(:to => emails.split(","),
          :subject => "New post: '#{post.title}'")
   end
 
@@ -11,7 +11,7 @@ class UserMailer < ActionMailer::Base
   def new_comment_email(emails,post,comment)
     @post = post
     @comment = comment
-    mail(:bcc => emails.split(","),
+    mail(:to => emails.split(","),
          :subject => "#{comment.name} commented '#{post.title}'")
   end
 
@@ -20,7 +20,7 @@ class UserMailer < ActionMailer::Base
     @comment = comment
     @reply = comment.reply
     @reply_name = comment.reply_name
-    mail(:bcc => emails.split(","),
+    mail(:to => emails.split(","),
          :subject => "#{comment.reply_name} replied for '#{post.title}'")
 
   end
