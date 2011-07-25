@@ -1,5 +1,4 @@
 class UserMailer < ActionMailer::Base
-  default from: "blog@daekrist.net"
   default to: "daekrist@gmail.com"
 
   def new_post_email(emails,post)
