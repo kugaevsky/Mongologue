@@ -17,7 +17,7 @@ gem 'mongoid'
 gem 'bson_ext'
 gem 'therubyracer'
 
-gem 'memcached'
+gem 'memcached', '1.2.6'
 gem 'memcache-client'
 # gem 'redis'
 # gem 'redis-store', '1.0.0.rc1'

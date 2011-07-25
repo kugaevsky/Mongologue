@@ -44,6 +44,7 @@ body {
   font-family: Cambria, Georgia, "Times New Roman", serif;
   font-size-adjust: 0.467;
   font-size: 100%;
+  line-height: 150%;
   padding: 0;
   margin: 0;
   background-color: $pgcolor;
@@ -51,7 +52,6 @@ body {
   background-repeat: repeat;
 
 }
-
 
 p, h1, h2, h3, a, img, input, textarea, div {
      padding: 0;
@@ -72,15 +72,6 @@ h1 {
   line-height: 1.6em;
   word-spacing: 1px;
 }
-
-h2 {
-  font-size: 140%;
-  font-weight: normal;
-  line-height: 1.6em;
-  word-spacing: 1px;
-  font-variant: small-caps;
-}
-
 
 h1:first-letter  { font-size: 145%;}
 
@@ -327,16 +318,24 @@ h1:first-letter  { font-size: 145%;}
 }
 
 
-h3 {
-font-size: 1em;
-}
-
 .post, .comment {
   margin: 0 15px 15px 15px;
 }
 
 .post h2 {
-  margin: 10px 0 10px 0;
+  font-size: 140%;
+  font-weight: bold;
+  line-height: 1.6em;
+  word-spacing: 1px;
+  margin: 10px 0 10px 15px;
+  font-variant: small-caps;
+}
+
+.post h3 {
+  font-size: 115%;
+  font-weight: bold;
+  line-height: 1.6em;
+  margin-left: 15px;
 }
 
 
@@ -360,7 +359,7 @@ font-size: 1em;
 .postinfo {
   display: block;
   font-size: 0.8em;
-  margin: 20px 0 5px 0;
+  margin: 20px 0 5px 15px;
 }
 
 .postpanel {
@@ -538,3 +537,12 @@ input[type=submit] {
   background: $bgcolor;
   text-align: center;
 }
+
+b, strong, em {
+  font-weight: bold;
+}
+
+i {
+  font-style: italic;
+}
+
