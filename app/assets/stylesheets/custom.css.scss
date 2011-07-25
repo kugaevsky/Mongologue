@@ -428,10 +428,18 @@ p.commclientinfo {
 
 h2 a:link, h2 a:active, h2 a:visited, h2 a:hover, h2 a:focus,
 h1 a:link, h1 a:active, h1 a:visited, h1 a:hover, h1 a:focus  {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 a:hover { background-color:$hlcolor; }
+
+.post p a {
+  color: $hlcolor;
+}
+
+.post p a:hover {
+  color: white;
+}
 
 .rightbutton {
   width: 100%;
