@@ -1,6 +1,6 @@
 $pgcolor: darkgray;
 $bgcolor: #FFFFFF;
-$hlcolor: #DA7C0C;
+$hlcolor: #BD3B08;
 $fmcolor: #eeeeee;
 $atcolor: #222222;
 $ftcolor: #000000;
@@ -53,6 +53,7 @@ body {
 
 }
 
+
 p, h1, h2, h3, a, img, input, textarea, div {
      padding: 0;
      margin: 0;
@@ -60,10 +61,16 @@ p, h1, h2, h3, a, img, input, textarea, div {
 
 
 a:link, a:active, a:visited {
-  color: $fontcolor;
+  color: $hlcolor;
   background-color: inherit;
   text-decoration: underline;
 }
+
+a:hover {
+  color: white;
+  background-color:$hlcolor;
+}
+
 
 h1 {
   font-weight: normal;
@@ -126,6 +133,7 @@ h1:first-letter  { font-size: 145%;}
   height: 50px;
   text-decoration: none;
   background: transparent;
+  color: $fontcolor;
 }
 
 #logopic {
@@ -247,6 +255,7 @@ h1:first-letter  { font-size: 145%;}
   width: 113px;
   height: $rssheight;
   background: transparent;
+  color: $fontcolor;
 
 }
 
@@ -263,7 +272,13 @@ h1:first-letter  { font-size: 145%;}
   margin-left: 10px;
   padding: 5px;
 
+  a {
+    color: $fontcolor;
+  }
+
 }
+
+
 
 #greeting, #passwordinfo {
 
@@ -329,7 +344,13 @@ h1:first-letter  { font-size: 145%;}
   word-spacing: 1px;
   margin: 10px 0 10px 15px;
   font-variant: small-caps;
+  a {
+    color: $fontcolor;
+  }
+
 }
+
+
 
 .post h3 {
   font-size: 115%;
@@ -429,16 +450,6 @@ p.commclientinfo {
 h2 a:link, h2 a:active, h2 a:visited, h2 a:hover, h2 a:focus,
 h1 a:link, h1 a:active, h1 a:visited, h1 a:hover, h1 a:focus  {
   text-decoration: underline;
-}
-
-a:hover { background-color:$hlcolor; }
-
-.post p a {
-  color: $hlcolor;
-}
-
-.post p a:hover {
-  color: white;
 }
 
 .rightbutton {
