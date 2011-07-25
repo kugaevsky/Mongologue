@@ -59,7 +59,6 @@ module Mongologue
     # config.cache_store = :redis_store
     config.cache_store = :mem_cache_store
 
-
      # add unicode support for strings everywhere
      String.class_eval  'def downcase
          Unicode::downcase(self)

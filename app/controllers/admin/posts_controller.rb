@@ -81,6 +81,7 @@ class Admin::PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         expire_cloud
+        UserMailer.new_post_email([],@post).deliver
         format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
         # format.xml  { render :xml => @post, :status => :created, :location => @post }
         format.js { render 'create.js.erb' }
