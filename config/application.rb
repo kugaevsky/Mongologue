@@ -58,6 +58,8 @@ module Mongologue
     # ActionController::Base.cache_store = :mem_cache_store, "localhost"
     # config.cache_store = :redis_store
     config.cache_store = :mem_cache_store
+    #config.cache_store = :memcached_store, '127.0.0.1:11211', { :no_block => true, :buffer_requests => true,
+    #                                        :noreply => true, :binary_protocol => false }
 
      # add unicode support for strings everywhere
      String.class_eval  'def downcase

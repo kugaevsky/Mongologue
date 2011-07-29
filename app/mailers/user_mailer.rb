@@ -1,10 +1,10 @@
 class UserMailer < ActionMailer::Base
-  default from: 'Daekrist.Net Blog <blog@daekrist.net>'
+  default from: 'Daekrist.Net <blog@daekrist.net>'
 
   def new_post_email(emails,post)
     @post = post
     mail(:to => emails.split(","),
-         :subject => "New post: '#{post.title}'")
+         :subject => "New post: '#{post.title.html_safe}'")
   end
 
 
@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
     @post = post
     @comment = comment
     mail(:to => emails.split(","),
-         :subject => "#{comment.name} commented '#{post.title}'")
+         :subject => "#{comment.name} commented '#{post.title.html_safe}'")
   end
 
   def new_reply_email(emails,post,comment)
@@ -21,7 +21,7 @@ class UserMailer < ActionMailer::Base
     @reply = comment.reply
     @reply_name = comment.reply_name
     mail(:to => emails.split(","),
-         :subject => "#{comment.reply_name} replied for '#{post.title}'")
+         :subject => "#{comment.reply_name} replied for '#{post.title.html_safe}'")
 
   end
 

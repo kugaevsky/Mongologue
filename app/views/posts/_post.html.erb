@@ -1,15 +1,18 @@
 <% cache("p#{post.pid}") do %>
   <div class="post">
     <h2><%= link_to_post(post) %></h2>
+
+
     <%= post.html_content.html_safe %>
     <div class="postinfo" title="<%= post.created_at %>"><%= post.created_at %><br>
     Tags: <%= tags_list(post.tags) %></div>
   </div>
 <% end %>
 <div class="postpanel">
+<div style="float:left; width:55px; height: 20px; margin: 0 0 0 15px; display:block;"><g:plusone size="small"></g:plusone></div>
 <% if admin_url? %>
   <div class="postadm">
-  <%= link_to_edit(post) +' | '+ link_to_delete(post) %>
+  | <%= link_to_edit(post) +' | '+ link_to_delete(post) %>
   </div>
 <% end %>
 <%= render :partial => 'posts/commcounter', :locals => { :post =>post } %>

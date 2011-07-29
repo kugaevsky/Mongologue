@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
   def expire_cloud
     expire_fragment('tagscloud')
     expire_fragment('sitemap')
+    expire_fragment('topposts')
   end
 
   def expire_sitemap

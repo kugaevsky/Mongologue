@@ -1,7 +1,7 @@
-New reply for the entry '<%= @post.title %>.
+New reply for the entry '<%= @post.title.html_safe %>.
 
 <%= @reply_name %> replied to <%= @comment.name %>:
 <%= @reply %>
 
 > <%= @comment.name %> said:
-> <%= @comment.content %>
+> <%= @comment.content.html_safe %>
