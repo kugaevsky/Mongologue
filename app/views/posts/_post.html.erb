@@ -9,7 +9,7 @@
   </div>
 <% end %>
 <div class="postpanel">
-<div style="float:left; width:55px; height: 20px; margin: 0 0 0 15px; display:block;"><g:plusone size="small"></g:plusone></div>
+<div style="float:left; width:55px; height: 20px; margin: 0 0 0 15px; display:block;"><%= gplus_post(post) %></div>
 <% if admin_url? %>
   <div class="postadm">
   | <%= link_to_edit(post) +' | '+ link_to_delete(post) %>

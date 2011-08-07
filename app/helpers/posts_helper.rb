@@ -36,4 +36,8 @@ module PostsHelper
     tlist.sub(', ','').html_safe
   end
 
+  def gplus_post(post)
+    "<g:plusone size='small' href='#{polymorphic_url(post)}'></g:plusone>".html_safe
+  end
+
 end
