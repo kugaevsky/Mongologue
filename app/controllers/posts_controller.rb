@@ -41,19 +41,15 @@ class PostsController < ApplicationController
     @title = @posts.first.title if @posts.size!=0
 
     respond_to do |format|
-      format.html { # expires_in 10.seconds, :public => true if !signed_in?;
-                    # expires_in 0.seconds, :public => false if signed_in?;
-                    render :html => @posts;
+      format.html { render :html => @posts;
                     memc_write
                    }
       format.js
-      format.rss  { # expires_in 1.hour, :public => true if !signed_in?
-                    response.headers["Content-Type"] = "application/xml; charset=utf-8"
+      format.rss  { response.headers["Content-Type"] = "application/xml; charset=utf-8"
                     render :rss => @posts
                     memc_write }
 
       format.json { response.headers["Content-Type"] = "application/json; charset=utf-8"
-                    #expires_in 1.hour, :public => true;
                     render :json => @posts
                     memc_write }
     end
@@ -62,9 +58,6 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.xml
   def show
-
-    expires_in 10.seconds, :public => true if !signed_in?;
-    expires_in 0.seconds, :public => false if signed_in?;
 
     @title = @post.title
 

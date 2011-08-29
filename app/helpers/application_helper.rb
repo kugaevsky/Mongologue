@@ -1,6 +1,6 @@
 #encoding: utf-8
 
-require '/home/mike/rails/fasttypo/fasttypo'
+require '/Users/Mike/dev/fasttypo/fasttypo'
 
 module ApplicationHelper
   include FastTypo

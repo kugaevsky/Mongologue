@@ -23,7 +23,7 @@ class Comment
   after_destroy :dec_counter
   attr_accessible :content
   before_save :render_text
-  embedded_in :post, :inverse_of => :comments, :index => true
+  embedded_in :post, :inverse_of => :comments
 
   def render_text
      self.content=sanitize(content,:tags =>%w(i b)) # add auto_link later

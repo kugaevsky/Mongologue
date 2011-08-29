@@ -1,5 +1,5 @@
 #encoding: utf-8
-require '/home/mike/rails/fasttypo/fasttypo'
+require '/Users/Mike/dev/fasttypo/fasttypo'
 
 $KCODE = 'u' if RUBY_VERSION < '1.9.0'
 
