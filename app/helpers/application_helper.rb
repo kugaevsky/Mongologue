@@ -7,7 +7,7 @@ module ApplicationHelper
 
   # Return a title on a per-page basis.
   def page_title
-    base_title = "☢ Mongologue"
+    base_title = APP_CONFIG[:base_title]
     if @title.nil?
       base_title
     else

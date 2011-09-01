@@ -1,0 +1,10 @@
+default:
+  base_title: "☢ Mongologue"
+  mailer_from: 'Daekrist.Net <blog@daekrist.net>'
+production:
+  
+
+development:
+  
+test:
+  

@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: 'Daekrist.Net <blog@daekrist.net>'
+  default from: APP_CONFIG[:mailer_from]
 
   def new_post_email(emails,post)
     @post = post
