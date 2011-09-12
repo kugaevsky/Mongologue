@@ -5,9 +5,7 @@ class PostsController < ApplicationController
 
   before_filter :store_location
   before_filter :find_post, :except => [:index, :sitemap]
-  #caches_action :index, :unless => :authorized_admin?, :cache_path => Proc.new { |c| c.params }
-  #caches_action :show, :unless => :authorized_admin?, :cache_path => Proc.new { |c| c.params }
-
+  
   def find_post
     @post = Post.where(:pid => params[:id]).first || not_found
   end
