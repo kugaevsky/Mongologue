@@ -23,6 +23,7 @@ gem 'memcache-client'
 # gem 'redis-store', '1.0.0.rc1'
 
 gem 'loginza'
+gem 'fasttypo', :git => "git://github.com/daekrist/fasttypo.git"
 
 # Use unicorn as the web server
 # gem 'unicorn'

@@ -1,7 +1,5 @@
 #encoding: utf-8
 
-require '/Users/Mike/dev/fasttypo/fasttypo'
-
 module ApplicationHelper
   include FastTypo
 
