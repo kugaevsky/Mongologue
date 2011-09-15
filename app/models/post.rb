@@ -138,50 +138,50 @@ class Post
   def self.my_search(s)
     any_flag = false
     if !s.blank?
-     terms = s.gsub(/ *, */,',').gsub(/[^!*0-9a-zа-яё ,]+/,'').strip.downcase.split(',')
-     my_tags = Tag.only(:id).map(&:id).to_set
+      terms = s.gsub(/ *, */,',').gsub(/[^!*0-9a-zа-яё ,]+/,'').strip.downcase.split(',')
+      my_tags = Tag.only(:id).map(&:id).to_set
 
-     crit = Post.all
-     keywords_and = Array.new
-     keywords_not = Array.new
-     tags_and = Array.new
-     tags_not = Array.new
+      crit = Post.all
+      keywords_and = Array.new
+      keywords_not = Array.new
+      tags_and = Array.new
+      tags_not = Array.new
 
-     terms.each do |t|
-       is_keyword = false
-       is_tag = false
-       is_not = false
-       is_like = false
+      terms.each do |t|
+        is_keyword = false
+        is_tag = false
+        is_not = false
+        is_like = false
 
-       is_not = true if t.start_with?("!")
-       if t.end_with?("*")
+        is_not = true if t.start_with?("!")
+        if t.end_with?("*")
          is_keyword = true
          is_like = true
-       end
+        end
 
-       t.gsub!(/[!*]/,'')
+        t.gsub!(/[!*]/,'')
 
-       if my_tags.include?(t)
+        if my_tags.include?(t)
          is_tag = true unless is_keyword
-       else
+        else
          is_keyword = true
-       end
+        end
 
-       t= /^#{t}/ if is_like
+        t= /^#{t}/ if is_like
 
-       if is_keyword
+        if is_keyword
          if is_not
            keywords_not << t
          else
            keywords_and << t
          end
-       else
+        else
          if is_not
            tags_not << t
          else
            tags_and << t
          end
-       end
+        end
      end
 
      if !any_flag

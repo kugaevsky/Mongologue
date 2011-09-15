@@ -191,7 +191,7 @@ module ApplicationHelper
       end
     end
 
-    line.replace(complex_format(line))
+    line.replace(complex_format(line,{},options))
 
     line.gsub!("\n","")
     line.gsub!("\r","")

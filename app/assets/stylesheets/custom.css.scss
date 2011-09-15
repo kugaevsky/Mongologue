@@ -342,7 +342,7 @@ h1:first-letter  { font-size: 145%;}
   font-weight: bold;
   line-height: 1.6em;
   word-spacing: 1px;
-  margin: 10px 0 10px 15px;
+  margin: 10px 0 10px 0px;
   font-variant: small-caps;
   a {
     color: $fontcolor;
@@ -356,7 +356,7 @@ h1:first-letter  { font-size: 145%;}
   font-size: 115%;
   font-weight: bold;
   line-height: 1.6em;
-  margin-left: 15px;
+  margin-left: 0px;
 }
 
 
@@ -374,20 +374,20 @@ h1:first-letter  { font-size: 145%;}
 
 .post p, .comment p {
   text-indent: 30px;
-  margin: 0 0 0 15px;
+  margin: 0 0 0 0;
 }
 
 .postinfo {
   display: block;
   font-size: 0.8em;
-  margin: 20px 0 5px 15px;
+  margin: 20px 0 5px 0;
 }
 
 .postpanel {
   display: block;
-  width: $contentwidth - 35px;
+  width: $contentwidth - 20px;
   height: 35px;
-  margin: 0 15px 0 15px;
+  margin: 0 0 0 0;
 }
 
 .postadm {
