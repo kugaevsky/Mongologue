@@ -22,17 +22,17 @@ class Post
   validates_length_of :tags_as_string, :maximum => 200
 
   embeds_many :comments, :inverse_of => :post
-  index :pid
-  index :title
-  index "comments.pid"
+  index ({   pid: 1 })
+  index ({ title: 1})
+  index "comments.pid" => 1
 
-  index :tags
-  index :keywords
+  index ({tags: 1})
+  index ({keywords: 1})
 
-  index :created_at
-  index :updated_at
-  index "comments.created_at"
-  index "comments.updated_at"
+  index ({created_at: 1})
+  index ({updated_at: 1})
+  index "comments.created_at" => 1
+  index "comments.updated_at" => 1
   before_save :process_tags_and_keywords
   before_save :render_content
   after_save :rebuild_tags
@@ -226,8 +226,15 @@ class Post
       return count;
       }"
 
-      tmpcloud=Post.collection.map_reduce(map,reduce, :raw => true, :out => 'tagcloud' )
-      Mongoid.master.collection('tagcloud').create_index([["value", Mongo::DESCENDING]])
+      tmpcloud=Post.map_reduce(map, reduce).out(replace: "tagcloud")
+      # Force db hit (wtf?)
+      tmpcloud.each do |document|
+       # p document
+      end
+
+      db = Mongoid::Sessions.default
+      tagcloud = db[:tagcloud]
+      tagcloud.indexes.create(value: -1)
     end
 
 end

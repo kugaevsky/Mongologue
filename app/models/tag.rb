@@ -1,8 +1,7 @@
 class Tag
   include Mongoid::Document
-  self.collection_name = 'tagcloud'
-  identity :type => String
+  field :_id, type: String
   field :value, :type => Integer
-  cache
+  store_in collection: "tagcloud"
 
 end

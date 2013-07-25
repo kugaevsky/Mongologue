@@ -54,4 +54,5 @@ Mongologue::Application.configure do
 
   # Do not compress assets
   config.assets.compress = false
+  
 end

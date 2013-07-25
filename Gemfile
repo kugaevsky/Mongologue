@@ -1,20 +1,22 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+gem 'rails', '= 3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 
-# Asset template engines
-gem 'sass-rails'
-gem 'coffee-script'
-gem 'uglifier'
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-script'
+  gem 'uglifier'
+end
+
 gem 'unicode'
 
 gem 'jquery-rails'
-gem 'mongoid'
-gem 'bson_ext'
+gem 'mongoid', '3.0.17'
+# gem 'bson_ext'
 gem 'therubyracer'
 
 gem 'memcached', '1.2.6'

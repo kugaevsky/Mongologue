@@ -3,8 +3,8 @@ class Sequence
   field :parent
   field :object
 
-  index :parent
-  index :object
+  index ({parent: 1})
+  index ({object: 1})
 
   def self.generate_pid(parent,object)
     @seq=where(:parent => parent, :object => object).first || 

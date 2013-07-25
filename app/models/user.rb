@@ -4,7 +4,7 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   field :admin, :type => Boolean
-  field :identity
+  field :identity, :type => String
   field :email
   field :photo
   field :nickname
@@ -16,9 +16,9 @@ class User
   field :salt
   field :settings, :type => Hash
 
-  index :remember_token, :unique => true
-  index :identity, :unique => true
-  index :email
+  index({ remember_token: 1 }, { unique: true })
+  index({ identity: 1 }, { unique: true })
+  index({ email: 1 }, {unique: true})
 
   attr_accessor :password
 

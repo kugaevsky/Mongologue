@@ -4,6 +4,7 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_resource/railtie"
 require "rails/test_unit/railtie"
+require "sprockets/railtie"
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -45,11 +46,11 @@ module Mongologue
     config.filter_parameters += [:password]
 
     config.assets.enabled = true
-    config.assets.prefix = "/assets"
+    # config.assets.prefix = "/assets"
 
-    Mongoid.configure do |config|
-      config.logger = nil
-    end
+    # Mongoid.configure do |config|
+    #  config.logger = nil
+    # end
 
     # config.mongoid.preload_models = false
 
