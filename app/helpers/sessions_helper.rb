@@ -67,8 +67,8 @@ module SessionsHelper
   end
 
    def identity_or_name(user)
-    if user['name'].nil?
-      user['identity']
+    if user[:name].nil?
+      user[:identity]
     elsif user['name']['full_name'].nil?
       "#{user['name']['first_name']} #{user['name']['last_name']}"
     else

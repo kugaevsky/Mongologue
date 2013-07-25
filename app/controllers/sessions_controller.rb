@@ -10,7 +10,7 @@
       if data = Loginza.user_data(params[:token])
         session[:return_to] = params[:rt]
         # render :inline => "<%= 1+2 %>"
-        user = User.find_or_create_by(:dentity => data["identity"])
+        user = User.find_or_create_by(:identity => data["identity"])
         # First user to sign in becomes blog admin
         if User.count == 1
           user.admin = true;
