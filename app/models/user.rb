@@ -5,11 +5,11 @@ class User
   include Mongoid::Timestamps
   field :admin, :type => Boolean
   field :identity, :type => String
-  field :email
-  field :photo
-  field :nickname
-  field :uid
-  field :photo
+  field :email, :type => String
+  field :photo, :type => String
+  field :nickname, :type => String
+  field :uid, :type => String
+  field :photo, :type => String
   field :remember_token
   field :notes
   field :encrypted_password

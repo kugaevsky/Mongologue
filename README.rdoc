@@ -1,47 +1,28 @@
 == Welcome to Mongologue
 
 Ok, this is my first attempt to create something using Ruby on Rails after "Ruby on Rails Tutorial: Learn by example" book and I didn't came up with something better than Yet Another Blog Engine.
-Well, the problem is - this is NOT yet another blog engine.
 
-It is way better.
+Uses MongoDB+Mongoid to store all its data.
 
-This blog uses MongoDB+Mongoid combination to store all its data.
 Authorization handled with Loginza gem (https://github.com/galetahub/loginza).
-Ajax magic and effects (there are lot of them) are sponsored by jQuery library.
 
 Main features:
-- Uses bleeding edge Ruby on Rails 3.1 engine (so you're getting all these new fancy things: asset pipelines, SCSS and CoffeeScript out of the box).
-- Extremely fast: Uses C-extension for automatic text typography (fasttypo) and supports memcached (sample nginx configuration included).
+
+- Uses Ruby on Rails 3.2 framework.
+- Uses fast C-extension for automatic text typography (fasttypo) and supports memcached (sample nginx configuration included).
 - Everything is UTF-8.
 - Fast ajaxy interface with inplace editing.
 - Loginza (OpenID) authorization provider support with optional password protection if you feel paranoid.
 - Tags and autotags. Autotags automatically tag each post with year, month, days of week and month,
   post size (tiny/small/big/huge) and few other things. Posts with no user tags get "tagless".
-- Simple yet efficient built-in search engine to perform fulltext search. Distinguishes tags and keywords in your search query, allows to use "not includes" (!word) and "like" (word*) symbols.
+- Simple built-in search engine to perform fulltext search. Distinguishes tags and keywords in your search query, allows to use "not includes" (!word) and "like" (word*) symbols.
 - Tags autosuggestion as you type them.
 - RSS feeds for the whole blog or any custom search query.
 - Sitemap.
-
-Planned features:
-- E-mail subscriptions for new posts/comments.
-- Draft flag for the posts.
-- Future-publishing for the posts, so they become visible only after specified time.
-- Image hosting. You hotlink some picture in your post, Mongolgue downloads it, stores locally via GridFS and rewrites your link.
-- Private comments/replies.
-- Administrative panel.
-- New class of users: authors. Authors can write their own posts and moderate them.
-- Individual user settings panel for each identified visitor.
-- Favorites for each identified visitor.
-- Security log.
-
-== Installation and Setup:
 
 For development and looking around:
 
 Populate new mongo database: rake db:drop, rake db:seed, rake db:create_indexes.
 This should generate some "lorem ipsum" posts with comments.
-
-For development or production:
-
-Sign in with Loginza using something (Gmail or Facebook will be fine).
-At this moment (development phase) all registered users become admins (easy to fix).
+First user to sign in (or all of them atm, don't remember) becomes an admin.
+Check /admin route for editing interface.
