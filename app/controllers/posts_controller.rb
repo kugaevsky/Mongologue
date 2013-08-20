@@ -4,12 +4,8 @@ class PostsController < ApplicationController
   include SessionsHelper
 
   before_filter :store_location
-  before_filter :find_post, :except => [:index, :sitemap]
-  skip_before_filter :get_top_posts, except: :index
-
-  def find_post
-    @post = Post.where(:pid => params[:id]).first || not_found
-  end
+  before_filter :get_post, except: [:index, :sitemap]
+  skip_before_filter :get_top_posts, only: :show
 
   def items_per_page
     if request.format.html? or request.format.js?
@@ -57,11 +53,8 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.xml
   def show
-
     @title = @post.title
-
     @new_comment = Comment.new
-
     respond_to do |format|
       format.html { render :html => @post;
                     memc_write
@@ -99,4 +92,9 @@ class PostsController < ApplicationController
     end
   end
 
+private
+
+  def get_post
+    @post = Post.where(:pid => params[:id]).first || not_found
+  end
 end

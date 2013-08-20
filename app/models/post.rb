@@ -200,6 +200,16 @@ class Post
     end
   end
 
+
+## NEW ERA!
+
+  def nearby_posts(winsize)
+    pidmod = pid < (winsize/2).round ? ((winsize/2+1).round-pid) : 0
+    Post.only(:pid, :title, :created_at).
+         where(:pid.lte => pid+(winsize/2).round+pidmod ).
+         desc(:created_at).limit(winsize)
+  end
+
   protected
 
     def assign_pid
@@ -236,5 +246,4 @@ class Post
       tagcloud = db[:tagcloud]
       tagcloud.indexes.create(value: -1)
     end
-
 end

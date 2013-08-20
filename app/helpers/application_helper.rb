@@ -240,24 +240,13 @@ module ApplicationHelper
     link_to_post(post) + " (#{post.comments_counter.to_i})"
   end
 
-  def you_are_here(post, winsize=10)
-    mystr=String.new
-
-    pidmod = post.pid < (winsize/2).round ? ((winsize/2+1).round-post.pid) : 0
-
-    posts = Post.only(:pid, :title, :created_at).\
-                where(:pid.lte => post.pid+(winsize/2).round+pidmod ).\
-                order_by([:created_at, :desc]).limit(winsize).to_ary
-
-    posts.each do |m|
-      if m.pid == post.pid
-        mystr=mystr+"&rarr; <b>#{m.title}</b><br />"
-      else
-        mystr=mystr+"#{link_to_post(m)}<br />"
-      end
+  def you_are_here(post, winsize)
+    result = ""
+    post.nearby_posts(winsize).each do |m|
+      result << ( m.pid == post.pid ? "&rarr; <b>#{m.title}</b>" : "#{link_to_post(m)}" )
+      result << "<br />"
     end
-    mystr.html_safe
-
+    result.html_safe
   end
 
 

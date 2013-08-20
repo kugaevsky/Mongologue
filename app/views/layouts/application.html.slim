@@ -19,7 +19,7 @@ html
         form#searchbox accept-charset="UTF-8" action="/" method="get" autocomplete="off"
           input#search name="s" type="text" value=(mainpage? ? params[:s] : '') placeholder="Enter comma-separated words and press Enter."
           #fakesearch
-          #rss: a href="/feed.rss#{'?s=#{params[:s]}' if params[:s]}" title="RSS feed"
+          #rss: a href="/feed.rss#{"?s=#{params[:s]}" if params[:s]}" title="RSS feed"
             img src="/images/rss-20px.png"
             p
               'Posts:
@@ -43,7 +43,7 @@ html
 
           - else
             #youareherebutton.button.rightbutton You are here
-            #youarehere: p = you_are_here(@post,10)
+            #youarehere: p = you_are_here(@post, params[:winsize]||10)
 
           #tagsbutton.button.rightbutton All tags
           = cache('tagscloud') do
