@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '= 3.2.12'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -11,6 +11,8 @@ group :assets do
   gem 'coffee-script'
   gem 'uglifier'
 end
+
+gem 'slim-rails'
 
 gem 'unicode'
 
