@@ -42,4 +42,8 @@ group :development, :test do
   # Pretty printed test output
   gem 'turn', :require => false
   gem 'faker'
+
+  # Code style and smell
+  gem 'brakeman', require: false
+  gem 'rails_best_practices', require: false
 end
