@@ -85,17 +85,11 @@ module ApplicationHelper
   end
 
   def mainpage?
-    if controller.controller_name == "posts" and controller.action_name == "index"
-      return true
-    end
-    return false
+    controller.controller_name == "posts" && controller.action_name == "index"
   end
 
   def showpostpage?
-    if controller.controller_name == "posts" and controller.action_name == "show"
-      return true
-    end
-    return false
+    controller.controller_name == "posts" && controller.action_name == "show"
   end
 
   def cache_unless_admin *args

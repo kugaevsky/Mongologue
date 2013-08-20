@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
 
-  include ApplicationHelper
-  include SessionsHelper
-  include PostsHelper
-  include CommentsHelper
   protect_from_forgery
 
   def expire_post_with_comments(post)
