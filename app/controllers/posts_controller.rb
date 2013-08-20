@@ -7,29 +7,21 @@ class PostsController < ApplicationController
   before_filter :get_post, except: [:index, :sitemap]
   skip_before_filter :get_top_posts, only: :show
 
-  def items_per_page
-    if request.format.html? or request.format.js?
-      return 15
-    else
-      return 20
-    end
-  end
-
   # GET /posts
   # GET /posts.xml
   def index
-    start_post = Post.where(:pid => params[:p]).first || not_found if params[:p]
-
     # We have new post form embedded into index
     @post=Post.new
 
+    start_post = Post.where(:pid => params[:p]).first || not_found if params[:p]
+
+    @posts = Post.without(:comments).desc(:created_at)
+
     # Ok, fulltext search goes here
-    @posts = Post.without(:comments)
     @posts = @posts.my_search(params[:s]) if params[:s]
-    @posts = @posts.order_by([:created_at, :desc])
     @posts = @posts.where(:created_at.lte => start_post.created_at) if params[:p]
     @posts_count = @posts.count
-    @posts = @posts.limit(items_per_page+1).to_ary
+    @posts = @posts.limit(items_per_page+1)
 
     @next_page_pid = @posts.size!= items_per_page+1 ? nil : @posts.last.pid
 
@@ -93,6 +85,11 @@ class PostsController < ApplicationController
   end
 
 private
+
+  def items_per_page
+    return 15 if request.format.html? or request.format.js?
+    20
+  end
 
   def get_post
     @post = Post.where(:pid => params[:id]).first || not_found

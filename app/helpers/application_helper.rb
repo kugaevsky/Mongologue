@@ -15,33 +15,21 @@ module ApplicationHelper
 
   def memc_write(time = 600)
     CACHE.clone
-
-    begin
-      @tstr="#{response.body}"
-      CACHE.set("blog"+request.fullpath,@tstr,time,false);
-    rescue
-    end
-
-    if request.fullpath=="/" or request.fullpath.start_with?("/?")
-      begin
-        aindex=CACHE.get("blog::index")
-      rescue
-        aindex=Set.new
-      end
-        if !aindex.include?(request.fullpath)
-          aindex << "blog"+request.fullpath;
-          CACHE.set("blog::index",Marshal.dump(aindex));
+      req_fullpath = request.fullpath
+      CACHE.set("blog#{req_fullpath}", response.body, time, false)
+      if req_fullpath == "/" || req_fullpath.start_with?("/?")
+        aindex=CACHE.get("blog::index") rescue aindex = Set.new
+        if !aindex.include?(req_fullpath)
+          aindex << "blog" + req_fullpath
+          CACHE.set("blog::index", Marshal.dump(aindex))
         end
-    end
+      end
     CACHE.quit
   end
 
   def memc_purge(post)
     CACHE.clone
-    begin
-      CACHE.delete("blog/posts/#{post.pid}");
-    rescue
-    end
+      CACHE.delete("blog/posts/#{post.pid}") rescue nil
     CACHE.quit
   end
 
@@ -51,7 +39,7 @@ module ApplicationHelper
         aindex=CACHE.get("blog::index")
         CACHE.delete("blog::index")
         aindex.each do |item|
-          CACHE.delete(item);
+          CACHE.delete(item)
         end
       rescue
       end
@@ -61,15 +49,9 @@ module ApplicationHelper
 
   # for caching
   def page_name
-    if @posts.nil? || @posts.first.nil?
-      if @post.nil?
-        return "none"
-      else
-        return "p#{@post.pid}"
-      end
-    else
-      return "p#{@posts.first.pid}"
-    end
+    return "none" if @post.nil?
+    return "p#{@post.pid}" if @posts.first.nil?
+    "p#{@posts.first.pid}"
   end
 
   def prefix
