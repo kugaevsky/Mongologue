@@ -1,0 +1,73 @@
+doctype 5
+html
+  head
+    meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+    title = page_title
+    = stylesheet_link_tag 'application', media: 'screen'
+    = javascript_include_tag 'application'
+
+    = csrf_meta_tag
+
+
+  body
+    #wrapper
+      #header
+        #logo
+          a href="/" title="Powered by MongoDB"
+            img src="/images/rad-30px-white.png" id='logopic'
+            h1 Mongologue
+        form#searchbox accept-charset="UTF-8" action="/" method="get" autocomplete="off"
+          input#search name="s" type="text" value=(mainpage? ? params[:s] : '') placeholder="Enter comma-separated words and press Enter."
+          #fakesearch
+          #rss: a href="/feed.rss#{'?s=#{params[:s]}' if params[:s]}" title="RSS feed"
+            img src="/images/rss-20px.png"
+            p
+              'Posts:
+              span#postscounter<> = mainpage? ? @posts_count : Post.count
+        #clientinfo
+
+      #container
+        p
+        #jsflash
+        #content
+          = yield
+
+        aside#side-b
+          #edituser
+          - if !showpostpage?
+            = cache("topposts") do
+              #toppostsbutton.button.rightbutton Fresh &amp; commented
+              #topposts: p = top_commented_posts
+          - else
+            #youareherebutton.button.rightbutton You are here
+            #youarehere: p = you_are_here(@post,10)
+
+          #tagsbutton.button.rightbutton All tags
+          = cache('tagscloud') do
+            = render :partial => '/tags/tagscloud'
+
+          = cache("footer") do
+            #aboutbutton.button.rightbutton Author info
+            #abouttext
+              p: a href="#" About author
+              ul
+                - %w(Google+ Facebook Livejournal Twitter Github Skype ICQ e-mail).each do |c|
+                  li = c
+
+            #siteinfobutton.button.rightbutton Site info
+            #siteinfo
+              p: a href="#" About this site
+              p
+                'Created with
+                a href="http://rubyonrails.org/" Ruby on Rails 3
+              p
+                'Powered by
+                a<> href="http://mongodb.org" MongoDB
+                'and
+                a<> href="http://mongoid.org" Mongoid
+              p
+                'Inspired by
+                a href="http://spectator.ru" Dmitry Smirnov
+      div#footer 2011 ☢ “First they ignore you, then they laugh at you, then they fight you, then you win.”
+    script type="text/javascript" src="https://apis.google.com/js/plusone.js" {lang: 'ru'}
+
