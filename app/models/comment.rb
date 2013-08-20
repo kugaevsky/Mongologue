@@ -6,14 +6,14 @@ class Comment
   include ActionView::Helpers
   include ApplicationHelper
 
-  field :pid
-  field :name
-  field :url
-  field :ip
-  field :content
-  field :reply
-  field :reply_name
-  field :reply_url
+  field :pid, type: Integer
+  field :name, type: String
+  field :url, type: String
+  field :ip, type: String
+  field :content, type: String
+  field :reply, type: String
+  field :reply_name, type: String
+  field :reply_url, type: String
   validates_length_of :content, :within => 5..600
   validates_length_of :reply, :maximum => 1000
   validates_length_of :name, :maximum => 60
