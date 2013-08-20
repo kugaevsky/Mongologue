@@ -5,3 +5,7 @@ tmp/
 .sass-cache/
 Gemfile.lock
 .DS_Store
+
+# Ignore modern rvm notation
+.ruby-version
+.ruby-gemset
