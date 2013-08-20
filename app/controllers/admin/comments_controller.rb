@@ -29,7 +29,7 @@ class Admin::CommentsController < ApplicationController
     @comment.destroy
     expire_comments(@post)
     respond_to do |format|
-      format.html { redirect_to @post }
+      format.html { redirect_to post_path(@post) }
       format.xml  { head :ok }
       format.js { render 'destroy_comment.js.erb' }
     end
@@ -52,7 +52,7 @@ class Admin::CommentsController < ApplicationController
       end
       if @comment.save
         expire_comments(@post)
-        format.html { redirect_to( @post, :notice => "Reply updated.") }
+        format.html { redirect_to( post_path(@post), notice: "Reply updated.") }
         # format.xml  { head :ok }
         format.js   { render 'comments/show_reply.js.erb' }
       else

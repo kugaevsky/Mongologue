@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
       if @new_comment.save
         expire_post_with_comments(@post)
 
-        format.html { redirect_to @post }
+        format.html { redirect_to post_path(@post) }
         format.js   { render 'create_comment.js.erb'   }
       else
         format.html { render :template => 'posts/show' }
@@ -39,7 +39,7 @@ class CommentsController < ApplicationController
   def show
     respond_to do |format|
       format.js { render 'show_reply.js.erb' }
-      format.html { redirect_to @post }
+      format.html { redirect_to post_path(@post) }
     end
   end
 
