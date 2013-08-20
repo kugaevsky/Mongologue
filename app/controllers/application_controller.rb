@@ -1,7 +1,12 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-
   protect_from_forgery
+
+  include ApplicationHelper
+  include SessionsHelper
+  include PostsHelper
+
+  before_filter :get_top_posts
 
   def expire_post_with_comments(post)
     expire_post(post)
@@ -53,4 +58,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+protected
+
+  def get_top_posts
+    maxsize = params[:maxsize] || 10
+    @top_posts = Post.only(:pid, :title, :comments_counter).
+                      where(:created_at.gt => 1.month.ago).
+                      desc(:comments_counter).
+                      limit(maxsize)
+  end
 end

@@ -37,7 +37,10 @@ html
           - if !showpostpage?
             = cache("topposts") do
               #toppostsbutton.button.rightbutton Fresh &amp; commented
-              #topposts: p = top_commented_posts
+              #topposts: ul
+                - @top_posts.each do |post|
+                  li = show_top_post(post)
+
           - else
             #youareherebutton.button.rightbutton You are here
             #youarehere: p = you_are_here(@post,10)

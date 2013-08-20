@@ -5,7 +5,8 @@ class PostsController < ApplicationController
 
   before_filter :store_location
   before_filter :find_post, :except => [:index, :sitemap]
-  
+  skip_before_filter :get_top_posts, except: :index
+
   def find_post
     @post = Post.where(:pid => params[:id]).first || not_found
   end

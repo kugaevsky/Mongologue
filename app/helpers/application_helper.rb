@@ -236,15 +236,8 @@ module ApplicationHelper
     end
   end
 
-  def top_commented_posts(maxsize=11)
-    @top_posts = Post.only(:pid, :title, :comments_counter).\
-                      where(:created_at.gt => 1.month.ago).\
-                      order_by([:comments_counter, :desc]).limit(maxsize).to_ary
-    outstr=String.new
-    @top_posts.each do |post|
-      outstr = outstr + link_to_post(post) + " (#{post.comments_counter.to_i})" + "<br />"
-    end
-    outstr.html_safe
+  def show_top_post(post)
+    link_to_post(post) + " (#{post.comments_counter.to_i})"
   end
 
   def you_are_here(post, winsize=10)
